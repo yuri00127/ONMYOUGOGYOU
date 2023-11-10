@@ -14,6 +14,10 @@ public class Button : MonoBehaviour
     [Header("アニメーション")]
     private Animator _anim;
 
+    // input
+    public bool CanInput = true;
+    private const float _inputWait = 0.1f;
+
 
     public virtual void Start()
     {
@@ -42,7 +46,10 @@ public class Button : MonoBehaviour
     // マウスオーバーした時の処理
     public virtual void PointerEnter(GameObject gameObject)
     {
-        EventSystem.current.SetSelectedGameObject(gameObject);
+        if (EventSystem.current.currentSelectedGameObject != gameObject)
+        {
+            EventSystem.current.SetSelectedGameObject(gameObject);
+        }
     }
 
     // マウスアウトした時の処理

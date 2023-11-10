@@ -5,26 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class BattleButton : Button
 {
+    private float _loadWaitTime = 1.0f;
 
     public override void Start()
     {
         base.Start();
-    }
-
-
-    public override void Select()
-    {
-        // シーンを次のインデックスにする
-    }
-
-    public override void Deselect()
-    {
-        
-    }
-
-    public override void Submit()
-    {
-        
     }
 
     public override void PointerEnter(GameObject gameObject)
@@ -32,9 +17,18 @@ public class BattleButton : Button
         base.PointerEnter(gameObject);
     }
 
-    public override void PointerExit()
+    // キャラクター選択画面へ遷移
+    public override void Submit()
     {
-        base.PointerExit();
+        StartCoroutine(LoadScene());
     }
 
+    // シーン遷移のアニメーション
+    private IEnumerator LoadScene()
+    {
+        yield return new WaitForSeconds(_loadWaitTime);
+
+        SceneManager.LoadScene(CharacterSelectScene);
+
+    }
 }

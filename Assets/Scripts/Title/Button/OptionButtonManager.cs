@@ -2,38 +2,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class OptionButtonManager : Button
 {
     [Header("オプションビュー")]
     [SerializeField] private GameObject _optionView;
-    [SerializeField] private GameObject _defaultForcus;
+    [SerializeField] private GameObject _optionDefaultForcus;
+    [SerializeField] private GameObject _titleDefaultForcus;
+    private bool _isOpenOptionView = false;
 
     [Header("アイコン")]
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
+    private Image _buttonIcon;
 
     private const string _assignmentButton = "Menu";
 
 
-    private void Start()
+    public override void Start()
     {
-        
+        _buttonIcon = this.GetComponent<Image>();
     }
 
     private void Update()
     {
-        if (Input.GetAxisRaw(_assignmentButton) > 0) { Select(); }
+        // 入力
+        if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
+        {
+            Select();
+        }
+        
+        // 一度入力をやめると再入力可能にする
+        if (Input.GetAxisRaw(_assignmentButton) == 0)
+        {
+            CanInput = true;
+        }
     }
 
-    public override void PointerEnter(GameObject gameObject)
-    {
-       
-    }
-
-    // オプションビューを開く
+    // オプションビューの開閉
     public override void Select()
     {
-        _optionView.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(_defaultForcus);
+        CanInput = false;
+
+        // 開く
+        if (!_isOpenOptionView)
+        {
+            // ビューの設定
+            _optionView.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(_optionDefaultForcus);
+            _isOpenOptionView = true;
+
+            // ボタン画像の設定
+            _buttonIcon.sprite = _sourceImage[1];
+
+            return;
+        }
+
+        // 閉じる
+        if (_isOpenOptionView)
+        {
+            // ビューの設定
+            _optionView.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(_titleDefaultForcus);
+            _isOpenOptionView = false;
+
+            // ボタン画像の設定
+            _buttonIcon.sprite = _sourceImage[0];
+
+            return;
+        }
+        
     }
+
 }
