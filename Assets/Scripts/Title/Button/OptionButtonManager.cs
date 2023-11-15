@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// タイトル画面でオプションを開く
 public class OptionButtonManager : Button
 {
     [Header("オプションビュー")]
@@ -31,7 +32,7 @@ public class OptionButtonManager : Button
         {
             Select();
         }
-        
+
         // 一度入力をやめると再入力可能にする
         if (Input.GetAxisRaw(_assignmentButton) == 0)
         {
