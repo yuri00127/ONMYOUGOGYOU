@@ -14,6 +14,7 @@ public class SelectBackButton : Button
         // ì¸óÕ
         if (Input.GetAxisRaw(_cancelButton) > 0Å@&& CanInput)
         {
+            CanInput = false;
             _selectStepManager.BackStep();
         }
 

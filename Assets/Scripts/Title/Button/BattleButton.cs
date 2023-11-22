@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BattleButton : Button
 {
-    private float _loadWaitTime = 1.0f;
+    [SerializeField] private LoadNextScene _loadNextScene;
+    private const string _nextScene = "CharacterSelect";
 
     public override void Start()
     {
@@ -20,15 +21,7 @@ public class BattleButton : Button
     // キャラクター選択画面へ遷移
     public override void Submit()
     {
-        StartCoroutine(LoadScene());
+        StartCoroutine(_loadNextScene.LoadScene(_nextScene));
     }
 
-    // シーン遷移のアニメーション
-    private IEnumerator LoadScene()
-    {
-        yield return new WaitForSeconds(_loadWaitTime);
-
-        SceneManager.LoadScene(CharacterSelectScene);
-
-    }
 }

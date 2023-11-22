@@ -7,9 +7,12 @@ using UnityEngine.UI;
 
 public class SelectStepManager : MonoBehaviour
 {
+    [Header("スクリプト")]
+    [SerializeField] private LoadNextScene _loadNextScene;
+
     // 選択ステップ（自キャラ、敵キャラ、敵AIレベル）
-    public int NowSelectStep = 0;
-    //public int NowSelectStep { get; private set; } = 0;
+    //public int NowSelectStep = 0;
+    public int NowSelectStep { get; private set; } = 0;
 
     [Header("デフォルトボタン")]
     [SerializeField] private GameObject _characterDefaultButton;
@@ -25,8 +28,12 @@ public class SelectStepManager : MonoBehaviour
     [SerializeField] private GameObject _stepGuideObj;
     private Image _stepGuideImg;
     [SerializeField] private Sprite[] _stepGuides = new Sprite[3];
-    
 
+    [Header("Cancelガイド")]
+    [SerializeField] private GameObject _cancelGuideObj;
+    private Image _cancelGuideImg;
+    [SerializeField] private Sprite[] _cancelGuides = new Sprite[3];
+    
     private const string _titleScene = "Title";
     private const string _battleScene = "Battle";
 
@@ -34,19 +41,20 @@ public class SelectStepManager : MonoBehaviour
     private void Start()
     {
         _stepGuideImg = _stepGuideObj.GetComponent<Image>();
+        _cancelGuideImg = _cancelGuideObj.GetComponent<Image>();
     }
 
     // プレイヤーキャラクターの選択ステップ
     private void PlayerCharacterSelect()
     {
-        _stepGuideImg.sprite = _stepGuides[0];
+        StepGuideSet();
         EventSystem.current.SetSelectedGameObject(_characterDefaultButton);
     }
 
     // 敵キャラクターの選択ステップ
     private void AICharacterSelect()
     {
-        _stepGuideImg.sprite = _stepGuides[1];
+        StepGuideSet();
         EventSystem.current.SetSelectedGameObject(_characterDefaultButton);
     }
 
@@ -54,7 +62,7 @@ public class SelectStepManager : MonoBehaviour
     private void AILevelSelect()
     {
         _AiLevelObj.SetActive(true);
-        _stepGuideImg.sprite = _stepGuides[2];
+        StepGuideSet();
         EventSystem.current.SetSelectedGameObject(_AILevelDefaultButton);
     }
 
@@ -85,7 +93,7 @@ public class SelectStepManager : MonoBehaviour
         Debug.Log("AIChara:" + PlayerPrefs.GetInt(_saveAICharacterId));
         Debug.Log("AILevel:" + PlayerPrefs.GetInt(_saveAILevel));
 
-        //SceneManager.LoadScene(_battleScene);
+        StartCoroutine(_loadNextScene.LoadScene(_battleScene));
     }
 
     // 選択ステップを一つ前に戻す
@@ -116,5 +124,11 @@ public class SelectStepManager : MonoBehaviour
         }
     }
 
+    // ステップごとにガイド画像を変更する
+    private void StepGuideSet()
+    {
+        _stepGuideImg.sprite = _stepGuides[NowSelectStep];
+        _cancelGuideImg.sprite = _cancelGuides[NowSelectStep];
+    }
 
 }
