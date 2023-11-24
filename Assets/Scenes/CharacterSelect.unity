@@ -2626,6 +2626,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628244289}
   m_CullTransparentMesh: 1
+--- !u!114 &1751104525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6151681423960265032, guid: 7b817db77020f004e901c9235560bc99, type: 3}
+  m_PrefabInstance: {fileID: 1192839821}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd31120b57fd87479bad5da24340a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1828676957
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,7 +3185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e059e82bf34de44881b52bb6d1b1811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NowSelectStep: 0
+  _loadNextScene: {fileID: 1751104525}
   _characterDefaultButton: {fileID: 270411502}
   _AILevelDefaultButton: {fileID: 2036368941}
   _AiLevelObj: {fileID: 1828676957}
