@@ -29,10 +29,10 @@ public class PouseButtonManager : Button
         // 入力
         if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
         {
-            Select();
+            Submit();
         }
 
-        // 入力をやめたら再入力可能
+        // 一度入力をやめると再入力可能
         if (Input.GetAxisRaw(_assignmentButton) == 0)
         {
             CanInput = true;
@@ -40,7 +40,7 @@ public class PouseButtonManager : Button
     }
 
     // ポーズの開閉
-    public override void Select()
+    public override void Submit()
     {
         CanInput = false;
 
@@ -71,5 +71,10 @@ public class PouseButtonManager : Button
 
             return;
         }
+    }
+
+    public override void PointerEnter(GameObject gameObject)
+    {
+        base.PointerEnter(gameObject);
     }
 }

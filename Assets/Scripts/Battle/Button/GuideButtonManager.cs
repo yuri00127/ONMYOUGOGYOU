@@ -31,7 +31,7 @@ public class GuideButtonManager : Button
             Select();
         }
 
-        if (Input.GetAxisRaw(_assignmentButton) == 0 && !_isPointerDown)
+        if (!CanInput && Input.GetAxisRaw(_assignmentButton) == 0 && !_isPointerDown)
         {
             Deselect();
             CanInput = true;

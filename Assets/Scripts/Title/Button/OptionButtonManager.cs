@@ -30,10 +30,10 @@ public class OptionButtonManager : Button
         // 入力
         if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
         {
-            Select();
+            Submit();
         }
 
-        // 一度入力をやめると再入力可能にする
+        // 一度入力をやめると再入力可能
         if (Input.GetAxisRaw(_assignmentButton) == 0)
         {
             CanInput = true;
@@ -41,7 +41,7 @@ public class OptionButtonManager : Button
     }
 
     // オプションビューの開閉
-    public override void Select()
+    public override void Submit()
     {
         CanInput = false;
 
