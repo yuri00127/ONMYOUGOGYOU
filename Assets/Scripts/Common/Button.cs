@@ -12,7 +12,7 @@ public class Button : MonoBehaviour
     public const string BattleScene = "Battle";
 
     [Header("アニメーション")]
-    private Animator _anim;
+    protected Animator Anim;
 
     // input
     public bool CanInput = true;
@@ -22,7 +22,7 @@ public class Button : MonoBehaviour
     public virtual void Start()
     {
         // Animatorコンポーネント取得
-        _anim = this.GetComponent<Animator>();
+        Anim = this.GetComponent<Animator>();
     }
 
     // フォーカス時の処理

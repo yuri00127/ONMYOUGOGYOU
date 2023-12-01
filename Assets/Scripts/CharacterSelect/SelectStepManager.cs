@@ -9,6 +9,7 @@ public class SelectStepManager : MonoBehaviour
 {
     [Header("スクリプト")]
     [SerializeField] private LoadNextScene _loadNextScene;
+    [SerializeField] private SelectCharacterData _selectCharacterData;
 
     // 選択ステップ（自キャラ、敵キャラ、敵AIレベル）
     //public int NowSelectStep = 0;
@@ -19,10 +20,6 @@ public class SelectStepManager : MonoBehaviour
     [SerializeField] private GameObject _AILevelDefaultButton;
 
     [SerializeField] private GameObject _AiLevelObj;
-
-    private const string _savePlayerCharacterId = "PlayerCharacter";
-    private const string _saveAICharacterId = "AICharacter";
-    private const string _saveAILevel = "AILevel";
 
     [Header("ステップガイド")]
     [SerializeField] private GameObject _stepGuideObj;
@@ -66,10 +63,11 @@ public class SelectStepManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(_AILevelDefaultButton);
     }
 
+
     // プレイヤーの使用キャラクターを選択して、敵キャラ選択へ
     public void NextAICharacterSelect(int PlayerCharacterId)
     {
-        PlayerPrefs.SetInt(_savePlayerCharacterId, PlayerCharacterId);
+        PlayerPrefs.SetInt(_selectCharacterData.SavePlayerCharacterId, PlayerCharacterId);
 
         NowSelectStep++;
         AICharacterSelect();
@@ -78,7 +76,7 @@ public class SelectStepManager : MonoBehaviour
     // AIの使用キャラクターを選択して、AIレベル選択へ
     public void NextAILevelSelect(int AICharacterId)
     {
-        PlayerPrefs.SetInt(_saveAICharacterId, AICharacterId);
+        PlayerPrefs.SetInt(_selectCharacterData.SaveAICharacterId, AICharacterId);
 
         NowSelectStep++;
         AILevelSelect();
@@ -87,11 +85,7 @@ public class SelectStepManager : MonoBehaviour
     // AIの強さのレベルを選択して、バトル画面へ遷移
     public void NextBattleScene(int level)
     {
-        PlayerPrefs.SetInt(_saveAILevel, level);
-
-        Debug.Log("PLChara:" + PlayerPrefs.GetInt(_savePlayerCharacterId));
-        Debug.Log("AIChara:" + PlayerPrefs.GetInt(_saveAICharacterId));
-        Debug.Log("AILevel:" + PlayerPrefs.GetInt(_saveAILevel));
+        PlayerPrefs.SetInt(_selectCharacterData.SaveAILevel, level);
 
         StartCoroutine(_loadNextScene.LoadScene(_battleScene));
     }

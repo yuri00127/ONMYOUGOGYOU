@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   Id: 1
-  Name: 
+  Name: "\u7384\u6B66"
   TypeId: 1
+  CharacterImage: {fileID: 0}
   CommandNames:
   - 
   - 
@@ -22,8 +23,8 @@ MonoBehaviour:
   - 
   - 
   CommandSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8f90b93a48feb8a44ab3d180478d1956, type: 3}
+  - {fileID: 21300000, guid: 4fb8fa9f0e239094ca81b3c96082f2d9, type: 3}
+  - {fileID: 21300000, guid: 85083c0e56bb858499fc46ef22d5ef93, type: 3}
+  - {fileID: 21300000, guid: 61e8232c934d15342ad2cf445e3590ab, type: 3}
+  - {fileID: 21300000, guid: 49d90fa701bf44246b18e1277c615cd1, type: 3}

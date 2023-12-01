@@ -12,16 +12,8 @@ public class GuideButtonManager : Button
     public bool IsOpenGuideView { get; private set; } = false;
     private bool _isPointerDown = false;
 
-    [Header("アイコン")]
-    [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
-    private Image _buttonIcon;
-
     private const string _assignmentButton = "Y";
 
-    public override void Start()
-    {
-        _buttonIcon = this.GetComponent<Image>();
-    }
 
     private void Update()
     {
@@ -47,9 +39,6 @@ public class GuideButtonManager : Button
         _guideView.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         IsOpenGuideView = true;
-
-        // ボタン画像の設定
-        _buttonIcon.sprite = _sourceImage[1];
     }
 
     // ガイドを閉じる
@@ -59,9 +48,6 @@ public class GuideButtonManager : Button
         _guideView.SetActive(false);
         EventSystem.current.SetSelectedGameObject(_battleDefaultForcus);
         IsOpenGuideView = false;
-
-        // ボタン画像の設定
-        _buttonIcon.sprite = _sourceImage[0];
     }
 
     // マウスでの操作

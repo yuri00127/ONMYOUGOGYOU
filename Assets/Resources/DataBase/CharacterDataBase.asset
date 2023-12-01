@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CharacterDataBase
   m_EditorClassIdentifier: 
   CharacterList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b1baa81dc6263cc46a94337dbf843b71, type: 2}
+  - {fileID: 11400000, guid: 8303a7d3329ea0f4aaf6e10c397f96aa, type: 2}
+  - {fileID: 11400000, guid: d617dea8b595117419abf151f253a7c7, type: 2}
+  - {fileID: 11400000, guid: c88bb8d79e4fab14e861bca11831c741, type: 2}
+  - {fileID: 11400000, guid: afb1b71b239ef6c41b3f133dd9fdadb0, type: 2}
