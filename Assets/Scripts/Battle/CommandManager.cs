@@ -10,8 +10,10 @@ public class CommandManager : MonoBehaviour
 
     [Header("コマンド")]
     [SerializeField] private GameObject[] _commandArray = new GameObject[5];
-    private Image[] _commandImgArray = new Image[5];
+    private Image[] _commandImageArray = new Image[5];
     private int _isSelectingCommandSequence = 0;
+    public Sprite[] CommandSprites { get; private set; } = new Sprite[5];
+    public Sprite[] SelectCommandSprites { get; private set; } = new Sprite[5];
 
     [SerializeField] private GameObject[] _playerCommands = new GameObject[3];
     private const string _mindObjName = "Mind";
@@ -24,20 +26,20 @@ public class CommandManager : MonoBehaviour
     [SerializeField] private Sprite _nullSprite;
 
     private bool _canInput = true;
-    private const string _InputCancel = "Cancel";
+    private const string _inputCancel = "Cancel";
 
 
     // Update is called once per frame
     void Update()
     {
         // 入力
-        if (!_isAllSelect && Input.GetAxis(_InputCancel) > 0 && _canInput)
+        if (!_isAllSelect && Input.GetAxis(_inputCancel) > 0 && _canInput)
         {
             CancelCommand();
         }
 
         // 一度入力をやめると再入力可能
-        if (!_isAllSelect && Input.GetAxisRaw(_InputCancel) == 0)
+        if (!_isAllSelect && Input.GetAxisRaw(_inputCancel) == 0)
         {
             _canInput = true;
         }
@@ -48,16 +50,17 @@ public class CommandManager : MonoBehaviour
     {
         _playerCharacter = character;
 
-        // コマンドのImageコンポーネント取得
+        // コマンドのImageコンポーネントにSpriteをセット
         for (int i = 0; i < _commandArray.Length; i++)
         {
-            _commandImgArray[i] = _commandArray[i].GetComponent<Image>();
+            _commandArray[i].GetComponent<Image>().sprite = _playerCharacter.CommandSprites[i];
         }
 
-        // コマンドの画像をセット
-        for (int i = 0; i < _playerCharacter.CommandSprites.Length; i++)
+        // キャラクターごとのコマンド画像を取得
+        for (int i = 0; i < _commandArray.Length; i++)
         {
-            _commandImgArray[i].sprite = _playerCharacter.CommandSprites[i];
+            CommandSprites[i] = character.CommandSprites[i];
+            SelectCommandSprites[i] = character.SelectCommandSprites[i];
         }
     }
 

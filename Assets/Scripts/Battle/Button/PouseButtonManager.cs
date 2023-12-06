@@ -16,7 +16,7 @@ public class PouseButtonManager : Button
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
     private Image _buttonIcon;
 
-    private const string _assignmentButton = "X";
+    private const string _assignmentButton = "Menu";
 
 
     public override void Start()

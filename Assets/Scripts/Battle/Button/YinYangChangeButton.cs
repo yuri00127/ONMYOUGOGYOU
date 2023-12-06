@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class YinYangChangeButton : Button
 {
     private const string _AnimName = "IsYin";
+    private const string _inputName = "X";
 
     public bool IsYin { get; private set; } = true;
 
@@ -14,8 +15,25 @@ public class YinYangChangeButton : Button
         base.Start();
     }
 
+    private void Update()
+    {
+        // “ü—Í
+        if (Input.GetAxis(_inputName) > 0 && CanInput)
+        {
+            Submit();
+        }
+
+        // ˆê“x“ü—Í‚ğ‚â‚ß‚é‚ÆÄ“ü—Í‰Â”\
+        if (Input.GetAxisRaw(_inputName) == 0)
+        {
+            CanInput = true;
+        }
+    }
+
     public override void Submit()
     {
+        CanInput = false;
+
         if (IsYin)
         {
             Anim.SetBool(_AnimName, false);
