@@ -20,8 +20,8 @@ public class AICharacterManager : CharacterManager
     private int _showMindNumber;        // •\¦‚·‚é‹C‚Ì”
 
     // ƒRƒ}ƒ“ƒh‚ÌŒˆ’è
-    private int[] _selectCommandIndexArray = new int[3];
-    private int[] _selectMindIndexArray = new int[3];
+    public int[] _selectCommandIndexArray { get; private set; } = new int[3];
+    public bool[] _selectMindArray { get; private set; } = new bool[3];
 
 
     protected override void Start()
@@ -72,10 +72,15 @@ public class AICharacterManager : CharacterManager
         }
 
         // ‹C‚ğŒˆ’è(0‚È‚ç‰AA1‚È‚ç—z)
-        for (int i = 0; i < _selectMindIndexArray.Length; i++)
+        for (int i = 0; i < _selectMindArray.Length; i++)
         {
-            _selectMindIndexArray[i] = Random.Range(0, 2);
-            Debug.Log("“G‚Ì‰A—zF" + _selectMindIndexArray[i]);
+            if (Random.Range(0, 2) == 0)
+            {
+                _selectMindArray[i] = true;
+            }
+            _selectMindArray[i] = false;
+
+            Debug.Log("“G‚Ì‰A—zF" + _selectMindArray[i]);
         }
 
         // ƒRƒ}ƒ“ƒh‚ğ•\¦‚·‚é
@@ -93,7 +98,13 @@ public class AICharacterManager : CharacterManager
         for (int i = 0; i < showMindPositionList.Count; i++)
         {
             int positionNumber = showMindPositionList[i];
-            _mindImageArray[positionNumber].sprite = _yinYanSprites[_selectMindIndexArray[i]];
+
+            if (_selectMindArray[i])
+            {
+                _mindImageArray[positionNumber].sprite = _yinYanSprites[0];
+                continue;
+            }
+            _mindImageArray[positionNumber].sprite = _yinYanSprites[1];
         }
 
     }

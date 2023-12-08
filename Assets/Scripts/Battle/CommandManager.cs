@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CommandManager : MonoBehaviour
 {
     [SerializeField] private YinYangChangeButton _yinYangChangeButton;
+    [SerializeField] private BattleManager _battleManager;
     private Character _playerCharacter;
 
     [Header("コマンド")]
@@ -18,9 +19,9 @@ public class CommandManager : MonoBehaviour
     [SerializeField] private GameObject[] _playerCommands = new GameObject[3];
     private const string _mindObjName = "Mind";
 
-    [Header("選択されたコマンド")]
-    private List<int> _commandIdList = new List<int>();
-    private List<bool> _isYinList = new List<bool>();    // 陰かどうか
+    //選択されたコマンド
+    public List<int> CommandIdList { get; private set; } = new List<int>();
+    public List<bool> IsYinList { get; private set; } = new List<bool>();    // 陰かどうか
     private bool _isAllSelect = false;
 
     [SerializeField] private Sprite _nullSprite;
@@ -69,8 +70,8 @@ public class CommandManager : MonoBehaviour
     {
         if (!_isAllSelect)
         {
-            _commandIdList.Add(int.Parse(command.name));
-            _isYinList.Add(_yinYangChangeButton.IsYin);
+            CommandIdList.Add(int.Parse(command.name));
+            IsYinList.Add(_yinYangChangeButton.IsYin);
 
             // 選択したコマンドの画像を設定
             _playerCommands[_isSelectingCommandSequence].GetComponent<Image>().sprite
@@ -88,6 +89,7 @@ public class CommandManager : MonoBehaviour
         {
             _canInput = false;
             _isAllSelect = true;
+            _battleManager.Battle();
         }
     }
 
