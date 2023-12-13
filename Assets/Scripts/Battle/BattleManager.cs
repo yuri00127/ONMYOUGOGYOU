@@ -64,7 +64,7 @@ public class BattleManager : MonoBehaviour
             playerDisadvantage = attributeCompatibility.playerDisadvantage;
 
             // 相手の属性を取得
-            int aiAttribute = _AICharacterManager._selectCommandIndexArray[i];
+            int aiAttribute = 0;// _AICharacterManager._selectCommandIndexArray[i];
 
             // プレイヤーが有利な時
             if (aiAttribute == playerAdvantageous)
@@ -145,12 +145,14 @@ public class BattleManager : MonoBehaviour
             }
 
             // 相性がないとき
-            if (IsHarmony(_commandManager.IsYinList[i], _AICharacterManager._selectMindArray[i]))
+            // 仮置き、要修正
+            if (IsHarmony(_commandManager.IsYinList[i], _commandManager.IsYinList[i]))
             {
                 result[i, 0] = 0;
                 result[i, 1] = 0;
                 continue;
             }
+
 
             result[i, 0] = 10;
             result[i, 1] = 10;
@@ -161,10 +163,13 @@ public class BattleManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 比和が発生するかチェック
+    /// 属性の比和が発生するかチェック
+    /// 比和…キャラクターとコマンドの属性が同じとき
+    /// 　　　相手に有利な属性→与えるダメージが上昇
+    /// 　　　相手に不利な属性→受けるダメージが上昇
     /// </summary>
-    /// <param name="playerMind">プレイヤーのコマンドの気</param>
-    /// <param name="aiMind">敵のコマンドの気</param>
+    /// <param name="playerMind">プレイヤーのコマンドの属性</param>
+    /// <param name="aiMind">敵のコマンドの属性</param>
     /// <returns>比和が発生したらtrue</returns>
     private bool IsHarmony(bool playerMind, bool aiMind)
     {
