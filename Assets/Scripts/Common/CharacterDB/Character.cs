@@ -9,7 +9,7 @@ public class Character : ScriptableObject
 {
     public int Id;
     public string Name;
-    public int TypeId;
+    public int AttributeId;
     public Sprite CharacterImage;
     public string[] CommandNames = new string[5];
     public Sprite[] CommandSprites = new Sprite[5];

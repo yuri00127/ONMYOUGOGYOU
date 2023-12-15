@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class CommandManager : MonoBehaviour
 {
-    [SerializeField] private BattleManager _battleManager;
-    protected Character SelectCharacter;
+    // スクリプトを取得するオブジェクト
+    private const string _battleManagerObjName = "BattleManager";
+
+    // スクリプト
+    private BattleManager _battleManager;
+    public Character SelectCharacter { get; protected set; }
 
     // キャラクターのコマンド
     protected GameObject[] SelectCommandObjArray = new GameObject[3];   // 選択したコマンドの表示Object
@@ -15,7 +19,7 @@ public class CommandManager : MonoBehaviour
     protected Image[] MindImageArray = new Image[3];                    // 陰陽表示ObjectのImageコンポーネント
 
     // 表示
-    [SerializeField] private GameObject _selectCommandObj;              // 表示領域のObject
+    protected GameObject SelectCommandObj;              // 表示領域のObject
     [SerializeField] private Sprite[] _yinYangSprites = new Sprite[2];  // 陰陽のSprite
 
     // 選択コマンド
@@ -25,15 +29,16 @@ public class CommandManager : MonoBehaviour
 
     protected virtual void Awake()
     {
+        // スクリプト取得
+        _battleManager = GameObject.Find(_battleManagerObjName).GetComponent<BattleManager>();
+
         // 選択したコマンドの表示領域を取得
         int commandIndex = 0;
         for (int i = 0; i < SelectCommandObjArray.Length; i++)
         {
             // Object取得
             commandIndex++;
-
-            // ※AIのほうができなくてエラーっぽい
-            SelectCommandObjArray[i] = _selectCommandObj.transform.Find(commandIndex.ToString()).gameObject;
+            SelectCommandObjArray[i] = SelectCommandObj.transform.Find(commandIndex.ToString()).gameObject;
 
             // Imageコンポーネント取得
             SelectCommandImageArray[i] = SelectCommandObjArray[i].GetComponent<Image>();
@@ -49,17 +54,23 @@ public class CommandManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 選択されたコマンドの画像を表示領域にセット
+    /// 選択されたコマンドの画像を表示領域にセットする
     /// </summary>
-    /// <param name="command">選択されたコマンドボタンのObject</param>
-    /// <param name="selectingCommandSequence"></param>
-    public virtual void SelectCommand(GameObject command, int selectingCommandSequence)
+    /// <param name="selectingCommandSequence">表示する位置</param>
+    public virtual void SelectCommand(int selectingCommandSequence)
     {
         // 選択したコマンドの画像をセット
         int spriteIndex = CommandIdList[selectingCommandSequence];
         SelectCommandImageArray[selectingCommandSequence].sprite = SelectCharacter.CommandSprites[spriteIndex];
+    }
 
-        // 対応する陰陽の画像をセット
+    /// <summary>
+    /// 選択された気の画像を表示領域にセットする
+    /// </summary>
+    /// <param name="selectingCommandSequence">表示する位置</param>
+    protected virtual void SelectMind(int selectingCommandSequence)
+    {
+        // 陽が選択されていたら
         if (IsYinList[selectingCommandSequence])
         {
             // 陰の画像をセット
@@ -68,8 +79,7 @@ public class CommandManager : MonoBehaviour
         }
 
         // 陽の画像をセット
-        MindImageArray[selectingCommandSequence].sprite = _yinYangSprites[0];
-
+        MindImageArray[selectingCommandSequence].sprite = _yinYangSprites[1];
     }
     
 }

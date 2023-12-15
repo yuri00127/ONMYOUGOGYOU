@@ -1,34 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    [Header("スクリプト")]
-    [SerializeField] private CommandManager _commandManager;
-    [SerializeField] private AICharacterManager _AICharacterManager;
-    [SerializeField] private RoundCounter _roundCounter;
+    // スクリプトを取得するオブジェクト
+    private const string _playerCommandManagerObjName = "PlayerCommandManager";
+    private const string _aiCommandManagerObjName = "AICommandManager";
+    private const string _roundCounterObjName = "RoundCounter";
+    
 
-    private int _nowRound = 1;
+    // スクリプト
+    private PlayerCommandManager _playerCommandManager;
+    private AICommandManager _aiCommandManager;
+    private RoundCounter _roundCounter;
 
+    // HP
+    private const string _playerHpObjName = "PlayerCharacterHP";
+    private const string _auHpObjName = "AICharacterHP";
+    private Slider _playerHpSlider;
+    private Slider _aiHpSlider;
+
+    private int _nowRound = 1;  // 現在のラウンド
+
+    private void Awake()
+    {
+        // スクリプト取得
+        _playerCommandManager = GameObject.Find(_playerCommandManagerObjName).GetComponent<PlayerCommandManager>();
+        _aiCommandManager = GameObject.Find(_aiCommandManagerObjName).GetComponent<AICommandManager>();
+        _roundCounter = GameObject.Find(_roundCounterObjName).GetComponent<RoundCounter>();
+
+        // HPのSlider取得
+        _playerHpSlider = GameObject.Find(_playerHpObjName).GetComponent<Slider>();
+        _aiHpSlider = GameObject.Find(_auHpObjName).GetComponent<Slider>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        // 開始時のアニメーション
+
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator StartAnimation()
     {
-        
+        // HPバーを満タンにする
+        while (_playerHpSlider.value != 1)
+        {
+            _playerHpSlider.value += 0.01f;
+            _aiHpSlider.value += 0.01f;
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        // ラウンドを表示する
+
     }
 
     // コマンドバトルを行う
     public void Battle()
     {
-        _nowRound++;
+        // バトル結果取得
         BattleResult();
+
+        // 次のラウンドへ
+        _nowRound++;
         _roundCounter.CountUp(_nowRound);
     }
 
@@ -36,52 +74,73 @@ public class BattleManager : MonoBehaviour
     private void BattleResult()
     {
         // 属性の判定
-        int[] attributeResult = AttributeCheck();
+        int[,] attributeResult = AttributeCheck();
 
         // ダメージの決定
         int[,] damageResult = DamageCheck(attributeResult);
 
-        // ダメージを反映
         // アニメーション
-        
+
+        // ダメージを反映
+
     }
 
     /// <summary>
-    /// 相性判定の結果を取得
+    /// コマンド属性の相性判定
+    /// [n,0] 相性判定の結果(1:有利、-1:不利、0:どちらでもない)
+    /// [n,1] 比和の有無(0:無、1:有)
+    /// [n,2] 敵の比和の有無
     /// </summary>
-    /// <returns>相性判定の配列（1:有利、-1:不利、0:どちらでもない）</returns>
-    private int[] AttributeCheck()
+    /// <returns>判定結果の配列</returns>
+    private int[,] AttributeCheck()
     {
-        int[] result = new int[3];
+        int[,] result = new int[3,3];
         int playerAdvantageous = 0;
         int playerDisadvantage = 0;
 
         for (int i = 0; i <= result.Length; i++)
         {
-            // プレイヤーの属性の有利・不利を取得
-            var attributeCompatibility = AttributeCompativilityCheck(_commandManager.CommandIdList[i]);
+            int playerCommandAttributeId = _playerCommandManager.CommandIdList[i];
+            bool isHarmony = false;
+                
+            // プレイヤーのコマンド属性の有利・不利を取得
+            var attributeCompatibility = AttributeCompativilityCheck(playerCommandAttributeId);
             playerAdvantageous = attributeCompatibility.playerAdvantageous;
             playerDisadvantage = attributeCompatibility.playerDisadvantage;
 
-            // 相手の属性を取得
-            int aiAttribute = 0;// _AICharacterManager._selectCommandIndexArray[i];
+            // 敵コマンドの属性を取得
+            int aiCommandAttributeId = _aiCommandManager.CommandIdList[i];
+
+            // キャラクターとコマンドの属性が一致しているかチェック
+            if (IsHarmony(_playerCommandManager.SelectCharacter.AttributeId, playerCommandAttributeId))
+            {
+                result[i, 1] = 1;
+            }
+            result[i, 1] = 0;
+
+            // 敵キャラクターと敵コマンドの属性が一致しているかチェック
+            if (IsHarmony(_aiCommandManager.SelectCharacter.AttributeId, aiCommandAttributeId))
+            {
+                result[i, 2] = 1;
+            }
+            result[i, 2] = 0;
 
             // プレイヤーが有利な時
-            if (aiAttribute == playerAdvantageous)
+            if (aiCommandAttributeId == playerAdvantageous)
             {
-                result[i] = 1;
+                result[i, 0] = 1;
                 continue;
             }
 
             // プレイヤーが不利な時
-            if (aiAttribute == playerDisadvantage)
+            if (aiCommandAttributeId == playerDisadvantage)
             {
-                result[i] = -1;
+                result[i, 0] = -1;
                 continue;
             }
 
             // 相性が存在しないとき
-            result[i] = 0;
+            result[i, 0] = 0;
         }
 
         return result;
@@ -120,61 +179,95 @@ public class BattleManager : MonoBehaviour
 
     /// <summary>
     /// ダメージの量を取得
+    /// [n,0] 敵へのダメージ量
+    /// [n,1] 自分へのダメージ量
     /// </summary>
-    /// <param name="attributeResult">属性相性の判定結果</param>
-    /// <returns>攻撃ごとのダメージ量
-    /// [攻撃の順番 ,0:相手へのダメージ、1:自分へのダメージ]</returns>
-    private int[,] DamageCheck(int[] attributeResult)
+    /// <param name="attributeResult">[n,0]相性、[n,1]比和、[n,2]敵の比和</param>
+    /// <returns>コマンドごとのダメージ量の配列</returns>
+    private int[,] DamageCheck(int[,] attributeResult)
     {
         int[,] result = new int[3,2];
+        bool isContradict = false;
+        bool isPlayerHarmony = false;   // キャラの属性とコマンドの属性が一致しているか(プレイヤー)
+        bool isAiHarmony = false;       // キャラの属性とコマンドの属性が一致しているか(敵)
 
         for (int i = 0; i >= result.Length; i++)
         {
-            // プレイヤーが有利な時
-            if (attributeResult[i] == 1)
+            // 属性の一致を確認
+
+            // 攻撃の打ち消しが発生しているかチェック
+            if (IsContradict(_playerCommandManager.IsYinList[i], _playerCommandManager.IsYinList[i]))
             {
-                result[i,0] = 20;
+                isContradict = true;
+            }
+
+            // プレイヤーが有利な時
+            if (attributeResult[i,0] == 1)
+            {
+                result[i, 0] = 20;
+                
+                // 自分へのダメージ
+                if (!isContradict)
+                {
+                    result[i, 1] = 5;
+                }
+
                 continue;
             }
 
             // プレイヤーが不利な時
-            if (attributeResult[i] == -1)
+            if (attributeResult[i,0] == -1)
             {
                 result[i,1] = 20;
                 continue;
             }
 
             // 相性がないとき
-            // 仮置き、要修正
-            if (IsHarmony(_commandManager.IsYinList[i], _commandManager.IsYinList[i]))
+            if (attributeResult[i,0] == 0)
             {
-                result[i, 0] = 0;
-                result[i, 1] = 0;
+                result[i, 0] = 10;
+
+                // 自分へのダメージ
+                if (!isContradict)
+                {
+                    result[i, 1] = 10;
+                }
+                
                 continue;
             }
-
-
-            result[i, 0] = 10;
-            result[i, 1] = 10;
 
         }
 
         return result;
     }
 
+
     /// <summary>
-    /// 属性の比和が発生するかチェック
-    /// 比和…キャラクターとコマンドの属性が同じとき
-    /// 　　　相手に有利な属性→与えるダメージが上昇
-    /// 　　　相手に不利な属性→受けるダメージが上昇
+    /// キャラクターの属性とコマンドの属性が一致しているかチェック
     /// </summary>
-    /// <param name="playerMind">プレイヤーのコマンドの属性</param>
-    /// <param name="aiMind">敵のコマンドの属性</param>
-    /// <returns>比和が発生したらtrue</returns>
-    private bool IsHarmony(bool playerMind, bool aiMind)
+    /// <param name="characterAttributeId"></param>
+    /// <param name="commandAttributeId"></param>
+    /// <returns></returns>
+    private bool IsHarmony(int characterAttributeId, int commandAttributeId)
+    { 
+        if (characterAttributeId == commandAttributeId) { return true; }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 攻撃の打ち消しが発生するかチェック
+    /// →相手と異なる気を選択すると打ち消しが発生
+    /// →相性不利の時は打ち消せない
+    /// </summary>
+    /// <param name="playerMind">プレイヤーのコマンドの気</param>
+    /// <param name="aiMind">敵のコマンドの気</param>
+    /// <returns>打ち消しが発生したらtrue</returns>
+    private bool IsContradict(bool playerMind, bool aiMind)
     {
         if (playerMind != aiMind) { return true; }
 
         return false;
     }
+
 }

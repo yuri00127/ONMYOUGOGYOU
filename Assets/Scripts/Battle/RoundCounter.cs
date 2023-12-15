@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RoundCounter : MonoBehaviour
 {
     [Header("カウント")]
+    [SerializeField] private GameObject _roundCounterObj;      // カウント背景の画像
     [SerializeField] private GameObject _firstPlaceObj;        // 1の位のオブジェクト
     [SerializeField] private GameObject _decimalPlaceObj;      // 2の位のオブジェクト
     private Image _firstPlaceImage;

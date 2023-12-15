@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class PlayerCommandManager : CommandManager
 {
     // スクリプトを取得するオブジェクト
-    private const string _changeButtonObj = "ChangeButton";
+    private const string _changeButtonObjName = "ChangeButton";
+    private const string _playerCharacterManagerObjName = "PlayerCharacterManager";
+    private const string _battleManagerObjName = "BattleManager";
 
     // スクリプト
     private YinYangChangeButton _yinYangChangeButton;
+    private PlayerCharacterManager _playerCharacterManager;
+    private BattleManager _battleManager;
 
     [Header("コマンドObject")]
     [SerializeField] private GameObject[] _commandButtonArray = new GameObject[5];  // コマンドボタンのObject
@@ -22,23 +26,32 @@ public class PlayerCommandManager : CommandManager
     private bool _isAllSelect = false;              // コマンドが上限まで選択されたかどうか
 
     // Input
-    protected bool CanInput = true;                 // 入力を可能とする制御
+    public bool CanInput = true;                 // 入力を可能とする制御
     private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
 
 
     protected override void Awake()
     {
         // スクリプトの取得
-        _yinYangChangeButton = GameObject.Find(_changeButtonObj).GetComponent<YinYangChangeButton>();
+        _yinYangChangeButton = GameObject.Find(_changeButtonObjName).GetComponent<YinYangChangeButton>();
+        _playerCharacterManager = GameObject.Find(_playerCharacterManagerObjName).GetComponent<PlayerCharacterManager>();
+        _battleManager = GameObject.Find(_battleManagerObjName).GetComponent<BattleManager>();
+
+        // 表示領域のObject取得
+        SelectCommandObj = GameObject.Find(_playerSelectCommandObjName);
+        base.Awake();
 
         // コマンドボタンのImageコンポーネントの取得
         for (int i = 0; i < _commandButtonArray.Length; i++)
         {
             _commandButtonImageArray[i] = _commandButtonArray[0].GetComponent<Image>();
         }
+    }
 
-        base.Awake();
-
+    private void Start()
+    {
+        // 選択された自機キャラクターを取得
+        SelectCharacter = _playerCharacterManager.SelectCharacter;
     }
 
     protected override void Update()
@@ -56,21 +69,11 @@ public class PlayerCommandManager : CommandManager
         }
     }
 
-
-    /// <summary>
-    /// 選択された自機キャラクターを取得
-    /// </summary>
-    /// <param name="character">選択されたキャラクター</param>
-    public void SetCommand(Character character)
-    {
-        SelectCharacter = character;
-    }
-
     /// <summary>
     /// プレイヤーが選択したコマンドをセットする
     /// </summary>
     /// <param name="command">選択されたコマンドのObject</param>
-    public override void SelectCommand(GameObject command, int selectCommandIndex)
+    public override void SelectCommand(int selectCommandIndex)
     {
         // コマンドが上限まで選択されていなければ
         if (!_isAllSelect)
@@ -80,7 +83,8 @@ public class PlayerCommandManager : CommandManager
             IsYinList.Add(_yinYangChangeButton.IsYin);
 
             // 選択されたコマンドを表示領域にセットする
-            base.SelectCommand(command, _selectingCommandSequence);
+            base.SelectCommand(_selectingCommandSequence);
+            base.SelectMind(_selectingCommandSequence);
 
             // 選択されたコマンドの数をカウントアップ
             _selectingCommandSequence++;
@@ -93,7 +97,7 @@ public class PlayerCommandManager : CommandManager
             Debug.Log("攻撃開始");
             CanInput = false;
             _isAllSelect = true;
-            //_battleManager.Battle();
+            _battleManager.Battle();
         }
 
     }

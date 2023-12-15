@@ -67,10 +67,10 @@ public class CommandButton : Button
     /// </summary>
     public override void Submit()
     {
-        Debug.Log("コマンド選択:" + this.gameObject.name);
+        //Debug.Log("コマンド選択:" + this.gameObject.name);
 
         // コマンドが選択された処理を行う
-        _playerCommandManager.SelectCommand(this.gameObject, _commandIndex);
+        _playerCommandManager.SelectCommand(_commandIndex);
     }
 
     public override void PointerEnter(GameObject gameObject)

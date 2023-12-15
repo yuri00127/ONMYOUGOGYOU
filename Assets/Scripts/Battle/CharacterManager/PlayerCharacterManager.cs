@@ -22,10 +22,4 @@ public class PlayerCharacterManager : CharacterManager
         // スクリプトを取得
         _playerCommandManager = GameObject.Find(_playerCommandManagerObjName).GetComponent<PlayerCommandManager>();
     }
-
-    protected override void Start()
-    {
-        // 選択されたキャラクターをCommandManagerに伝える
-        _playerCommandManager.SetCommand(SelectCharacter);
-    }
 }

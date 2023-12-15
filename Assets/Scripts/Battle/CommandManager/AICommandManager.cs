@@ -9,10 +9,10 @@ public class AICommandManager : CommandManager
     private const string _aiCharacterManagerObjName = "AICharacterManager";
 
     // スクリプト
-    private AICharacterManager _aICharacterManager;
+    private AICharacterManager _aiCharacterManager;
 
     // 表示
-    private const string _playerSelectCommandObjName = "AICommands";    // 選択したコマンドの表示領域の名前
+    private const string _aiSelectCommandObjName = "AICommands";        // 選択したコマンドの表示領域の名前
     [SerializeField] private Sprite _unknownSprite;                     // 不明なコマンドのSprite
     private int _showCommandNumber;                                     // レベル別の表示するコマンドの数
     private int _showMindNumber;                                        // レベル別の表示する気の数
@@ -24,10 +24,18 @@ public class AICommandManager : CommandManager
 
     protected override void Awake()
     {
+        // 表示領域のObject取得
+        SelectCommandObj = GameObject.Find(_aiSelectCommandObjName);
         base.Awake();
 
         // スクリプトを取得
-        _aICharacterManager = GameObject.Find(_aiCharacterManagerObjName).GetComponent<AICharacterManager>();
+        _aiCharacterManager = GameObject.Find(_aiCharacterManagerObjName).GetComponent<AICharacterManager>();
+    }
+
+    private void Start()
+    {
+        // 選択された敵キャラクターを取得
+        SelectCharacter = _aiCharacterManager.SelectCharacter;
 
         // レベルにごとのコマンド表示数を取得
         ShowCommandCheck();
@@ -49,7 +57,6 @@ public class AICommandManager : CommandManager
         CommandIdList.Clear();
         IsYinList.Clear();
 
-
         // 敵のコマンドを決定
         int selectCommandIndex = 0;
         for (int i = 0; i < SelectCommandObjArray.Length; i++)
@@ -57,7 +64,7 @@ public class AICommandManager : CommandManager
             selectCommandIndex = Random.Range(_startCommandRange, _endCommandRange);
             CommandIdList.Add(selectCommandIndex);
 
-            Debug.Log("敵のコマンド：" + selectCommandIndex);
+            //Debug.Log("敵のコマンド：" + selectCommandIndex);
         }
 
         // 気を決定(0なら陰、1なら陽)
@@ -72,57 +79,41 @@ public class AICommandManager : CommandManager
             Debug.Log("敵の陰陽：" + IsYinList[i]);
         }
 
-        for (int i = 0; i < SelectCommandObjArray.Length; i++)
-        {
-            base.SelectCommand(null, i);
-        }
-
-        /*
-        // コマンドを表示する
+        // コマンドの表示
         List<int> showCommandPositionList = ShowPositionDecide(_showCommandNumber);
 
         for (int i = 0; i < showCommandPositionList.Count; i++)
         {
-            int positionNumber = showCommandPositionList[i];
-            SelectCommandImageArray[positionNumber].sprite = SelectCharacter.SelectCommandSprites[_selectCommandIndexArray[positionNumber]];
+            base.SelectCommand(showCommandPositionList[i]);
         }
 
-        // 気を表示する
+        // 気の表示
         List<int> showMindPositionList = ShowPositionDecide(_showMindNumber);
 
         for (int i = 0; i < showMindPositionList.Count; i++)
         {
-            int positionNumber = showMindPositionList[i];
-
-            if (_selectMindArray[i])
-            {
-                MindImageArray[positionNumber].sprite = _yinYanSprites[0];
-                continue;
-            }
-            MindImageArray[positionNumber].sprite = _yinYanSprites[1];
+            base.SelectMind(showMindPositionList[i]);
         }
-        */
-
     }
 
     // AIレベルによって表示する量を変更
     private void ShowCommandCheck()
     {
-        if (_aICharacterManager.AILevel == 1)
+        if (_aiCharacterManager.AILevel == 1)
         {
             _showCommandNumber = 2;
             _showMindNumber = 2;
             return;
         }
 
-        if (_aICharacterManager.AILevel == 2)
+        if (_aiCharacterManager.AILevel == 2)
         {
             _showCommandNumber = 1;
             _showMindNumber = 1;
             return;
         }
 
-        if (_aICharacterManager.AILevel == 3)
+        if (_aiCharacterManager.AILevel == 3)
         {
             _showCommandNumber = 1;
             _showMindNumber = 0;
@@ -142,6 +133,8 @@ public class AICommandManager : CommandManager
             int num = Random.Range(0, _positionIndex.Count);
             _returnPositionIndex.Add(_positionIndex[num]);
             _positionIndex.RemoveAt(num);
+
+            //Debug.Log("位置" + num);
         }
 
         return _returnPositionIndex;
