@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   Name: 
-  TypeId: 3
+  AttributeId: 3
+  CharacterImage: {fileID: 0}
   CommandNames:
   - 
   - 
@@ -22,6 +23,12 @@ MonoBehaviour:
   - 
   - 
   CommandSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  SelectCommandSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

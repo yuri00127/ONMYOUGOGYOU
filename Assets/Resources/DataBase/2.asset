@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Name: 
-  TypeId: 2
+  AttributeId: 2
   CharacterImage: {fileID: 0}
   CommandNames:
   - 

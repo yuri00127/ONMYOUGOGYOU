@@ -9,7 +9,7 @@ public class CommandManager : MonoBehaviour
     private const string _battleManagerObjName = "BattleManager";
 
     // スクリプト
-    private BattleManager _battleManager;
+    public BattleManager _battleManager { get; protected set; }
     public Character SelectCharacter { get; protected set; }
 
     // キャラクターのコマンド
@@ -19,7 +19,7 @@ public class CommandManager : MonoBehaviour
     protected Image[] MindImageArray = new Image[3];                    // 陰陽表示ObjectのImageコンポーネント
 
     // 表示
-    protected GameObject SelectCommandObj;              // 表示領域のObject
+    protected GameObject SelectCommandObj;                              // 表示領域のObject
     [SerializeField] private Sprite[] _yinYangSprites = new Sprite[2];  // 陰陽のSprite
 
     // 選択コマンド
