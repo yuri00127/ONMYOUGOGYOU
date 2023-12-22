@@ -13,7 +13,20 @@ public class OptionButtonManager : Button
     [SerializeField] private GameObject _titleDefaultForcus;
     private bool _isOpenOptionView = false;
 
-    [Header("アイコン")]
+    // ビュー内オブジェクト
+    [SerializeField] private Sprite[] _changePCButtonSprites = new Sprite[2];
+    private const string _changePCButtonObjName = "ChangeKeyBoardAndMouseButton";
+    private Image _changePCButtonImg;
+    [SerializeField] private Sprite[] _changeControllerButtonSprites = new Sprite[2];
+    private const string _changeControllerButtonObjName = "ChangeControllerButton";
+    private Image _changeControllerButtonImg;
+    [SerializeField] private Sprite[] _controllerGuideSprites = new Sprite[2];
+    private const string _controllerGuideObjName = "ControllerGuide";
+    private Image _controllerGuideImg;
+    private bool _isPCChange = true;            // 操作をPCに切り替えた直後
+    private bool _isControllerChange = false;   // 操作をコントローラーに切り替えた直後
+
+    [Header("ボタンアイコン")]
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
     private Image _buttonIcon;
 
@@ -22,7 +35,13 @@ public class OptionButtonManager : Button
 
     public override void Start()
     {
+        // メニューボタンのImageコンポーネントを取得
         _buttonIcon = this.GetComponent<Image>();
+
+        // 操作方法切り替えボタンを取得
+        _controllerGuideImg = _optionView.transform.Find(_controllerGuideObjName).GetComponent<Image>();
+        _changePCButtonImg = _optionView.transform.Find(_changePCButtonObjName).GetComponent<Image>();
+        _changeControllerButtonImg = _optionView.transform.Find(_changeControllerButtonObjName).GetComponent<Image>();
     }
 
     private void Update()
@@ -71,6 +90,42 @@ public class OptionButtonManager : Button
             _buttonIcon.sprite = _sourceImage[0];
 
             return;
+        }
+        
+    }
+
+    // 操作説明をPC版に切り替える
+    public void ChangePCButton()
+    {
+        if (!_isPCChange)
+        {
+            // 操作説明画像を変更
+            _controllerGuideImg.sprite = _controllerGuideSprites[0];
+
+            // 切り替えボタンの画像を変更
+            _changeControllerButtonImg.sprite = _changeControllerButtonSprites[0];
+            _changePCButtonImg.sprite = _changePCButtonSprites[1];
+
+            _isPCChange = true;
+            _isControllerChange = false;
+        }
+        
+    }
+
+    // 操作説明をコントローラー版に切り替える
+    public void ChangeControllerButton()
+    {
+        if (!_isControllerChange)
+        {
+            // 操作説明画像を変更
+            _controllerGuideImg.sprite = _controllerGuideSprites[1];
+
+            // 切り替えボタンの画像を変更
+            _changePCButtonImg.sprite = _changePCButtonSprites[0];
+            _changeControllerButtonImg.sprite = _changeControllerButtonSprites[1];
+
+            _isControllerChange = true;
+            _isPCChange = false;
         }
         
     }

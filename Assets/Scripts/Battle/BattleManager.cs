@@ -331,6 +331,17 @@ public class BattleManager : MonoBehaviour
         // コマンドの順番にダメージを確定
         for (int i = 0; i < damageResult.GetLength(0); i++)
         {
+            // 打ち消しアニメーション
+
+
+            // 比和アニメーション
+
+
+            // 属性アニメーション
+
+
+            yield return wait;
+
             // 敵へのダメージを確定
             _aiHpSlider.value -= damageResult[i, 0];
 

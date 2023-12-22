@@ -12,10 +12,11 @@ public class AICommandManager : CommandManager
     private AICharacterManager _aiCharacterManager;
 
     // 表示
-    private const string _aiSelectCommandObjName = "AICommands";        // 選択したコマンドの表示領域の名前
-    [SerializeField] private Sprite _unknownSprite;                     // 不明なコマンドのSprite
-    private int _showCommandNumber;                                     // レベル別の表示するコマンドの数
-    private int _showMindNumber;                                        // レベル別の表示する気の数
+    private const string _aiSelectCommandObjName = "AICommands";    // 選択したコマンドの表示領域の名前
+    [SerializeField] private Sprite _unknownCommandSprite;          // 不明なコマンドのSprite
+    [SerializeField] private Sprite _unknownMindSprite;             // 不明な気のSprite
+    private int _showCommandNumber;                                 // レベル別の表示するコマンドの数
+    private int _showMindNumber;                                    // レベル別の表示する気の数
 
     // コマンド選択
     private const int _startCommandRange = 0;   // コマンドの範囲の最小値
@@ -49,8 +50,8 @@ public class AICommandManager : CommandManager
         // 全ての表示をリセット
         for (int i = 0; i < SelectCommandObjArray.Length; i++)
         {
-            SelectCommandImageArray[i].sprite = _unknownSprite;
-            MindImageArray[i].sprite = _unknownSprite;
+            SelectCommandImageArray[i].sprite = _unknownCommandSprite;
+            MindImageArray[i].sprite = _unknownMindSprite;
         }
 
         // 選択リストをリセット
@@ -76,7 +77,7 @@ public class AICommandManager : CommandManager
             }
             IsYinList.Add(false);
 
-            Debug.Log("敵の陰陽：" + IsYinList[i]);
+            //Debug.Log("敵の陰陽：" + IsYinList[i]);
         }
 
         // コマンドの表示
