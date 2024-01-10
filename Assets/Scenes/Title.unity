@@ -895,11 +895,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 7f88d356884e09f4e9773c2c9c10d803, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1202,7 +1202,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1183262046}
           m_TargetAssemblyTypeName: GameCloseButton, Assembly-CSharp
-          m_MethodName: Quit
+          m_MethodName: Submit
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1218,7 +1218,55 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1183262046}
           m_TargetAssemblyTypeName: GameCloseButton, Assembly-CSharp
-          m_MethodName: Quit
+          m_MethodName: Submit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1183262046}
+          m_TargetAssemblyTypeName: GameCloseButton, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1183262040}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1183262046}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1183262046}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: Deselect
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1240,6 +1288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58edbfd0d8c61134d819a1bad5af3b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanInput: 1
+  SubmitSE: {fileID: 0}
 --- !u!224 &1210504183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8536744043510798492, guid: 2029e7b8ef4931f47a5c15c84b4bd994, type: 3}
@@ -1561,6 +1611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanInput: 1
+  SubmitSE: {fileID: 8300000, guid: d1c6e773550715141915d6cd65a29c00, type: 3}
   _loadNextScene: {fileID: 1918261874}
 --- !u!114 &1570346231
 MonoBehaviour:
@@ -1591,22 +1642,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1570346230}
-          m_TargetAssemblyTypeName: BattleButton, Assembly-CSharp
-          m_MethodName: Submit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 0
     callback:
       m_PersistentCalls:
@@ -1618,6 +1653,38 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 1570346224}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1570346230}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1570346230}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1743,6 +1810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanInput: 1
+  SubmitSE: {fileID: 8300000, guid: 05df74aeaa3e22141b1c0a82ee747ebd, type: 3}
   _optionView: {fileID: 485808114}
   _optionDefaultForcus: {fileID: 571829362}
   _titleDefaultForcus: {fileID: 1771297500}
@@ -1758,6 +1826,8 @@ MonoBehaviour:
   _sourceImage:
   - {fileID: 21300000, guid: 26b15769d3c405a42b6294145fda9e83, type: 3}
   - {fileID: 21300000, guid: 79452ba41865dfa4d9b08c2c89f7051a, type: 3}
+  SecondSubmitSE: {fileID: 8300000, guid: 034b821c6e67df04889e37ca4a60cadc, type: 3}
+  ControllerChangeSE: {fileID: 8300000, guid: d9e4d05da858c4148a348a213b82a46d, type: 3}
 --- !u!114 &1671955085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1986,6 +2056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanInput: 1
+  SubmitSE: {fileID: 0}
 --- !u!1 &1803501706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,133 +2143,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd31120b57fd87479bad5da24340a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1999136167
-GameObject:
+--- !u!1001 &4165262615167621177
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1999136170}
-  - component: {fileID: 1999136169}
-  m_Layer: 0
-  m_Name: SEManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1999136169
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999136167}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4165262615925210513, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: _beforeObj
+      value: 
+      objectReference: {fileID: 1771297500}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5202123
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39119896
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 63.52522
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalRotation.x
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalRotation.y
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalRotation.z
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1999136170
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999136167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5202123, y: 0.39119896, z: 63.52522}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210515, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165262615925210526, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+      propertyPath: m_Name
+      value: SEManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5408875a384e99f44a82becfc9617634, type: 3}
 --- !u!1001 &4651678864996859161
 PrefabInstance:
   m_ObjectHideFlags: 0

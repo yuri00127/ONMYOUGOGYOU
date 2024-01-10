@@ -32,9 +32,15 @@ public class OptionButtonManager : Button
 
     private const string _assignmentButton = "Menu";
 
+    // Audio
+    [SerializeField] private AudioClip SecondSubmitSE;      // ビューを閉じるSE
+    [SerializeField] private AudioClip ControllerChangeSE;  // 操作説明画像切り替え時のSE
+
 
     public override void Start()
     {
+        base.Start();
+
         // メニューボタンのImageコンポーネントを取得
         _buttonIcon = this.GetComponent<Image>();
 
@@ -67,6 +73,8 @@ public class OptionButtonManager : Button
         // 開く
         if (!_isOpenOptionView)
         {
+            Audio.PlayOneShot(SubmitSE);
+
             // ビューの設定
             _optionView.SetActive(true);
             EventSystem.current.SetSelectedGameObject(_optionDefaultForcus);
@@ -81,6 +89,8 @@ public class OptionButtonManager : Button
         // 閉じる
         if (_isOpenOptionView)
         {
+            Audio.PlayOneShot(SecondSubmitSE);
+
             // ビューの設定
             _optionView.SetActive(false);
             EventSystem.current.SetSelectedGameObject(_titleDefaultForcus);
@@ -99,6 +109,8 @@ public class OptionButtonManager : Button
     {
         if (!_isPCChange)
         {
+            Audio.PlayOneShot(ControllerChangeSE);
+
             // 操作説明画像を変更
             _controllerGuideImg.sprite = _controllerGuideSprites[0];
 
@@ -117,6 +129,8 @@ public class OptionButtonManager : Button
     {
         if (!_isControllerChange)
         {
+            Audio.PlayOneShot(ControllerChangeSE);
+
             // 操作説明画像を変更
             _controllerGuideImg.sprite = _controllerGuideSprites[1];
 

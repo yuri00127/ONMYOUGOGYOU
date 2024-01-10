@@ -9,7 +9,6 @@ public class BattleManager : MonoBehaviour
     private const string _playerCommandManagerObjName = "PlayerCommandManager";
     private const string _aiCommandManagerObjName = "AICommandManager";
     private const string _roundCounterObjName = "RoundCounter";
-    
 
     // スクリプト
     private PlayerCommandManager _playerCommandManager;
@@ -27,6 +26,16 @@ public class BattleManager : MonoBehaviour
     private int _nowRound = 1;                 // 現在のラウンド
     private bool _isFinish = false;            // 勝敗が決定しているか
 
+    // Audio
+    private const string _seManagerObjName = "SEManager";
+    private AudioSource _audio;
+    [SerializeField] private AudioClip _disadbantageAttackSE;
+    [SerializeField] private AudioClip _attackSE;
+    [SerializeField] private AudioClip _advantageousAttackSE;
+    [SerializeField] private AudioClip _harmonySE;      // 比和発生時のSE
+    [SerializeField] private AudioClip _contradictSE;   // 打ち消し発生時のSE
+
+
     private void Awake()
     {
         // スクリプト取得
@@ -41,6 +50,8 @@ public class BattleManager : MonoBehaviour
         // HPの初期設定
         _playerHpSlider.value = 0;
         _aiHpSlider.value = 0;
+
+        _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -205,12 +216,15 @@ public class BattleManager : MonoBehaviour
     /// ダメージの量を取得
     /// [n,0] 敵へのダメージ量
     /// [n,1] 自分へのダメージ量
+    /// [n,2] 属性相性(-1:不利,0:普通,1:有利)
+    /// [n,3] 打ち消しの有無(0:あり,1:なし)
+    /// [n,4] 比和の有無(0:あり,1:なし)
     /// </summary>
     /// <param name="attributeResult">[n,0]相性、[n,1]比和</param>
     /// <returns>コマンドごとのダメージ量の配列</returns>
     private int[,] DamageCheck(int[,] attributeResult)
     {
-        int[,] result = new int[3,2];               // 確定したダメージの配列
+        int[,] result = new int[3,5];               // 確定したダメージの配列
         int[] damaged = new int[] { 15, 5, 10 };    // 有利、不利、通常のダメージ量
         bool isContradict = false;                  // 攻撃打ち消し発生の有無
 
@@ -220,13 +234,20 @@ public class BattleManager : MonoBehaviour
             // 攻撃の打ち消しが発生しているかをチェック
             isContradict = IsContradict(_playerCommandManager.IsYinList[i], _aiCommandManager.IsYinList[i]);
 
+            result[i, 3] = 0;
+
+            if (isContradict)
+            {
+                result[i, 3] = 1;
+            }
+
             // プレイヤーが有利な時
             if (attributeResult[i,0] == 1)
-            {
-                // 敵へのダメージ
-                result[i, 0] = damaged[0];
+            {   
+                result[i, 2] = 1;
 
-                // 自分へのダメージ
+                // ダメージ
+                result[i, 0] = damaged[0];
                 result[i, 1] = damaged[1];
 
                 // 打ち消し発生時
@@ -241,10 +262,10 @@ public class BattleManager : MonoBehaviour
             // プレイヤーが不利な時
             if (attributeResult[i,0] == -1)
             {
-                // 敵へのダメージ
-                result[i, 0] = damaged[1];
+                result[i, 2] = -1;
 
-                // 自分へのダメージ
+                // ダメージ
+                result[i, 0] = damaged[1];
                 result[i,1] = damaged[0];
 
                 continue;
@@ -253,10 +274,10 @@ public class BattleManager : MonoBehaviour
             // 相性がないとき
             if (attributeResult[i,0] == 0)
             {
-                // 敵へのダメージ
-                result[i, 0] = damaged[2];
+                result[i, 2] = 0;
 
-                // 自分へのダメージ
+                // ダメージ
+                result[i, 0] = damaged[2];
                 result[i, 1] = damaged[2];
 
                 // 打ち消し発生時
@@ -272,16 +293,20 @@ public class BattleManager : MonoBehaviour
         // 比和の処理(ダメージを1.5倍にする)
         for (int i = 0; i < result.GetLength(0); i++)
         {
+            result[i, 4] = 0;
+
             // 自コマンド
             if (attributeResult[i, 1] == 1)
             {
                 result[i, 0] = (int)(result[i, 0] * 1.5);
+                result[i, 4] = 1;
             }
 
             // 相手コマンド
             if (attributeResult[i, 1] == -1)
             {
                 result[i, 1] = (int)(result[i, 1] * 1.5);
+                result[i, 4] = 1;
             }
 
             //Debug.Log(string.Format("{0}番目のコマンド ", i + 1) + "相手ダメージ:" + result[i, 0]);
@@ -332,12 +357,34 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < damageResult.GetLength(0); i++)
         {
             // 打ち消しアニメーション
+            if (damageResult[i, 3] == 1)
+            {
 
+            }
 
             // 比和アニメーション
+            if (damageResult[i, 4] == 1)
+            {
+
+            }
 
 
             // 属性アニメーション
+            // ダメージごとのSE
+            if (damageResult[i, 2] == 1)
+            {
+                // 有利
+            }
+
+            if (damageResult[i, 2] == 0)
+            {
+                // 普通
+            }
+
+            if (damageResult[i, 2] == -1)
+            {
+                // 不利
+            }
 
 
             yield return wait;
@@ -381,6 +428,8 @@ public class BattleManager : MonoBehaviour
         _aiCommandManager.CommandIdList.Clear();
         _aiCommandManager.IsYinList.Clear();
         _aiCommandManager.SetAICommand();
+
+        //yield return new WaitForSeconds(0.2f);
 
         // ラウンド表示を更新
         _nowRound++;

@@ -23,14 +23,14 @@ MonoBehaviour:
   - 
   - 
   CommandSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8f90b93a48feb8a44ab3d180478d1956, type: 3}
+  - {fileID: 21300000, guid: 4fb8fa9f0e239094ca81b3c96082f2d9, type: 3}
+  - {fileID: 21300000, guid: 85083c0e56bb858499fc46ef22d5ef93, type: 3}
+  - {fileID: 21300000, guid: 61e8232c934d15342ad2cf445e3590ab, type: 3}
+  - {fileID: 21300000, guid: 49d90fa701bf44246b18e1277c615cd1, type: 3}
   SelectCommandSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 224a04521c0c1fc469aac2ed057a8659, type: 3}
+  - {fileID: 21300000, guid: 55c829d5673b852438d46f1d7847b236, type: 3}
+  - {fileID: 21300000, guid: b0b4aa6a9ecd2df4eadc5e4f7920e520, type: 3}
+  - {fileID: 21300000, guid: 428557fa490ba44418c9b6bc417970e2, type: 3}
+  - {fileID: 21300000, guid: f0a3e1e6d2cfd1347a4885c8c74e10a9, type: 3}

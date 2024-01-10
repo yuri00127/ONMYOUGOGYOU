@@ -27,6 +27,14 @@ public class PlayerCommandManager : CommandManager
     public bool CanInput = true;                 // 入力を可能とする制御
     private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
 
+    // Audio
+    private const string _seManagerObjName = "SEManager";
+    private AudioSource _audio;
+    [SerializeField] private AudioClip _submitSE;
+    [SerializeField] private AudioClip _submitFinishSE;
+    [SerializeField] private AudioClip _cancelSE;
+
+
 
     protected override void Awake()
     {
@@ -43,6 +51,8 @@ public class PlayerCommandManager : CommandManager
         {
             _commandButtonImageArray[i] = _commandButtonArray[0].GetComponent<Image>();
         }
+
+        _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -75,6 +85,8 @@ public class PlayerCommandManager : CommandManager
         // コマンドが上限まで選択されていなければ
         if (!IsAllSelect)
         {
+            _audio.PlayOneShot(_submitSE);
+
             // 選択されたコマンドの情報をリストに登録
             CommandIdList.Add(selectCommandIndex - 1);
             IsYinList.Add(_yinYangChangeButton.IsYin);
@@ -91,7 +103,7 @@ public class PlayerCommandManager : CommandManager
         // 攻撃開始
         if (SelectingCommandSequence >= _maxSelectingCommandSequence)
         {
-            //Debug.Log("攻撃開始");
+            _audio.PlayOneShot(_submitFinishSE);
 
             CanInput = false;
             IsAllSelect = true;
@@ -108,6 +120,8 @@ public class PlayerCommandManager : CommandManager
 
         if (SelectingCommandSequence >= 0)
         {
+            _audio.PlayOneShot(_cancelSE);
+
             // コマンド選択数を減らす
             SelectingCommandSequence--;
 

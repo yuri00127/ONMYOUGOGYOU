@@ -23,12 +23,14 @@ public class BattleButton : Button
     // キャラクター選択画面へ遷移
     public override void Submit()
     {
+        // 初回押下時のみ処理する
         if (!_isLoading)
         {
+            Audio.PlayOneShot(SubmitSE);
             StartCoroutine(_loadNextScene.LoadScene(_nextScene));
-        }
 
-        _isLoading = true;
+            _isLoading = true;
+        }
     }
 
 }

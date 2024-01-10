@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameCloseButton : MonoBehaviour
+public class GameCloseButton : Button
 {
-  
-    public void Quit()
+    public override void Submit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -13,5 +12,5 @@ public class GameCloseButton : MonoBehaviour
         Application.Quit();
 #endif
     }
-    
+
 }

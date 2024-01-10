@@ -18,23 +18,31 @@ public class Button : MonoBehaviour
     public bool CanInput = true;
     private const float _inputWait = 0.1f;
 
+    // Audio
+    private const string _seObjName = "SEManager";
+    protected AudioSource Audio;
+    [SerializeField] protected AudioClip SubmitSE;  // ボタン押下時のSE
+
 
     public virtual void Start()
     {
         // Animatorコンポーネント取得
         Anim = this.GetComponent<Animator>();
+
+        // AudioSourceコンポーネント取得
+        Audio = GameObject.Find(_seObjName).GetComponent<AudioSource>();
     }
 
     // フォーカス時の処理
     public virtual void Select()
     {
-
+        
     }
 
     // フォーカスが外れた時の処理
     public virtual void Deselect()
     {
-
+        
     }
 
     // 選択した時の処理
