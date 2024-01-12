@@ -33,6 +33,7 @@ public class YinYangChangeButton : Button
     public override void Submit()
     {
         CanInput = false;
+        Audio.PlayOneShot(SubmitSE);
 
         if (IsYin)
         {

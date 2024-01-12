@@ -4174,7 +4174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanInput: 1
-  SubmitSE: {fileID: 0}
+  SubmitSE: {fileID: 8300000, guid: d9e4d05da858c4148a348a213b82a46d, type: 3}
 --- !u!95 &885176859
 Animator:
   serializedVersion: 3
@@ -5619,11 +5619,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900e920ef9d74b3478ca6b5589e8a1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disadbantageAttackSE: {fileID: 0}
-  _attackSE: {fileID: 0}
-  _advantageousAttackSE: {fileID: 0}
-  _harmonySE: {fileID: 0}
-  _contradictSE: {fileID: 0}
+  _disadbantageAttackSE: {fileID: 8300000, guid: cf30862c728d6694f8265620c22ae9ef, type: 3}
+  _attackSE: {fileID: 8300000, guid: e10a40ec9a0c200439b581604e5450c3, type: 3}
+  _advantageousAttackSE: {fileID: 8300000, guid: 6f4d2b2a532ad5b47ba20d5038731f1c, type: 3}
+  _harmonySE: {fileID: 8300000, guid: b2936bc1e3b699847affc4f73cfa5510, type: 3}
+  _contradictSE: {fileID: 8300000, guid: 795a5bbe2cffb594c8b928c88585c831, type: 3}
+  _waterAttackParticle: {fileID: 133813231002817845, guid: 539b9297976eb9444b6017d87175fad8, type: 3}
+  _treeAttackParticle: {fileID: 8630463584405363854, guid: 859ec3a14042b944f877bde1581a2c13, type: 3}
+  _fireAttackParticle: {fileID: 4700183917218928242, guid: 7974077dbcb4732439fc2e21d4060fe3, type: 3}
+  _soilAttackParticle: {fileID: 1842431290459884672, guid: c72bbf013f04c594b9bc3dc54fd691b1, type: 3}
+  _goldAttackParticle: {fileID: 7898199528025544019, guid: 03da641c2004ec047aabe6cb71268bcc, type: 3}
 --- !u!4 &1713596765
 Transform:
   m_ObjectHideFlags: 0

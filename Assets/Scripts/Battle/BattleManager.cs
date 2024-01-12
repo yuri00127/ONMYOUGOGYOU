@@ -35,6 +35,17 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private AudioClip _harmonySE;      // 比和発生時のSE
     [SerializeField] private AudioClip _contradictSE;   // 打ち消し発生時のSE
 
+    // Animation
+    [SerializeField] private ParticleSystem _waterAttackParticle;
+    [SerializeField] private ParticleSystem _treeAttackParticle;
+    [SerializeField] private ParticleSystem _fireAttackParticle;
+    [SerializeField] private ParticleSystem _soilAttackParticle;
+    [SerializeField] private ParticleSystem _goldAttackParticle;
+    private Vector3 _playerPos;
+    private const string _playerObjName = "PlayerCharacter";
+    private Vector3 _aiPos;
+    private const string _aiObjName = "AICharacter";
+
 
     private void Awake()
     {
@@ -52,6 +63,9 @@ public class BattleManager : MonoBehaviour
         _aiHpSlider.value = 0;
 
         _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
+
+        _playerPos = GameObject.Find(_playerObjName).transform.position;
+        _aiPos = GameObject.Find(_aiObjName).transform.position;
     }
 
     // Start is called before the first frame update
@@ -84,35 +98,18 @@ public class BattleManager : MonoBehaviour
         _isFirstAnimation = true;   // アニメーション
         _playerHpSlider.value = _maxHp;
         _aiHpSlider.value = _maxHp;
-
-        // ラウンドを表示する
-
     }
 
-    // コマンドバトルを行う
+    /// <summary>
+    /// コマンドバトルを行う
+    /// </summary>
     public void Battle()
-    {
-        // バトル結果取得
-        BattleResult();
-
-        // お互いのHPが残っていれば、次のラウンドへ
-        if (!_isFinish)
-        {
-            StartCoroutine(NextRound());
-        }
-
-    }
-
-    // コマンドバトルの結果を取得
-    private void BattleResult()
     {
         // 属性の判定
         int[,] attributeResult = AttributeCheck();
 
         // ダメージの決定
         int[,] damageResult = DamageCheck(attributeResult);
-
-        // アニメーション
 
         // ダメージを反映
         StartCoroutine(DamageResult(damageResult));
@@ -217,14 +214,15 @@ public class BattleManager : MonoBehaviour
     /// [n,0] 敵へのダメージ量
     /// [n,1] 自分へのダメージ量
     /// [n,2] 属性相性(-1:不利,0:普通,1:有利)
-    /// [n,3] 打ち消しの有無(0:あり,1:なし)
-    /// [n,4] 比和の有無(0:あり,1:なし)
+    /// [n,3] 打ち消しの有無(0:なし,1:あり)
+    /// [n,4] 比和の有無(0:なし,1:あり)
+    /// [n,5] 敵の比和の有無(0:なし,1:あり)
     /// </summary>
     /// <param name="attributeResult">[n,0]相性、[n,1]比和</param>
     /// <returns>コマンドごとのダメージ量の配列</returns>
     private int[,] DamageCheck(int[,] attributeResult)
     {
-        int[,] result = new int[3,5];               // 確定したダメージの配列
+        int[,] result = new int[3,6];               // 確定したダメージの配列
         int[] damaged = new int[] { 15, 5, 10 };    // 有利、不利、通常のダメージ量
         bool isContradict = false;                  // 攻撃打ち消し発生の有無
 
@@ -294,6 +292,7 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < result.GetLength(0); i++)
         {
             result[i, 4] = 0;
+            result[i, 5] = 0;
 
             // 自コマンド
             if (attributeResult[i, 1] == 1)
@@ -306,7 +305,7 @@ public class BattleManager : MonoBehaviour
             if (attributeResult[i, 1] == -1)
             {
                 result[i, 1] = (int)(result[i, 1] * 1.5);
-                result[i, 4] = 1;
+                result[i, 5] = 1;
             }
 
             //Debug.Log(string.Format("{0}番目のコマンド ", i + 1) + "相手ダメージ:" + result[i, 0]);
@@ -351,46 +350,64 @@ public class BattleManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator DamageResult(int[,] damageResult)
     {
-        var wait = new WaitForSeconds(1f);
+        var wait = new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
         // コマンドの順番にダメージを確定
         for (int i = 0; i < damageResult.GetLength(0); i++)
         {
-            // 打ち消しアニメーション
-            if (damageResult[i, 3] == 1)
-            {
-
-            }
-
-            // 比和アニメーション
-            if (damageResult[i, 4] == 1)
-            {
-
-            }
-
-
-            // 属性アニメーション
-            // ダメージごとのSE
+            // 攻撃アニメーション
             if (damageResult[i, 2] == 1)
             {
                 // 有利
+                _audio.PlayOneShot(_advantageousAttackSE);
             }
 
             if (damageResult[i, 2] == 0)
             {
                 // 普通
+                _audio.PlayOneShot(_attackSE);
             }
 
             if (damageResult[i, 2] == -1)
             {
                 // 不利
+                _audio.PlayOneShot(_disadbantageAttackSE);
             }
 
+            // 打ち消しアニメーション
+            bool isContradict = false;
+            if (damageResult[i, 3] == 1)
+            {
+                _audio.PlayOneShot(_contradictSE);
+                isContradict = true;
+            }
 
-            yield return wait;
+            // 比和アニメーション
+            bool isPlayerHarmony = false;
+            if (damageResult[i, 4] == 1)
+            {
+                _audio.PlayOneShot(_harmonySE);
+                isPlayerHarmony = true;
+            }
+
+            bool isAiHarmony = false;
+            if (!isContradict && damageResult[i, 5] == 1)
+            {
+                _audio.PlayOneShot(_harmonySE);
+                isAiHarmony = true;
+            }
+
+            AttackAnimation(_playerCommandManager.CommandIdList[i] + 1, _aiCommandManager.CommandIdList[i] + 1,
+                isContradict, isPlayerHarmony, isAiHarmony);
 
             // 敵へのダメージを確定
             _aiHpSlider.value -= damageResult[i, 0];
+
+            // 自分へのダメージを確定
+            _playerHpSlider.value -= damageResult[i, 1];
+
+            yield return wait;
 
             // 勝利
             if (_aiHpSlider.value <= 0)
@@ -399,8 +416,6 @@ public class BattleManager : MonoBehaviour
                 StartCoroutine(BattleFinish(true));
                 break;
             }
-            // 自分へのダメージを確定
-            _playerHpSlider.value -= damageResult[i, 1];
 
             // 敗北
             if (_playerHpSlider.value <= 0)
@@ -410,14 +425,90 @@ public class BattleManager : MonoBehaviour
                 break;
             }
 
-            yield return wait;
+            //yield return wait;
         }
 
+        // お互いのHPが残っていれば、次のラウンドへ
+        if (!_isFinish)
+        {
+            StartCoroutine(NextRound());
+        }
+    }
+
+    private void AttackAnimation(int playerCommandAttributeId, int aiCommandAttributeId, bool isContradict, bool isPlayerHarmony, bool isAiHarmony)
+    {
+        ParticleSystem playerDamageParticle = null;
+        ParticleSystem aiDamageParticle = null;
+
+        // プレイヤーへの攻撃
+        switch (playerCommandAttributeId)
+        {
+            case 1:
+                aiDamageParticle = Instantiate(_waterAttackParticle, _aiPos, Quaternion.identity);
+                break;
+            case 2:
+                aiDamageParticle = Instantiate(_treeAttackParticle, _aiPos, Quaternion.identity);
+                break;
+            case 3:
+                aiDamageParticle = Instantiate(_fireAttackParticle, _aiPos, Quaternion.identity);
+                break;
+            case 4:
+                aiDamageParticle = Instantiate(_soilAttackParticle, _aiPos, Quaternion.identity);
+                break;
+            case 5:
+                aiDamageParticle = Instantiate(_goldAttackParticle, _aiPos, Quaternion.identity);
+                break;
+            default:
+                break;
+        }
+
+        // 比和
+        if (isPlayerHarmony)
+        {
+            aiDamageParticle.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        }
+
+        aiDamageParticle.Play();
+        Destroy(aiDamageParticle.gameObject, 0.5f);
+
+        // プレイヤーへの攻撃
+        if (!isContradict)
+        {
+            switch (aiCommandAttributeId)
+            {
+                case 1:
+                    playerDamageParticle = Instantiate(_waterAttackParticle, _playerPos, Quaternion.identity);
+                    break;
+                case 2:
+                    playerDamageParticle = Instantiate(_treeAttackParticle, _playerPos, Quaternion.identity);
+                    break;
+                case 3:
+                    playerDamageParticle = Instantiate(_fireAttackParticle, _playerPos, Quaternion.identity);
+                    break;
+                case 4:
+                    playerDamageParticle = Instantiate(_soilAttackParticle, _playerPos, Quaternion.identity);
+                    break;
+                case 5:
+                    playerDamageParticle = Instantiate(_goldAttackParticle, _playerPos, Quaternion.identity);
+                    break;
+                default:
+                    break;
+            }
+
+            // 比和
+            if (isAiHarmony)
+            {
+                playerDamageParticle.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            }
+
+            playerDamageParticle.Play();
+            Destroy(playerDamageParticle.gameObject, 0.5f);
+        }
     }
 
     private IEnumerator NextRound()
     {
-        yield return new WaitForSeconds(3f);
+        //yield return new WaitForSeconds(3f);
 
         // コマンド初期化
         _playerCommandManager.SelectingCommandSequence = 0;
@@ -429,7 +520,7 @@ public class BattleManager : MonoBehaviour
         _aiCommandManager.IsYinList.Clear();
         _aiCommandManager.SetAICommand();
 
-        //yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
 
         // ラウンド表示を更新
         _nowRound++;
