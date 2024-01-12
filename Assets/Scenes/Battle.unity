@@ -5624,6 +5624,7 @@ MonoBehaviour:
   _advantageousAttackSE: {fileID: 8300000, guid: 6f4d2b2a532ad5b47ba20d5038731f1c, type: 3}
   _harmonySE: {fileID: 8300000, guid: b2936bc1e3b699847affc4f73cfa5510, type: 3}
   _contradictSE: {fileID: 8300000, guid: 795a5bbe2cffb594c8b928c88585c831, type: 3}
+  _battleFinishJingle: {fileID: 8300000, guid: 717c140db4ed7bf4d9ee58354343440a, type: 3}
   _waterAttackParticle: {fileID: 133813231002817845, guid: 539b9297976eb9444b6017d87175fad8, type: 3}
   _treeAttackParticle: {fileID: 8630463584405363854, guid: 859ec3a14042b944f877bde1581a2c13, type: 3}
   _fireAttackParticle: {fileID: 4700183917218928242, guid: 7974077dbcb4732439fc2e21d4060fe3, type: 3}

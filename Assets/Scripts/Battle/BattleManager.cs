@@ -28,12 +28,15 @@ public class BattleManager : MonoBehaviour
 
     // Audio
     private const string _seManagerObjName = "SEManager";
-    private AudioSource _audio;
+    private const string _bgmManagerObjName = "BGMManager";
+    private AudioSource _seAudio;
+    private AudioSource _bgmAudio;
     [SerializeField] private AudioClip _disadbantageAttackSE;
     [SerializeField] private AudioClip _attackSE;
     [SerializeField] private AudioClip _advantageousAttackSE;
-    [SerializeField] private AudioClip _harmonySE;      // 比和発生時のSE
-    [SerializeField] private AudioClip _contradictSE;   // 打ち消し発生時のSE
+    [SerializeField] private AudioClip _harmonySE;             // 比和発生時のSE
+    [SerializeField] private AudioClip _contradictSE;          // 打ち消し発生時のSE
+    [SerializeField] private AudioClip _battleFinishJingle;    // バトル終了時のジングル
 
     // Animation
     [SerializeField] private ParticleSystem _waterAttackParticle;
@@ -62,7 +65,8 @@ public class BattleManager : MonoBehaviour
         _playerHpSlider.value = 0;
         _aiHpSlider.value = 0;
 
-        _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
+        _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
+        _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
 
         _playerPos = GameObject.Find(_playerObjName).transform.position;
         _aiPos = GameObject.Find(_aiObjName).transform.position;
@@ -360,26 +364,26 @@ public class BattleManager : MonoBehaviour
             if (damageResult[i, 2] == 1)
             {
                 // 有利
-                _audio.PlayOneShot(_advantageousAttackSE);
+                _seAudio.PlayOneShot(_advantageousAttackSE);
             }
 
             if (damageResult[i, 2] == 0)
             {
                 // 普通
-                _audio.PlayOneShot(_attackSE);
+                _seAudio.PlayOneShot(_attackSE);
             }
 
             if (damageResult[i, 2] == -1)
             {
                 // 不利
-                _audio.PlayOneShot(_disadbantageAttackSE);
+                _seAudio.PlayOneShot(_disadbantageAttackSE);
             }
 
             // 打ち消しアニメーション
             bool isContradict = false;
             if (damageResult[i, 3] == 1)
             {
-                _audio.PlayOneShot(_contradictSE);
+                _seAudio.PlayOneShot(_contradictSE);
                 isContradict = true;
             }
 
@@ -387,14 +391,14 @@ public class BattleManager : MonoBehaviour
             bool isPlayerHarmony = false;
             if (damageResult[i, 4] == 1)
             {
-                _audio.PlayOneShot(_harmonySE);
+                _seAudio.PlayOneShot(_harmonySE);
                 isPlayerHarmony = true;
             }
 
             bool isAiHarmony = false;
             if (!isContradict && damageResult[i, 5] == 1)
             {
-                _audio.PlayOneShot(_harmonySE);
+                _seAudio.PlayOneShot(_harmonySE);
                 isAiHarmony = true;
             }
 
@@ -532,6 +536,9 @@ public class BattleManager : MonoBehaviour
     private IEnumerator BattleFinish(bool playerWin)
     {
         Debug.Log("バトル終了");
+
+        _bgmAudio.clip = _battleFinishJingle;
+        _bgmAudio.Play();
 
         if (playerWin) { Debug.Log("プレイヤーの勝ち"); }
         if (!playerWin) { Debug.Log("敵の勝ち"); }
