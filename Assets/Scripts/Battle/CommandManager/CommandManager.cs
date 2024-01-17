@@ -61,7 +61,7 @@ public class CommandManager : MonoBehaviour
     {
         // 選択したコマンドの画像をセット
         int spriteIndex = CommandIdList[selectingCommandSequence];
-        SelectCommandImageArray[selectingCommandSequence].sprite = SelectCharacter.CommandSprites[spriteIndex];
+        SelectCommandImageArray[selectingCommandSequence].sprite = SelectCharacter.SelectCommandSprites[spriteIndex];
     }
 
     /// <summary>

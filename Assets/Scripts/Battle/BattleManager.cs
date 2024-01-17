@@ -255,7 +255,7 @@ public class BattleManager : MonoBehaviour
                 // 打ち消し発生時
                 if (isContradict)
                 {
-                    result[i, 1] = 0;
+                    result[i, 1] /= 2;
                 }
 
                 continue;
@@ -269,6 +269,9 @@ public class BattleManager : MonoBehaviour
                 // ダメージ
                 result[i, 0] = damaged[1];
                 result[i,1] = damaged[0];
+
+                // 打ち消しフラグを消す
+                result[i, 3] = 0;
 
                 continue;
             }
@@ -285,7 +288,7 @@ public class BattleManager : MonoBehaviour
                 // 打ち消し発生時
                 if (isContradict)
                 {
-                    result[i, 1] = 0;
+                    result[i, 1] /= 2;
                 }
 
                 continue;
@@ -522,7 +525,7 @@ public class BattleManager : MonoBehaviour
         _playerCommandManager.IsYinList.Clear();
         _aiCommandManager.CommandIdList.Clear();
         _aiCommandManager.IsYinList.Clear();
-        _aiCommandManager.SetAICommand();
+        _aiCommandManager.ShowAICommand();
 
         yield return new WaitForSeconds(0.5f);
 

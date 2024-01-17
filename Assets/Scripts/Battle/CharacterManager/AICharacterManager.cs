@@ -22,17 +22,16 @@ public class AICharacterManager : CharacterManager
         base.Awake();
 
         // 選択された敵キャラクターを取得
+        //int aiCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SaveAICharacterId, 1);
+        //SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
+        // 仮設定 
         int aiCharacterId = 1;
         SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
-        /*本番用
-        int aiCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SaveAICharacterId, 1);
-        */
 
         // 選択された敵の強さを取得
+        //AILevel = PlayerPrefs.GetInt(SelectCharacterData.SaveAILevel, 1);
+        // 仮設定 
         AILevel = 1;
-        /*本番用
-        _aiLevel = PlayerPrefs.GetInt(SelectCharacterData.SaveAILevel, 1);
-        */
 
     }
 

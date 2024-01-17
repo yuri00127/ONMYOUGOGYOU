@@ -1,46 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BGMController : VolumeController
 {
-    private AudioSource _BGMAudio;
-
-    private bool _isFirst = true;
     private const string _bgmManager = "BGMManager";
 
-
-    public override void Submit()
+    protected override void Awake()
     {
-        // ‰‰ñİ’è‚Ì‚İABGM‚ÌAudioSource‚ğæ“¾
-        if (_isFirst)
-        {
-            _BGMAudio = GameObject.Find(_bgmManager).GetComponent<AudioSource>();
-        }
+        Audio = GameObject.Find(_bgmManager).GetComponent<AudioSource>();
+        SliderName = BGMSliderName;
 
-        base.Submit();
-
-        _isFirst = false;
+        base.Awake();
     }
 
-    public override void Cancel()
+    protected override void Update()
     {
-        base.Cancel();
-    }
-
-    public override void VolumeUp()
-    {
-        // ‰¹—Ê‚ğã‚°‚é
-        _BGMAudio.volume += VolumeUnit;
-
-        base.VolumeUp();
-    }
-
-    public override void VolumeDown()
-    {
-        // ‰¹—Ê‚ğ‰º‚°‚é
-        _BGMAudio.volume -= VolumeUnit;
-
-        base.VolumeDown();
+        base.Update();
     }
 }
