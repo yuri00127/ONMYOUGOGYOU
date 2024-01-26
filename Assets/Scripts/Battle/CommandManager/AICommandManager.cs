@@ -75,10 +75,17 @@ public class AICommandManager : CommandManager
 
         // 敵のコマンドを決定
         int selectCommandIndex = 0;
+
         for (int i = 0; i < SelectCommandObjArray.Length; i++)
         {
             selectCommandIndex = SetAICommand(_aiCharacterManager.AILevel);
             CommandIdList.Add(selectCommandIndex);
+
+            /* デバッグ用 
+            if (i == 0) { CommandIdList.Add(4); }
+            if (i == 1) { CommandIdList.Add(3); }
+            if (i == 2) { CommandIdList.Add(4); }
+            */
 
             //Debug.Log("敵のコマンド：" + selectCommandIndex);
         }
@@ -218,7 +225,6 @@ public class AICommandManager : CommandManager
         {
             if (randomPoint < commandArray[i])
             {
-                Debug.Log("AI：" + i);
                 return i;
             }
 

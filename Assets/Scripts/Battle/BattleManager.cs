@@ -26,6 +26,12 @@ public class BattleManager : MonoBehaviour
     private int _nowRound = 1;                 // 現在のラウンド
     private bool _isFinish = false;            // 勝敗が決定しているか
 
+    // ダメージ計算
+    private int _damageBase = 5;            // 基礎ダメージ量
+    private int _damageMagnification = 2;   // 有利(*)、不利(/)時の倍率
+    private int _harmonyDamageUpValue = 3;  // 比和のダメージUP量
+    private int _damageUpValue = 5;         // 相生によるダメージUP量
+
     // Audio
     private const string _seManagerObjName = "SEManager";
     private const string _bgmManagerObjName = "BGMManager";
@@ -116,21 +122,22 @@ public class BattleManager : MonoBehaviour
         int[,] damageResult = DamageCheck(attributeResult);
 
         // ダメージを反映
-        StartCoroutine(DamageResult(damageResult));
+        StartCoroutine(DamageResult(attributeResult, damageResult));
 
     }
 
     /// <summary>
     /// コマンド属性の相性判定
     /// [n,0] 相性判定の結果(1:有利、-1:不利、0:どちらでもない)
-    /// [n,1] 比和の有無(0:無、1:自分、-1:敵)
+    /// [n,1] プレイヤーの比和判定(0:無、1:有)
+    /// [n,2] 敵の比和判定(0:無、1:有)
+    /// [n,3] ダメージ増幅判定(0:無、1:有)
     /// </summary>
     /// <returns>判定結果の配列</returns>
     private int[,] AttributeCheck()
     {
-        int[,] result = new int[3,2];
-        int playerAdvantageous = 0;
-        int playerDisadvantage = 0;
+        int[,] result = new int[3,4];   // 判定結果の配列
+        int beforeAiCommandId = -1;      // 直前の敵のコマンド
 
         // コマンドの順番ごとに結果を配列に格納
         for (int i = 0; i < result.GetLength(0); i++)
@@ -139,26 +146,37 @@ public class BattleManager : MonoBehaviour
                 
             // プレイヤーのコマンド属性の有利・不利を取得
             var attributeCompatibility = AttributeCompativilityCheck(playerCommandAttributeId);
-            playerAdvantageous = attributeCompatibility.playerAdvantageous;
-            playerDisadvantage = attributeCompatibility.playerDisadvantage;
+            int playerAdvantageous = attributeCompatibility.playerAdvantageous;
+            int playerDisadvantage = attributeCompatibility.playerDisadvantage;
+            int playerDamageUp = attributeCompatibility.playerDamageUp;
 
             // 敵コマンドの属性を取得
             int aiCommandAttributeId = _aiCommandManager.CommandIdList[i] + 1;
 
             // 比和のチェック
             result[i, 1] = 0;
+            result[i, 2] = 0;
 
-            // キャラクターとコマンドの属性が一致しているかチェック
             if (IsHarmony(_playerCommandManager.SelectCharacter.AttributeId, playerCommandAttributeId))
             {
                 result[i, 1] = 1;
             }
             
-            // 敵キャラクターと敵コマンドの属性が一致しているかチェック
             if (IsHarmony(_aiCommandManager.SelectCharacter.AttributeId, aiCommandAttributeId))
             {
-                result[i, 1] = -1;
+                result[i, 2] = 1;
             }
+
+            // ダメージ増幅判定
+            result[i, 3] = 0;
+
+            if (i >= 1 && beforeAiCommandId == playerDamageUp)
+            {
+                result[i, 3] = 1;
+            }
+
+            // 敵のコマンドを記録
+            beforeAiCommandId = aiCommandAttributeId;
 
             // プレイヤーが有利な時
             if (aiCommandAttributeId == playerAdvantageous)
@@ -176,7 +194,6 @@ public class BattleManager : MonoBehaviour
 
             // 相性が存在しないとき
             result[i, 0] = 0;
-            
         }
 
         return result;
@@ -187,136 +204,102 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     /// <param name="playerAttributeId">プレイヤーの属性のID</param>
     /// <returns>プレイヤーが有利をとれる属性,プレイヤーが不利となる属性</returns>
-    private (int playerAdvantageous, int playerDisadvantage) AttributeCompativilityCheck(int playerCommandAttributeId)
+    private (int playerAdvantageous, int playerDisadvantage, int playerDamageUp) AttributeCompativilityCheck(int playerCommandAttributeId)
     {
         switch (playerCommandAttributeId)
         {
             // 水
             case 1:
-                return (2, 4);
+                return (3, 4, 5);
             // 木
             case 2:
-                return (3, 5);
+                return (4, 5, 1);
             // 火
             case 3:
-                return (4, 1);
+                return (5, 1, 2);
             // 土
             case 4:
-                return (5, 2);
+                return (1, 2, 3);
             // 金
             case 5:
-                return (1, 3);
+                return (2, 3, 4);
             // デフォルト(絶対に通らない)
             default:
                 Debug.Log("処理ミス");
-                return (1, 1);
+                return (1, 1, 1);
         }
     }
 
     /// <summary>
     /// ダメージの量を取得
     /// [n,0] 敵へのダメージ量
-    /// [n,1] 自分へのダメージ量
-    /// [n,2] 属性相性(-1:不利,0:普通,1:有利)
-    /// [n,3] 打ち消しの有無(0:なし,1:あり)
-    /// [n,4] 比和の有無(0:なし,1:あり)
-    /// [n,5] 敵の比和の有無(0:なし,1:あり)
+    /// [n,1] プレイヤーへのダメージ量
+    /// [n,2] 打ち消しの有無(0:なし,1:あり)
     /// </summary>
-    /// <param name="attributeResult">[n,0]相性、[n,1]比和</param>
+    /// <param name="attributeResult">[n,0]相性、[n,1]プレイヤー比和、[n,2]敵比和、[n,3]増幅</param>
     /// <returns>コマンドごとのダメージ量の配列</returns>
     private int[,] DamageCheck(int[,] attributeResult)
     {
-        int[,] result = new int[3,6];               // 確定したダメージの配列
-        int[] damaged = new int[] { 15, 5, 10 };    // 有利、不利、通常のダメージ量
-        bool isContradict = false;                  // 攻撃打ち消し発生の有無
+        int[,] result = new int[3,3];            // 確定したダメージの配列
 
         // コマンドの順番ごとに結果を配列に格納
         for (int i = 0; i < result.GetLength(0); i++)
         {
-            // 攻撃の打ち消しが発生しているかをチェック
-            isContradict = IsContradict(_playerCommandManager.IsYinList[i], _aiCommandManager.IsYinList[i]);
+            int sumPlayerDamageBase = _damageBase;   // プレイヤーが与える基礎ダメージの合計
+            int sumPlayerDamage = 0;                 // プレイヤーが与えるダメージの合計
+            int sumAiDamageBase = _damageBase;       // 敵が与える基礎ダメージの合計
+            int sumAiDamage = 0;                     // 敵が与えるダメージの合計
 
-            result[i, 3] = 0;
-
-            if (isContradict)
+            // 直前の属性相性によるダメージUP
+            if (attributeResult[i, 3] == 1)
             {
-                result[i, 3] = 1;
+                sumPlayerDamageBase += _damageUpValue;
+            }
+
+            // 比和発生によるダメージUP
+            if (attributeResult[i, 1] == 1)
+            {
+                sumPlayerDamageBase += _harmonyDamageUpValue;
+            }
+
+            if (attributeResult[i, 2] == 1)
+            {
+                sumAiDamageBase += _harmonyDamageUpValue;
             }
 
             // プレイヤーが有利な時
             if (attributeResult[i,0] == 1)
-            {   
-                result[i, 2] = 1;
-
-                // ダメージ
-                result[i, 0] = damaged[0];
-                result[i, 1] = damaged[1];
-
-                // 打ち消し発生時
-                if (isContradict)
-                {
-                    result[i, 1] /= 2;
-                }
-
-                continue;
+            {
+                sumPlayerDamage = sumPlayerDamageBase * _damageMagnification;
+                sumAiDamage = sumAiDamageBase / _damageMagnification;
             }
 
             // プレイヤーが不利な時
             if (attributeResult[i,0] == -1)
             {
-                result[i, 2] = -1;
-
-                // ダメージ
-                result[i, 0] = damaged[1];
-                result[i,1] = damaged[0];
-
-                // 打ち消しフラグを消す
-                result[i, 3] = 0;
-
-                continue;
+                sumPlayerDamage = sumPlayerDamageBase / _damageMagnification;
+                sumAiDamage = sumAiDamageBase * _damageMagnification;
             }
 
             // 相性がないとき
             if (attributeResult[i,0] == 0)
             {
-                result[i, 2] = 0;
-
-                // ダメージ
-                result[i, 0] = damaged[2];
-                result[i, 1] = damaged[2];
-
-                // 打ち消し発生時
-                if (isContradict)
-                {
-                    result[i, 1] /= 2;
-                }
-
-                continue;
+                sumPlayerDamage = sumPlayerDamageBase;
+                sumAiDamage = sumAiDamageBase;
             }
-        }
 
-        // 比和の処理(ダメージを1.5倍にする)
-        for (int i = 0; i < result.GetLength(0); i++)
-        {
-            result[i, 4] = 0;
-            result[i, 5] = 0;
+            // 攻撃の打ち消しが発生しているかをチェック
+            result[i, 2] = 0;
 
-            // 自コマンド
-            if (attributeResult[i, 1] == 1)
+            if (attributeResult[i, 0] != -1 && IsContradict(_playerCommandManager.IsYinList[i], _aiCommandManager.IsYinList[i]))
             {
-                result[i, 0] = (int)(result[i, 0] * 1.5);
-                result[i, 4] = 1;
+                result[i, 2] = 1;
+                sumAiDamage /= 2;
             }
 
-            // 相手コマンド
-            if (attributeResult[i, 1] == -1)
-            {
-                result[i, 1] = (int)(result[i, 1] * 1.5);
-                result[i, 5] = 1;
-            }
-
-            //Debug.Log(string.Format("{0}番目のコマンド ", i + 1) + "相手ダメージ:" + result[i, 0]);
-            //Debug.Log(string.Format("{0}番目のコマンド ", i + 1) + "自ダメージ:" + result[i, 1]);
+            // ダメージ確定
+            result[i, 0] = sumPlayerDamage;
+            result[i, 1] = sumAiDamage;
         }
         
         return result;
@@ -355,7 +338,7 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     /// <param name="damageResult"></param>
     /// <returns></returns>
-    private IEnumerator DamageResult(int[,] damageResult)
+    private IEnumerator DamageResult(int[,] attributeResult, int[,] damageResult)
     {
         var wait = new WaitForSeconds(2f);
         yield return new WaitForSeconds(0.5f);
@@ -364,19 +347,19 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < damageResult.GetLength(0); i++)
         {
             // 攻撃アニメーション
-            if (damageResult[i, 2] == 1)
+            if (attributeResult[i, 0] == 1)
             {
                 // 有利
                 _seAudio.PlayOneShot(_advantageousAttackSE);
             }
 
-            if (damageResult[i, 2] == 0)
+            if (attributeResult[i, 0] == 0)
             {
                 // 普通
                 _seAudio.PlayOneShot(_attackSE);
             }
 
-            if (damageResult[i, 2] == -1)
+            if (attributeResult[i, 0] == -1)
             {
                 // 不利
                 _seAudio.PlayOneShot(_disadbantageAttackSE);
@@ -384,7 +367,7 @@ public class BattleManager : MonoBehaviour
 
             // 打ち消しアニメーション
             bool isContradict = false;
-            if (damageResult[i, 3] == 1)
+            if (damageResult[i, 2] == 1)
             {
                 _seAudio.PlayOneShot(_contradictSE);
                 isContradict = true;
@@ -392,14 +375,14 @@ public class BattleManager : MonoBehaviour
 
             // 比和アニメーション
             bool isPlayerHarmony = false;
-            if (damageResult[i, 4] == 1)
+            if (attributeResult[i, 1] == 1)
             {
                 _seAudio.PlayOneShot(_harmonySE);
                 isPlayerHarmony = true;
             }
 
             bool isAiHarmony = false;
-            if (!isContradict && damageResult[i, 5] == 1)
+            if (!isContradict && attributeResult[i, 2] == 1)
             {
                 _seAudio.PlayOneShot(_harmonySE);
                 isAiHarmony = true;
@@ -408,10 +391,17 @@ public class BattleManager : MonoBehaviour
             AttackAnimation(_playerCommandManager.CommandIdList[i] + 1, _aiCommandManager.CommandIdList[i] + 1,
                 isContradict, isPlayerHarmony, isAiHarmony);
 
+            /*// デバッグ用
+            Debug.Log("相性：" + attributeResult[i, 0]);
+            Debug.Log("自分の比和：" + attributeResult[i, 1] + "\n相手の比和：" + attributeResult[i, 2]);
+            Debug.Log("増幅の有無：" + attributeResult[i, 3] + "\n打ち消しの有無：" + damageResult[i, 2]);
+            Debug.Log("敵へのダメージ：" + damageResult[i, 0] + "\nプレイヤーへのダメージ：" + damageResult[i, 1]);
+            */
+
             // 敵へのダメージを確定
             _aiHpSlider.value -= damageResult[i, 0];
 
-            // 自分へのダメージを確定
+            // プレイヤーへのダメージを確定
             _playerHpSlider.value -= damageResult[i, 1];
 
             yield return wait;
