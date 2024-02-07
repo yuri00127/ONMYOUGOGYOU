@@ -3408,6 +3408,7 @@ MonoBehaviour:
   SubmitSE: {fileID: 0}
   _characterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
   _selectStepManager: {fileID: 2043042088}
+  _defaultCharacterSprite: {fileID: 21300000, guid: 72b2b0f19030acb4aa08dc3e71fecd77, type: 3}
 --- !u!1 &2081221495
 GameObject:
   m_ObjectHideFlags: 0

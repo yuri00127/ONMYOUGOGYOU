@@ -62,6 +62,7 @@ public class SelectStepManager : MonoBehaviour
     {
         StepGuideSet();
         EventSystem.current.SetSelectedGameObject(_characterDefaultButton);
+
     }
 
     // 敵AIレベルの選択ステップ

@@ -17,6 +17,7 @@ public class CharacterSelect : Button
     private Image _playerCharacterViewImage;
     private const string _aiCharacterViewObjName = "AICharacterBox";
     private Image _aiCharacterViewImage;
+    [SerializeField] private Sprite _defaultCharacterSprite;
 
 
     private void Awake()
@@ -61,6 +62,8 @@ public class CharacterSelect : Button
         {
             Debug.Log("PLchara" + _selectCharacterId);
             _selectStepManager.NextAICharacterSelect(_selectCharacterId);
+            _playerCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
+            _aiCharacterViewImage.sprite = _defaultCharacterSprite;
 
             return;
         }
@@ -70,6 +73,7 @@ public class CharacterSelect : Button
         {
             Debug.Log("AIchara" + _selectCharacterId);
             _selectStepManager.NextAILevelSelect(_selectCharacterId);
+            _aiCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
 
             return;
         }
