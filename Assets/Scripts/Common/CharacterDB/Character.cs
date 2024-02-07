@@ -11,7 +11,6 @@ public class Character : ScriptableObject
     public string Name;
     public int AttributeId;
     public Sprite CharacterImage;
-    public string[] CommandNames = new string[5];
     public Sprite[] CommandSprites = new Sprite[5];
     public Sprite[] SelectCommandSprites = new Sprite[5];
 }

@@ -27,13 +27,12 @@ public class PlayerCommandManager : CommandManager
     public bool CanInput = true;                 // 入力を可能とする制御
     private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
 
-    // Audio
+    [Header("Audio")]
     private const string _seManagerObjName = "SEManager";
     private AudioSource _audio;
     [SerializeField] private AudioClip _submitSE;
     [SerializeField] private AudioClip _submitFinishSE;
     [SerializeField] private AudioClip _cancelSE;
-
 
 
     protected override void Awake()
@@ -109,11 +108,11 @@ public class PlayerCommandManager : CommandManager
             IsAllSelect = true;
             _battleManager.Battle();
         }
-
     }
 
-
-    // 直前のコマンドの選択を取り消す
+    /// <summary>
+    /// 直前のコマンドの選択を取り消す
+    /// </summary>
     private void CancelCommand()
     {
         CanInput = false;

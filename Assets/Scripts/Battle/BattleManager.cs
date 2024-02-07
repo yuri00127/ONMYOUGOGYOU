@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
@@ -21,18 +22,29 @@ public class BattleManager : MonoBehaviour
     private Slider _playerHpSlider;
     private Slider _aiHpSlider;
     private int _maxHp = 100;
-
     private bool _isFirstAnimation = false;    // 最初のアニメーションが行われたか
     private int _nowRound = 1;                 // 現在のラウンド
     private bool _isFinish = false;            // 勝敗が決定しているか
 
     // ダメージ計算
-    private int _damageBase = 5;            // 基礎ダメージ量
+    private int _playerDamageBase = 5;      // プレイヤーの基礎ダメージ量
+    private int _aiDamageBase = 15;         // 敵の基礎ダメージ量
     private int _damageMagnification = 2;   // 有利(*)、不利(/)時の倍率
     private int _harmonyDamageUpValue = 3;  // 比和のダメージUP量
     private int _damageUpValue = 5;         // 相生によるダメージUP量
 
-    // Audio
+    [Header("勝敗結果")]
+    [SerializeField] private GameObject _resultCanvas;
+    private const string _resultImageObjName = "ResultImage";
+    private Image _resultImage;
+    private const string _characterImageObjName = "CharacterImage";
+    private GameObject _characterImageObj;
+    private Image _characterImage;
+    private const string _resultDefaultButtonObjName = "BackCharacterSelectButton";
+    private GameObject _resultDefaultButtonObj;
+    [SerializeField] private Sprite[] _resultSprites = new Sprite[2];   // 勝敗画像
+
+    [Header("Audio")]
     private const string _seManagerObjName = "SEManager";
     private const string _bgmManagerObjName = "BGMManager";
     private AudioSource _seAudio;
@@ -44,7 +56,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private AudioClip _contradictSE;          // 打ち消し発生時のSE
     [SerializeField] private AudioClip _battleFinishJingle;    // バトル終了時のジングル
 
-    // Animation
+    [Header("Animation")]
     [SerializeField] private ParticleSystem _waterAttackParticle;
     [SerializeField] private ParticleSystem _treeAttackParticle;
     [SerializeField] private ParticleSystem _fireAttackParticle;
@@ -245,10 +257,10 @@ public class BattleManager : MonoBehaviour
         // コマンドの順番ごとに結果を配列に格納
         for (int i = 0; i < result.GetLength(0); i++)
         {
-            int sumPlayerDamageBase = _damageBase;   // プレイヤーが与える基礎ダメージの合計
-            int sumPlayerDamage = 0;                 // プレイヤーが与えるダメージの合計
-            int sumAiDamageBase = _damageBase;       // 敵が与える基礎ダメージの合計
-            int sumAiDamage = 0;                     // 敵が与えるダメージの合計
+            int sumPlayerDamageBase = _playerDamageBase;   // プレイヤーが与える基礎ダメージの合計
+            int sumPlayerDamage = 0;                       // プレイヤーが与えるダメージの合計
+            int sumAiDamageBase = _aiDamageBase;           // 敵が与える基礎ダメージの合計
+            int sumAiDamage = 0;                           // 敵が与えるダメージの合計
 
             // 直前の属性相性によるダメージUP
             if (attributeResult[i, 3] == 1)
@@ -294,7 +306,7 @@ public class BattleManager : MonoBehaviour
             if (attributeResult[i, 0] != -1 && IsContradict(_playerCommandManager.IsYinList[i], _aiCommandManager.IsYinList[i]))
             {
                 result[i, 2] = 1;
-                sumAiDamage /= 2;
+                sumAiDamage /= 5;
             }
 
             // ダメージ確定
@@ -406,14 +418,6 @@ public class BattleManager : MonoBehaviour
 
             yield return wait;
 
-            // 勝利
-            if (_aiHpSlider.value <= 0)
-            {
-                _isFinish = true;
-                StartCoroutine(BattleFinish(true));
-                break;
-            }
-
             // 敗北
             if (_playerHpSlider.value <= 0)
             {
@@ -422,7 +426,13 @@ public class BattleManager : MonoBehaviour
                 break;
             }
 
-            //yield return wait;
+            // 勝利
+            if (_aiHpSlider.value <= 0)
+            {
+                _isFinish = true;
+                StartCoroutine(BattleFinish(true));
+                break;
+            }
         }
 
         // お互いのHPが残っていれば、次のラウンドへ
@@ -532,12 +542,35 @@ public class BattleManager : MonoBehaviour
 
         _bgmAudio.clip = _battleFinishJingle;
         _bgmAudio.Play();
+        _bgmAudio.loop = false;
 
-        if (playerWin) { Debug.Log("プレイヤーの勝ち"); }
-        if (!playerWin) { Debug.Log("敵の勝ち"); }
+        // 勝敗結果の表示
+        _resultCanvas.SetActive(true);
+        _resultImage = GameObject.Find(_resultImageObjName).GetComponent<Image>();
+        _characterImageObj = GameObject.Find(_characterImageObjName);
+        _characterImage = _characterImageObj.GetComponent<Image>();
+        
+        // プレイヤー勝利
+        if (playerWin)
+        {
+            _resultImage.sprite = _resultSprites[0];
+        }
+
+        // プレイヤー敗北
+        if (!playerWin)
+        {
+            _resultImage.sprite = _resultSprites[1];
+        }
+
+        _characterImage.sprite = GameObject.Find("PlayerCharacter").GetComponent<Image>().sprite;
+        _characterImageObj.GetComponent<Animator>().SetTrigger("First");
 
         yield return new WaitForSeconds(1f);
 
-        // 勝敗アニメーション
+        _resultCanvas.transform.Find("Button").gameObject.SetActive(true);
+        _resultDefaultButtonObj = GameObject.Find(_resultDefaultButtonObjName);
+        EventSystem.current.SetSelectedGameObject(_resultDefaultButtonObj);
+
     }
+
 }

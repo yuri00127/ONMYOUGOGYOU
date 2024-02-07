@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterSelect : Button
 {
@@ -11,16 +12,36 @@ public class CharacterSelect : Button
     private string _characterIdFormat = "Character{0}";
     private int _selectCharacterId;
 
+    // キャラクタービュー
+    private const string _playerCharacterViewObjName = "PlayerCharacterBox";
+    private Image _playerCharacterViewImage;
+    private const string _aiCharacterViewObjName = "AICharacterBox";
+    private Image _aiCharacterViewImage;
+
+
+    private void Awake()
+    {
+        _playerCharacterViewImage = GameObject.Find(_playerCharacterViewObjName).GetComponent<Image>();
+        _aiCharacterViewImage = GameObject.Find(_aiCharacterViewObjName).GetComponent<Image>();
+    }
 
     public override void PointerEnter(GameObject gameObject)
     {
-        if (_selectStepManager.NowSelectStep == 2)
+        base.PointerEnter(gameObject);
+
+        // プレイヤーキャラクター選択時
+        if (_selectStepManager.NowSelectStep == 0)
         {
-            EventSystem.current.SetSelectedGameObject(null);
+            _playerCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
             return;
         }
 
-        base.PointerEnter(gameObject);
+        // AIキャラクター選択時
+        if (_selectStepManager.NowSelectStep == 1)
+        {
+            _aiCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
+            return;
+        }
     }
 
     public void Submit(GameObject gameObject)

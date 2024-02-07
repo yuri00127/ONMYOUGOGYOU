@@ -36,7 +36,7 @@ public class VolumeController : MonoBehaviour
     protected virtual void Update()
     {
         // スライダーを選択中
-        if (EventSystem.current.currentSelectedGameObject.name == SliderName)
+        if (EventSystem.current.currentSelectedGameObject.name != null && EventSystem.current.currentSelectedGameObject.name == SliderName)
         {
             // 右入力
             if (Input.GetAxisRaw(InputHorizontal) > 0 && CanSelect) { VolumeUp(); }
@@ -54,8 +54,6 @@ public class VolumeController : MonoBehaviour
     // 音量を1段階上げる
     protected virtual void VolumeUp()
     {
-        if (IsFirst) { IsFirstSet(); }
-        
         CanSelect = false;
 
         Audio.volume += VolumeUnit;
@@ -65,8 +63,6 @@ public class VolumeController : MonoBehaviour
     // 音量を1段階下げる
     protected virtual void VolumeDown()
     {
-        if (IsFirst) { IsFirstSet(); }
-
         CanSelect = false;
 
         Audio.volume -= VolumeUnit;
@@ -74,15 +70,16 @@ public class VolumeController : MonoBehaviour
     }
 
     /// <summary>
-    /// シーンで始めて音量調節を行う時の処理
+    /// 音量設定を反映する
     /// </summary>
-    private void IsFirstSet()
+    private void VolumeSet()
     {
-        Debug.Log("初回");
-
-        // スライダーを取得
-        SliderObj = EventSystem.current.currentSelectedGameObject;
-        _volumeSlider = SliderObj.GetComponent<Slider>();
+        // 初回設定時にスライダーを取得
+        if (IsFirst)
+        {
+            SliderObj = EventSystem.current.currentSelectedGameObject;
+            _volumeSlider = SliderObj.GetComponent<Slider>();
+        }
 
         // 保存されている音量設定を反映する
         if (SliderName == SESliderName)
@@ -90,13 +87,13 @@ public class VolumeController : MonoBehaviour
             float seVolume = PlayerPrefs.GetFloat(_seVolumeName, 0.5f);
             Audio.volume = seVolume;
             _volumeSlider.value = seVolume;
+            IsFirst = false;
             return;
         }
 
         float bgmVolume = PlayerPrefs.GetFloat(_bgmVolumeName, 0.5f);
         Audio.volume = bgmVolume;
         _volumeSlider.value = bgmVolume;
-
         IsFirst = false;
     }
 
@@ -105,14 +102,14 @@ public class VolumeController : MonoBehaviour
     /// </summary>
     private void SaveVolumeSetting()
     {
-        Debug.Log("保存");
-
         if (EventSystem.current.currentSelectedGameObject.name == SESliderName)
         {
             PlayerPrefs.SetFloat(_seVolumeName, Audio.volume);
+            VolumeSet();
             return;
         }
 
         PlayerPrefs.SetFloat(_bgmVolumeName, Audio.volume);
+        VolumeSet();
     }
 }

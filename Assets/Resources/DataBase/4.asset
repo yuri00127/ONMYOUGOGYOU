@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 4
   m_EditorClassIdentifier: 
   Id: 4
-  Name: 
+  Name: "\u9E92\u9E9F"
   AttributeId: 4
-  CharacterImage: {fileID: 0}
+  CharacterImage: {fileID: 21300000, guid: 5b1fc3f35c811904ba93a566a10e49fb, type: 3}
   CommandNames:
   - 
   - 

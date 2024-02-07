@@ -42,7 +42,7 @@ public class AICommandManager : CommandManager
 
         // “G‚Ì‘®«‚ğæ“¾
         int aiCharacterId = PlayerPrefs.GetInt(_selectCharacterData.SaveAICharacterId);
-        _aiAttributeId = _characterDataBase.CharacterList[aiCharacterId].AttributeId;
+        _aiAttributeId = _characterDataBase.CharacterList[aiCharacterId - 1].AttributeId;
     }
 
     private void Start()

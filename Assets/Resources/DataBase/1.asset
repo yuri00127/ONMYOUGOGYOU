@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 1
   Name: "\u7384\u6B66"
   AttributeId: 1
-  CharacterImage: {fileID: 21300000, guid: 96535966f8d40dc4e8fd489170b50a3e, type: 3}
+  CharacterImage: {fileID: 21300000, guid: 72b2b0f19030acb4aa08dc3e71fecd77, type: 3}
   CommandNames:
   - 
   - 

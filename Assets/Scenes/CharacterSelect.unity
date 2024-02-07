@@ -182,7 +182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4fb8fa9f0e239094ca81b3c96082f2d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e6029953535f0e47bec25cb4c07f9ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -229,9 +229,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 2277abd96626ecc4fa9f57a7c2e9625f, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 2277abd96626ecc4fa9f57a7c2e9625f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -305,81 +305,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1 &221408598
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 221408599}
-  - component: {fileID: 221408601}
-  - component: {fileID: 221408600}
-  m_Layer: 5
-  m_Name: CharacterImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &221408599
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221408598}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 584349745}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 350, y: 350}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &221408600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221408598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &221408601
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221408598}
-  m_CullTransparentMesh: 1
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2043042091}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 18700367}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &263569987
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8f90b93a48feb8a44ab3d180478d1956, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72b2b0f19030acb4aa08dc3e71fecd77, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -514,7 +455,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 688367725}
     m_SelectOnRight: {fileID: 18700371}
   m_Transition: 2
   m_Colors:
@@ -526,9 +467,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 5ebebc193b74abe4f9e70074932b8928, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 5ebebc193b74abe4f9e70074932b8928, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -587,6 +528,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2043042091}
+          m_TargetAssemblyTypeName: CharacterSelect, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 270411502}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -874,8 +831,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 361, y: -502}
-  m_SizeDelta: {x: 1198, y: 50}
+  m_AnchoredPosition: {x: 323.97, y: -502}
+  m_SizeDelta: {x: 1272.06, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &559672053
 GameObject:
@@ -902,14 +859,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559672053}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 627644615}
+  m_Children: []
   m_Father: {fileID: 1624197243}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 400, y: 200}
@@ -1139,7 +1095,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 61e8232c934d15342ad2cf445e3590ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b1fc3f35c811904ba93a566a10e49fb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1186,9 +1142,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 0cfed766301dd9e4d9ba9f12ed5c2d58, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 0cfed766301dd9e4d9ba9f12ed5c2d58, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1262,6 +1218,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2043042091}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 566236375}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &584349744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,8 +1262,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 221408599}
+  m_Children: []
   m_Father: {fileID: 1624197243}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1337,81 +1308,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584349744}
-  m_CullTransparentMesh: 1
---- !u!1 &627644614
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 627644615}
-  - component: {fileID: 627644617}
-  - component: {fileID: 627644616}
-  m_Layer: 5
-  m_Name: CharacterImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &627644615
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627644614}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
-  m_Children: []
-  m_Father: {fileID: 559672054}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 350, y: 350}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &627644616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627644614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &627644617
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627644614}
   m_CullTransparentMesh: 1
 --- !u!1 &688367721
 GameObject:
@@ -1472,7 +1368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 49d90fa701bf44246b18e1277c615cd1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff1592dfffae86344b680e3ea171f267, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1508,7 +1404,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 566236379}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 270411506}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1519,9 +1415,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 9378409584558fd4ea05e25174356d84, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 9378409584558fd4ea05e25174356d84, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1580,6 +1476,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2043042091}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 688367721}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -3081,7 +2993,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 85083c0e56bb858499fc46ef22d5ef93, type: 3}
+  m_Sprite: {fileID: 21300000, guid: be1ff783dbb32b34f9468e751dc05de7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3128,9 +3040,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 73e1a2f504110474f883f1de9393b740, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ee6f1c76e82dbca40af1a717247bfe48, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 73e1a2f504110474f883f1de9393b740, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -3189,6 +3101,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2043042091}
+          m_TargetAssemblyTypeName: Button, Assembly-CSharp
+          m_MethodName: PointerEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1917385854}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
     callback:
       m_PersistentCalls:
         m_Calls:

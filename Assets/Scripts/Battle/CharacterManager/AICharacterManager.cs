@@ -11,6 +11,10 @@ public class AICharacterManager : CharacterManager
     // スクリプト
     private AICommandManager _aiCommandManager;
 
+    // キャラクタービュー
+    private const string _aiCharacterViewObjName = "AICharacter";
+
+
     public int AILevel { get; private set; }
     
 
@@ -22,17 +26,20 @@ public class AICharacterManager : CharacterManager
         base.Awake();
 
         // 選択された敵キャラクターを取得
-        //int aiCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SaveAICharacterId, 1);
-        //SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
-        // 仮設定 
-        int aiCharacterId = 1;
+        int aiCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SaveAICharacterId, 1);
         SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
+        // 仮設定 
+        //int aiCharacterId = 1;
+        //SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
 
         // 選択された敵の強さを取得
-        //AILevel = PlayerPrefs.GetInt(SelectCharacterData.SaveAILevel, 1);
+        AILevel = PlayerPrefs.GetInt(SelectCharacterData.SaveAILevel, 1);
         // 仮設定 
-        AILevel = 1;
+        //AILevel = 1;
 
+        // キャラクター画像をセット
+        CharacterImage = GameObject.Find(_aiCharacterViewObjName).GetComponent<Image>();
+        CharacterImage.sprite = SelectCharacter.CharacterImage;
     }
 
 }

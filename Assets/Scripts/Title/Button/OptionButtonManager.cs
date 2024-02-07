@@ -13,7 +13,7 @@ public class OptionButtonManager : Button
     [SerializeField] private GameObject _titleDefaultForcus;
     private bool _isOpenOptionView = false;
 
-    // ビュー内オブジェクト
+    [Header("ビュー内オブジェクト")]
     [SerializeField] private Sprite[] _changePCButtonSprites = new Sprite[2];
     private const string _changePCButtonObjName = "ChangeKeyBoardAndMouseButton";
     private Image _changePCButtonImg;

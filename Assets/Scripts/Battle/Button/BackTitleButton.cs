@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleBreakButton : Button
+public class BackTitleButton : Button
 {
     [SerializeField] private LoadNextScene _loadNextScene;
-    private const string _nextScene = "CharacterSelect";
+    private const string _nextScene = "Title";
 
     private bool _isLoading = false;
 
