@@ -15,9 +15,11 @@ public class InputTypeGuideChanger : MonoBehaviour
         if (Input.anyKeyDown) { IsKeyMouse = true; }
 
         // xboxコントローラー
+        /*
         if (Input.IsJoystickPreconfigured("X-Axis")) { IsController = true; }
         if (Input.IsJoystickPreconfigured("Y-Axis")) { IsController = true; }
         if (Input.IsJoystickPreconfigured("joystick button 0")) { IsController = true; }
         if (Input.IsJoystickPreconfigured("joystick button 1")) { IsController = true; }
+        */
     }
 }
