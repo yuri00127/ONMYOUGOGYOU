@@ -33,6 +33,13 @@ public class BattleManager : MonoBehaviour
     private int _harmonyDamageUpValue = 3;  // 比和のダメージUP量
     private int _damageUpValue = 5;         // 相生によるダメージUP量
 
+    [Header("ダメージ表示")]
+    [SerializeField] private Sprite[] _damageIcon = new Sprite[5];  // 増幅、比和、相性有利、相性不利、打ち消し
+    private Sprite[,] _playerDamageSprite = new Sprite[3, 4];       // プレイヤーのダメージ表示
+    private Sprite[,] _aiDamageSprite = new Sprite[3, 3];           // 敵のダメージ表示
+    [SerializeField] private GameObject[] _playerDamageIconObj;     // 画像を適用するObject(プレイヤー)
+    [SerializeField] private GameObject[] _aiDamageIconObj;         // 画像を適用するObject(敵)
+
     [Header("勝敗結果")]
     [SerializeField] private GameObject _resultCanvas;
     private const string _resultImageObjName = "ResultImage";
@@ -88,6 +95,7 @@ public class BattleManager : MonoBehaviour
 
         _playerPos = GameObject.Find(_playerObjName).transform.position;
         _aiPos = GameObject.Find(_aiObjName).transform.position;
+
     }
 
     // Start is called before the first frame update
@@ -261,22 +269,27 @@ public class BattleManager : MonoBehaviour
             int sumPlayerDamage = 0;                       // プレイヤーが与えるダメージの合計
             int sumAiDamageBase = _aiDamageBase;           // 敵が与える基礎ダメージの合計
             int sumAiDamage = 0;                           // 敵が与えるダメージの合計
+            List<Sprite> playerDamageIcon = new List<Sprite>();    // プレイヤーのダメージ要素
+            List<Sprite> aiDamageIcon = new List<Sprite>();        // 敵のダメージ要素
 
             // 直前の属性相性によるダメージUP
             if (attributeResult[i, 3] == 1)
             {
                 sumPlayerDamageBase += _damageUpValue;
+                playerDamageIcon.Add(_damageIcon[0]);
             }
 
             // 比和発生によるダメージUP
             if (attributeResult[i, 1] == 1)
             {
                 sumPlayerDamageBase += _harmonyDamageUpValue;
+                playerDamageIcon.Add(_damageIcon[1]);
             }
 
             if (attributeResult[i, 2] == 1)
             {
                 sumAiDamageBase += _harmonyDamageUpValue;
+                aiDamageIcon.Add(_damageIcon[1]);
             }
 
             // プレイヤーが有利な時
@@ -284,6 +297,8 @@ public class BattleManager : MonoBehaviour
             {
                 sumPlayerDamage = sumPlayerDamageBase * _damageMagnification;
                 sumAiDamage = sumAiDamageBase / _damageMagnification;
+                playerDamageIcon.Add(_damageIcon[2]);
+                aiDamageIcon.Add(_damageIcon[3]);
             }
 
             // プレイヤーが不利な時
@@ -291,6 +306,8 @@ public class BattleManager : MonoBehaviour
             {
                 sumPlayerDamage = sumPlayerDamageBase / _damageMagnification;
                 sumAiDamage = sumAiDamageBase * _damageMagnification;
+                playerDamageIcon.Add(_damageIcon[3]);
+                aiDamageIcon.Add(_damageIcon[2]);
             }
 
             // 相性がないとき
@@ -307,11 +324,25 @@ public class BattleManager : MonoBehaviour
             {
                 result[i, 2] = 1;
                 sumAiDamage /= 5;
+                playerDamageIcon.Add(_damageIcon[4]);
             }
 
             // ダメージ確定
             result[i, 0] = sumPlayerDamage;
             result[i, 1] = sumAiDamage;
+
+            // ダメージアイコン表示
+            for (int j = 0; j < playerDamageIcon.Count; j++)
+            {
+                Debug.Log("playerDamageIconの長さ：" + playerDamageIcon.Count);
+                Debug.Log("_playerDamageSpriteの長さ：" + _playerDamageSprite[i, j]);
+                _playerDamageSprite[i, j] = playerDamageIcon[j];
+            }
+
+            for (int j = 0; j < aiDamageIcon.Count; j++)
+            {
+                _aiDamageSprite[i, j] = aiDamageIcon[j];
+            }
         }
         
         return result;
@@ -358,6 +389,18 @@ public class BattleManager : MonoBehaviour
         // コマンドの順番にダメージを確定
         for (int i = 0; i < damageResult.GetLength(0); i++)
         {
+            // ダメージ表示
+            for (int j = 0; j < _playerDamageSprite.GetLength(0); j++)
+            {
+                Debug.Log("playerDamageSpriteの長さ：" + _playerDamageSprite.Length);
+                _playerDamageIconObj[j].GetComponent<Image>().sprite = _playerDamageSprite[i, j];
+            }
+
+            for (int j = 0; j < _aiDamageSprite.Length; j++)
+            {
+                _aiDamageIconObj[j].GetComponent<Image>().sprite = _aiDamageSprite[i, j];
+            }
+
             // 攻撃アニメーション
             if (attributeResult[i, 0] == 1)
             {

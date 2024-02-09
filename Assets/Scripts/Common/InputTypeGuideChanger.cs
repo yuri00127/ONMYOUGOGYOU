@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 入力のタイプによってガイド画像を切り替える(保留中)
+// 入力のタイプによってガイド画像を切り替える(保留)
 public class InputTypeGuideChanger : MonoBehaviour
 {
     public bool IsKeyMouse { get; private set; } = false;

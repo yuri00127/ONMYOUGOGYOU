@@ -60,7 +60,6 @@ public class CharacterSelect : Button
         // プレイヤーキャラクターの選択
         if (_selectStepManager.NowSelectStep == 0)
         {
-            Debug.Log("PLchara" + _selectCharacterId);
             _selectStepManager.NextAICharacterSelect(_selectCharacterId);
             _playerCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
             _aiCharacterViewImage.sprite = _defaultCharacterSprite;
@@ -71,7 +70,6 @@ public class CharacterSelect : Button
         // AIキャラクターの選択
         if (_selectStepManager.NowSelectStep == 1)
         {
-            Debug.Log("AIchara" + _selectCharacterId);
             _selectStepManager.NextAILevelSelect(_selectCharacterId);
             _aiCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
 
