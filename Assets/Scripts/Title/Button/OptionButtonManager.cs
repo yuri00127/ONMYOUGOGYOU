@@ -7,24 +7,13 @@ using UnityEngine.UI;
 // タイトル画面でオプションを開く
 public class OptionButtonManager : Button
 {
+    private OperatingGuideChange _operatingGuideChange;
+
     [Header("オプションビュー")]
     [SerializeField] private GameObject _optionView;
     [SerializeField] private GameObject _optionDefaultForcus;
     [SerializeField] private GameObject _titleDefaultForcus;
     private bool _isOpenOptionView = false;
-
-    [Header("ビュー内オブジェクト")]
-    [SerializeField] private Sprite[] _changePCButtonSprites = new Sprite[2];
-    private const string _changePCButtonObjName = "ChangeKeyBoardAndMouseButton";
-    private Image _changePCButtonImg;
-    [SerializeField] private Sprite[] _changeControllerButtonSprites = new Sprite[2];
-    private const string _changeControllerButtonObjName = "ChangeControllerButton";
-    private Image _changeControllerButtonImg;
-    [SerializeField] private Sprite[] _controllerGuideSprites = new Sprite[2];
-    private const string _controllerGuideObjName = "ControllerGuide";
-    private Image _controllerGuideImg;
-    private bool _isPCChange = true;            // 操作をPCに切り替えた直後
-    private bool _isControllerChange = false;   // 操作をコントローラーに切り替えた直後
 
     [Header("ボタンアイコン")]
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
@@ -34,20 +23,18 @@ public class OptionButtonManager : Button
 
     // Audio
     [SerializeField] private AudioClip SecondSubmitSE;      // ビューを閉じるSE
-    [SerializeField] private AudioClip ControllerChangeSE;  // 操作説明画像切り替え時のSE
 
 
     public override void Start()
     {
         base.Start();
 
-        // メニューボタンのImageコンポーネントを取得
-        _buttonIcon = this.GetComponent<Image>();
+        // 操作説明切り替え処理の準備
+        _operatingGuideChange = this.GetComponent<OperatingGuideChange>();
+        _operatingGuideChange.SetUp(_optionView);
 
-        // 操作方法切り替えボタンを取得
-        _controllerGuideImg = _optionView.transform.Find(_controllerGuideObjName).GetComponent<Image>();
-        _changePCButtonImg = _optionView.transform.Find(_changePCButtonObjName).GetComponent<Image>();
-        _changeControllerButtonImg = _optionView.transform.Find(_changeControllerButtonObjName).GetComponent<Image>();
+        // メニューボタンのImageコンポーネントを取得
+        _buttonIcon = this.GetComponent<Image>();        
     }
 
     private void Update()
@@ -107,19 +94,9 @@ public class OptionButtonManager : Button
     // 操作説明をPC版に切り替える
     public void ChangePCButton()
     {
-        if (!_isPCChange)
+        if (!_operatingGuideChange._isPC)
         {
-            Audio.PlayOneShot(ControllerChangeSE);
-
-            // 操作説明画像を変更
-            _controllerGuideImg.sprite = _controllerGuideSprites[0];
-
-            // 切り替えボタンの画像を変更
-            _changeControllerButtonImg.sprite = _changeControllerButtonSprites[0];
-            _changePCButtonImg.sprite = _changePCButtonSprites[1];
-
-            _isPCChange = true;
-            _isControllerChange = false;
+            _operatingGuideChange.PCButton(Audio);
         }
         
     }
@@ -127,19 +104,9 @@ public class OptionButtonManager : Button
     // 操作説明をコントローラー版に切り替える
     public void ChangeControllerButton()
     {
-        if (!_isControllerChange)
+        if (!_operatingGuideChange._isController)
         {
-            Audio.PlayOneShot(ControllerChangeSE);
-
-            // 操作説明画像を変更
-            _controllerGuideImg.sprite = _controllerGuideSprites[1];
-
-            // 切り替えボタンの画像を変更
-            _changePCButtonImg.sprite = _changePCButtonSprites[0];
-            _changeControllerButtonImg.sprite = _changeControllerButtonSprites[1];
-
-            _isControllerChange = true;
-            _isPCChange = false;
+            _operatingGuideChange.ControllerButton(Audio);
         }
         
     }

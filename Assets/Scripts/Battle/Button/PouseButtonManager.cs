@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PouseButtonManager : Button
 {
+    private OperatingGuideChange _operatingGuideChange;
+
     [Header("ガイドビュー")]
     [SerializeField] private GameObject _pouseView;
     [SerializeField] private GameObject _pouseDefaultForcus;
@@ -22,6 +24,10 @@ public class PouseButtonManager : Button
     public override void Start()
     {
         _buttonIcon = this.GetComponent<Image>();
+
+        // 操作説明切り替え処理の準備
+        _operatingGuideChange = this.GetComponent<OperatingGuideChange>();
+        _operatingGuideChange.SetUp(_pouseView);
     }
 
     private void Update()
@@ -77,5 +83,25 @@ public class PouseButtonManager : Button
     public override void PointerEnter(GameObject gameObject)
     {
         base.PointerEnter(gameObject);
+    }
+
+    // 操作説明をPC版に切り替える
+    public void ChangePCButton()
+    {
+        if (!_operatingGuideChange._isPC)
+        {
+            _operatingGuideChange.PCButton(Audio);
+        }
+
+    }
+
+    // 操作説明をコントローラー版に切り替える
+    public void ChangeControllerButton()
+    {
+        if (!_operatingGuideChange._isController)
+        {
+            _operatingGuideChange.ControllerButton(Audio);
+        }
+
     }
 }
