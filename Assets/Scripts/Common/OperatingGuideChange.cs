@@ -18,7 +18,7 @@ public class OperatingGuideChange : MonoBehaviour
     private Image _changeControllerButtonImg;
 
     [Header("操作説明画像")]
-    [SerializeField] private Sprite[] _operatingGuideSprites = new Sprite[2];
+    [SerializeField] private Sprite[] _operatingGuideSprites = new Sprite[4];
     private const string _operatingGuideObjName = "ControllerGuide";
     private Image _operatingGuideImg;
     public bool _isPC { get; private set; } = true;            // 操作をPCに切り替えた直後である
@@ -37,12 +37,12 @@ public class OperatingGuideChange : MonoBehaviour
     }
 
     // 操作説明をPC版に切り替える
-    public void PCButton(AudioSource audio)
+    public void PCButton(AudioSource audio, int sceneNum)
     {
         audio.PlayOneShot(ControllerChangeSE);
 
         // 操作説明画像を変更
-        _operatingGuideImg.sprite = _operatingGuideSprites[0];
+        _operatingGuideImg.sprite = _operatingGuideSprites[sceneNum];
 
         // 切り替えボタンの画像を変更
         _changeControllerButtonImg.sprite = _changeControllerButtonSprites[0];
@@ -53,12 +53,12 @@ public class OperatingGuideChange : MonoBehaviour
     }
 
     // 操作説明をコントローラー版に切り替える
-    public void ControllerButton(AudioSource audio)
+    public void ControllerButton(AudioSource audio, int sceneNum)
     {
         audio.PlayOneShot(ControllerChangeSE);
 
         // 操作説明画像を変更
-        _operatingGuideImg.sprite = _operatingGuideSprites[1];
+        _operatingGuideImg.sprite = _operatingGuideSprites[sceneNum + 1];
 
         // 切り替えボタンの画像を変更
         _changePCButtonImg.sprite = _changePCButtonSprites[0];

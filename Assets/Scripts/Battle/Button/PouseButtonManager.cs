@@ -23,6 +23,8 @@ public class PouseButtonManager : Button
 
     public override void Start()
     {
+        base.Start();
+
         _buttonIcon = this.GetComponent<Image>();
 
         // ‘€ìà–¾Ø‚è‘Ö‚¦ˆ—‚Ì€”õ
@@ -90,7 +92,7 @@ public class PouseButtonManager : Button
     {
         if (!_operatingGuideChange._isPC)
         {
-            _operatingGuideChange.PCButton(Audio);
+            _operatingGuideChange.PCButton(Audio, 2);
         }
 
     }
@@ -100,7 +102,7 @@ public class PouseButtonManager : Button
     {
         if (!_operatingGuideChange._isController)
         {
-            _operatingGuideChange.ControllerButton(Audio);
+            _operatingGuideChange.ControllerButton(Audio, 2);
         }
 
     }

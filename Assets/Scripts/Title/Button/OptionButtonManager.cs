@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// タイトル画面でオプションを開く
 public class OptionButtonManager : Button
 {
     private OperatingGuideChange _operatingGuideChange;
@@ -96,7 +95,7 @@ public class OptionButtonManager : Button
     {
         if (!_operatingGuideChange._isPC)
         {
-            _operatingGuideChange.PCButton(Audio);
+            _operatingGuideChange.PCButton(Audio, 0);
         }
         
     }
@@ -106,7 +105,7 @@ public class OptionButtonManager : Button
     {
         if (!_operatingGuideChange._isController)
         {
-            _operatingGuideChange.ControllerButton(Audio);
+            _operatingGuideChange.ControllerButton(Audio, 0);
         }
         
     }

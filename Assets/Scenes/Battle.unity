@@ -1243,7 +1243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f31ae0e23295f9c49aa555229a5bef66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e317b140db94abb40bd1de6497cd2c3e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2928,6 +2928,8 @@ MonoBehaviour:
   _operatingGuideSprites:
   - {fileID: 21300000, guid: 7e58548ba20e8514d830dce6d5775f4e, type: 3}
   - {fileID: 21300000, guid: ca2d2409a7dd9fb4bb6f5f8e5458caee, type: 3}
+  - {fileID: 21300000, guid: e317b140db94abb40bd1de6497cd2c3e, type: 3}
+  - {fileID: 21300000, guid: f31ae0e23295f9c49aa555229a5bef66, type: 3}
   ControllerChangeSE: {fileID: 8300000, guid: d9e4d05da858c4148a348a213b82a46d, type: 3}
 --- !u!1 &584606604
 GameObject:
@@ -3806,6 +3808,30 @@ PrefabInstance:
     - target: {fileID: 4694867547972734900, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 584349748}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 584349748}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangePCButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangePCButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PouseButtonManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694867547972734901, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PouseButtonManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd8c60bf087d4204185033aeb5085c86, type: 3}
@@ -8162,6 +8188,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 434443105}
     m_Modifications:
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 584349748}
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 584349748}
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeControllerButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeControllerButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PouseButtonManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675619123533202977, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PouseButtonManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2675619123533202988, guid: ce47c0700245c8244814a7bc638f1925, type: 3}
       propertyPath: m_Name
       value: ChangeControllerButton
