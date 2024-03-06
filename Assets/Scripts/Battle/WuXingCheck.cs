@@ -7,11 +7,39 @@ using UnityEngine;
 /// </summary>
 public class WuXingCheck : MonoBehaviour
 {
-    // 相剋
-    public void Rivalry(int playerCommandAttributeId, int aiCommandAttributeId)
+    // ダメージ計算
+    private int _damageMagnification = 2;             // 相剋の倍率
+    private int _damageMagnificationIsReinforce = 3;  // 比和時の相剋倍率
+    private int _damageUpValue = 5;                 　// 相生によるダメージUP量
+    private int _damageUpValueIsReinforce = 8;        // 比和時の相生ダメージUP量
+
+    [Header("Audio")]
+    private const string _seManagerObjName = "SEManager";
+    private const string _bgmManagerObjName = "BGMManager";
+    private AudioSource _seAudio;
+    private AudioSource _bgmAudio;
+    [SerializeField] private AudioClip _reinforceSE;            // 比和SE
+    [SerializeField] private AudioClip _attackSE;               // 攻撃SE
+    [SerializeField] private AudioClip _advantageousAttackSE;   // 有利攻撃SE
+    [SerializeField] private AudioClip _disadbantageAttackSE;   // 不利攻撃SE
+
+
+    /// <summary>
+    /// 【相剋】属性相性によってダメージ倍率を変化
+    /// </summary>
+    /// <param name="playerDamageBase">プレイヤーが与える処理前ダメージ</param>
+    /// <param name="aiDamageBase">AIが与える処理前ダメージ</param>
+    /// <param name="playerCommandAttributeId">プレイヤーのコマンドの属性ID</param>
+    /// <param name="aiCommandAttributeId">AIのコマンドの属性ID</param>
+    /// <returns>プレイヤーが与える処理後ダメージ、AIが与える処理後ダメージ</returns>
+    public (int playerDamaged, int aiDamaged) Rivalry (int playerDamageBase, int aiDamageBase,
+        int playerCommandAttributeId, int aiCommandAttributeId, bool isPlayerReinforce, bool isAiReinforce)
     {
-        int advantageousAttributeId = -1;
-        int disadvantageAttributeId = -1;
+        int advantageousAttributeId = -1;   // プレイヤーが有利な属性ID
+        int disadvantageAttributeId = -1;   // プレイヤーが不利な属性ID
+
+        int playerDamaged = 0;
+        int aiDamaged = 0;
 
         switch (playerCommandAttributeId)
         {
@@ -46,28 +74,63 @@ public class WuXingCheck : MonoBehaviour
                 break;
         }
 
+        // プレイヤーが与えるダメージアップ
         if (aiCommandAttributeId == advantageousAttributeId)
         {
-            // ダメージアップ
-            return;
+            _seAudio.PlayOneShot(_advantageousAttackSE);
+            playerDamaged = playerDamageBase * _damageMagnification;
+            aiDamaged = aiDamageBase / _damageMagnification;
+
+            if (isPlayerReinforce)
+            {
+                playerDamaged = playerDamageBase * _damageMagnificationIsReinforce;
+            }
+
+            if (isAiReinforce)
+            {
+                aiDamaged = aiDamaged / _damageMagnificationIsReinforce;
+            }
+
+            return (playerDamaged, aiDamaged);
         }
 
+        // プレイヤーが与えるダメージダウン
         if (aiCommandAttributeId == disadvantageAttributeId)
         {
-            // ダメージダウン
-            return;
+            _seAudio.PlayOneShot(_disadbantageAttackSE);
+            playerDamaged = playerDamageBase / _damageMagnification;
+            aiDamaged = aiDamageBase * _damageMagnification;
+
+            if (isPlayerReinforce)
+            {
+                playerDamaged = playerDamageBase / _damageMagnificationIsReinforce;
+            }
+
+            if (isAiReinforce)
+            {
+                aiDamaged = aiDamaged * _damageMagnificationIsReinforce;
+            }
+
+            return (playerDamaged, aiDamaged);
         }
 
         // 基礎ダメージそのまま返す
-        return;
+        _seAudio.PlayOneShot(_attackSE);
+        return (playerDamageBase, aiDamageBase);
     }
 
-    // 相生
-    public int Amplification(int playerCommandAttributeId, int aiCommandAttributeId)
+    /// <summary>
+    /// 【相生】属性相性によってダメージを増幅
+    /// </summary>
+    /// <param name="damageBase">処理前ダメージ</param>
+    /// <param name="commandAttributeId">自コマンドの属性ID</param>
+    /// <param name="otherCommandAttributeId">相手コマンドの属性ID</param>
+    /// <returns>処理後ダメージ</returns>
+    public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId)
     {
-        int otherAttributeId = -1;
+        int otherAttributeId = -1;  // 相手のコマンドの属性ID
 
-        switch (playerCommandAttributeId)
+        switch (commandAttributeId)
         {
             // 水
             case 1:
@@ -95,13 +158,32 @@ public class WuXingCheck : MonoBehaviour
                 break;
         }
 
+        //比和の反映
         // ダメージアップ
-        if (otherAttributeId == aiCommandAttributeId)
+        if (otherCommandAttributeId == otherAttributeId)
         {
-            // 基礎ダメージを追加して返す
+            return damageBase + _damageUpValue;
         }
 
         // 基礎ダメージをそのまま返す
-        return 0;
+        return damageBase;
+    }
+
+    /// <summary>
+    /// 【比和】キャラクターとコマンドの属性が同じか判定
+    /// </summary>
+    /// <param name="commandAttributeId">コマンドの属性ID</param>
+    /// <param name="character">キャラクター</param>
+    /// <returns>true/false</returns>
+    public bool Reinforce(int commandAttributeId, Character character)
+    {
+        // 発生
+        if (commandAttributeId == character.AttributeId)
+        {
+            _seAudio.PlayOneShot(_reinforceSE);
+            return true;
+        }
+
+        return false;
     }
 }

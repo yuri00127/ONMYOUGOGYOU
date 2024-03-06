@@ -25,7 +25,7 @@ public class AICommandManager : CommandManager
     private const int _startCommandRange = 0;   // コマンドの範囲の最小値
     private const int _endCommandRange = 5;     // コマンドの範囲の最大値
     private const int _maxAiLevel = 3;          // 敵AIの最大レベル
-    private int _aiAttributeId;             // 敵の属性ID
+    private int _aiAttributeId;                 // 敵の属性ID
     private bool _isFirstRound = true;          // 最初のターンかどうか
     private int[] commandArray = new int[] { 1, 1, 1, 1, 1 };   // コマンドの重みづけ
 

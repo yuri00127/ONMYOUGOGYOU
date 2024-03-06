@@ -19,12 +19,12 @@ public class PlayerCommandManager : CommandManager
     private const string _playerSelectCommandObjName = "PlayerCommands";            // 選択したコマンドの表示領域の名前
     [SerializeField] private Sprite _nullSprite;                                    // 何も選択していないときの画像
 
-    public int SelectingCommandSequence = 0;      // 選択されたコマンドの数
+    public int SelectingCommandSequence = 0;        // 選択されたコマンドの数
     private int _maxSelectingCommandSequence = 3;   // 選択できるコマンドの最大数
-    public bool IsAllSelect = false;              // コマンドが上限まで選択されたかどうか
+    public bool IsAllSelect = false;                // コマンドが上限まで選択されたかどうか
 
     // Input
-    public bool CanInput = true;                 // 入力を可能とする制御
+    public bool CanInput = true;                    // 入力を可能とする制御
     private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
 
     [Header("Audio")]
@@ -106,7 +106,7 @@ public class PlayerCommandManager : CommandManager
 
             CanInput = false;
             IsAllSelect = true;
-            _battleManager.Battle();
+            StartCoroutine(_battleManager.Battle());
         }
     }
 

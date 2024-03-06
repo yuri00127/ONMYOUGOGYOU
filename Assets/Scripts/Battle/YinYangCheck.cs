@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class YinYangCheck : MonoBehaviour
 {
+    [Header("Audio")]
+    private const string _seManagerObjName = "SEManager";
+    private const string _bgmManagerObjName = "BGMManager";
+    private AudioSource _seAudio;
+    private AudioSource _bgmAudio;
+    [SerializeField] private AudioClip _differSE;   // ‰A—zŒİªSE
+
+
     // ‰A—zŒİª
-    public int Differ(int damage, bool playerYinYang, bool aiYinYang)
+    public bool Differ(bool playerYinYang, bool aiYinYang)
     {
         // UŒ‚‚ª’Ê‚é
         if (playerYinYang != aiYinYang) 
         {
-            return damage;
+            return true;
         }
 
         // UŒ‚‚ª’Ê‚ç‚È‚¢
-        return 0;
+        _seAudio.PlayOneShot(_differSE);
+        return false;
     }
 
     // ‰A—z§–ñ
