@@ -28,6 +28,14 @@ public class WuXingCheck : MonoBehaviour
     [SerializeField] private AudioClip _advantageousAttackSE;   // 有利攻撃SE
     [SerializeField] private AudioClip _disadbantageAttackSE;   // 不利攻撃SE
 
+    // IconAnimation
+    [SerializeField] public Animator _playerAnim;
+    [SerializeField] public Animator _aiAnim;
+    private const string _reinforceParamName = "IsReinforce";
+    private const string _rivalryAdParamName = "IsRivalry_Advantageous";
+    private const string _rivalryDisadParamName = "IsRivalry_Disadvantage";
+    private const string _AmplificationParamName = "IsAmplification";
+
 
     private void Awake()
     {
@@ -89,6 +97,9 @@ public class WuXingCheck : MonoBehaviour
         if (aiCommandAttributeId == advantageousAttributeId)
         {
             _seAudio.PlayOneShot(_advantageousAttackSE);
+            _playerAnim.SetBool(_rivalryAdParamName, true);
+            _aiAnim.SetBool(_rivalryDisadParamName, true);
+
             playerDamaged = playerDamageBase * _damageMagnification;
             aiDamaged = aiDamageBase / _damageMagnification;
 
@@ -109,6 +120,9 @@ public class WuXingCheck : MonoBehaviour
         if (aiCommandAttributeId == disadvantageAttributeId)
         {
             _seAudio.PlayOneShot(_disadbantageAttackSE);
+            _playerAnim.SetBool(_rivalryDisadParamName, true);
+            _aiAnim.SetBool(_rivalryAdParamName, true);
+
             playerDamaged = playerDamageBase / _damageMagnification;
             aiDamaged = aiDamageBase * _damageMagnification;
 
@@ -137,7 +151,7 @@ public class WuXingCheck : MonoBehaviour
     /// <param name="commandAttributeId">自コマンドの属性ID</param>
     /// <param name="otherCommandAttributeId">相手コマンドの属性ID</param>
     /// <returns>処理後ダメージ</returns>
-    public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId, bool isReinforce)
+    public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId, bool isReinforce, bool isPlayer)
     {
         int otherAttributeId = -1;  // 相手のコマンドの属性ID
 
@@ -172,6 +186,16 @@ public class WuXingCheck : MonoBehaviour
         // ダメージアップ
         if (otherCommandAttributeId == otherAttributeId)
         {
+            if (isPlayer)
+            {
+                _playerAnim.SetBool(_AmplificationParamName, true);
+            }
+
+            if (!isPlayer)
+            {
+                _aiAnim.SetBool(_AmplificationParamName, true);
+            }
+
             // 比和発生時
             if (isReinforce)
             {
@@ -191,15 +215,38 @@ public class WuXingCheck : MonoBehaviour
     /// <param name="commandAttributeId">コマンドの属性ID</param>
     /// <param name="character">キャラクター</param>
     /// <returns>true/false</returns>
-    public bool Reinforce(int commandAttributeId, Character character)
+    public bool Reinforce(int commandAttributeId, Character character, bool isPlayer)
     {
         // 発生
         if (commandAttributeId == character.AttributeId)
         {
             _seAudio.PlayOneShot(_reinforceSE);
+
+            if (isPlayer) 
+            { 
+                _playerAnim.SetBool(_reinforceParamName, true);
+            }
+
+            if (!isPlayer) 
+            {
+                _aiAnim.SetBool(_reinforceParamName, true);
+            }
+
             return true;
         }
 
         return false;
+    }
+
+    public void AnimParametersReset()
+    {
+        _playerAnim.SetBool(_reinforceParamName, false);
+        _aiAnim.SetBool(_reinforceParamName, false);
+        _playerAnim.SetBool(_rivalryAdParamName, false);
+        _aiAnim.SetBool(_rivalryDisadParamName, false);
+        _playerAnim.SetBool(_rivalryDisadParamName, false);
+        _aiAnim.SetBool(_rivalryAdParamName, false);
+        _playerAnim.SetBool(_AmplificationParamName, false);
+        _aiAnim.SetBool(_AmplificationParamName, false);
     }
 }

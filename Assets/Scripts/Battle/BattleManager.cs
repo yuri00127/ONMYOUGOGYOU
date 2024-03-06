@@ -109,7 +109,7 @@ public class BattleManager : MonoBehaviour
         bool isPlayerReinforce = false;
         bool isAiReinforce = false;
 
-        var wait = new WaitForSeconds(2f);
+        var wait = new WaitForSeconds(1.0f);
 
         // 1ラウンドの処理
         for (int i = 0; i < playerCommandList.Count; i++)
@@ -132,8 +132,8 @@ public class BattleManager : MonoBehaviour
             }
 
             // 【比和】キャラクターとコマンドの属性が同じなら、以降の効果を増幅する
-            isPlayerReinforce = _wuXingCheck.Reinforce(playerCommandList[i] + 1, _playerCommandManager.SelectCharacter);
-            isAiReinforce = _wuXingCheck.Reinforce(aiCommandList[i] + 1, _aiCommandManager.SelectCharacter);
+            isPlayerReinforce = _wuXingCheck.Reinforce(playerCommandList[i] + 1, _playerCommandManager.SelectCharacter, true);
+            isAiReinforce = _wuXingCheck.Reinforce(aiCommandList[i] + 1, _aiCommandManager.SelectCharacter, false);
 
             // 【相剋】属性相性により、ダメージを増減
             var rivalryDamage = _wuXingCheck.Rivalry(playerDamage, aiDamage, playerCommandList[i] + 1, aiCommandList[i] + 1, isPlayerReinforce, isAiReinforce);
@@ -141,8 +141,8 @@ public class BattleManager : MonoBehaviour
             aiDamage = rivalryDamage.aiDamaged;
 
             // 【相生】属性相性により、ダメージを増幅
-            playerDamage = _wuXingCheck.Amplification(playerDamage, playerCommandList[i] + 1, aiCommandList[i] + 1, isPlayerReinforce);
-            aiDamage = _wuXingCheck.Amplification(aiDamage, aiCommandList[i] + 1, playerCommandList[i] + 1, isAiReinforce);
+            playerDamage = _wuXingCheck.Amplification(playerDamage, playerCommandList[i] + 1, aiCommandList[i] + 1, isPlayerReinforce, true);
+            aiDamage = _wuXingCheck.Amplification(aiDamage, aiCommandList[i] + 1, playerCommandList[i] + 1, isAiReinforce, false);
 
             // 攻撃アニメーション
             AttackAnimation(playerCommandList[i] + 1, isPlayerReinforce, _aiPos);
@@ -153,6 +153,11 @@ public class BattleManager : MonoBehaviour
 
             // プレイヤーへのダメージを確定
             _playerHpSlider.value -= aiDamage;
+
+            yield return wait;
+
+            _yinYangCheck.AnimParametersReset();
+            _wuXingCheck.AnimParametersReset();
 
             yield return wait;
 
@@ -172,6 +177,8 @@ public class BattleManager : MonoBehaviour
                 break;
             }
         }
+
+        _yinYangCheck.RestrictionAnimParametersReset();
 
         // お互いのHPが残っていれば、次のラウンドへ
         if (!_isFinish)

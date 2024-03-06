@@ -13,10 +13,12 @@ public class YinYangCheck : MonoBehaviour
     [SerializeField] private AudioClip _differSE;   // 陰陽互根SE
 
     // IconAnimation
-    [SerializeField] private Animator _playerAnim;
-    [SerializeField] private Animator _aiAnim;
+    [SerializeField] public Animator _playerRestrictionAnim;
+    [SerializeField] public Animator _playerDifferAnim;
+    [SerializeField] public Animator _aiRestrictionAnim;
+    [SerializeField] public Animator _aiDifferAnim;
     private const string _restrictionParamName = "IsRestriction";
-    
+    private const string _differParamName = "IsDiffer";
 
 
     private void Awake()
@@ -54,12 +56,12 @@ public class YinYangCheck : MonoBehaviour
         // アイコンアニメーション
         if (isPlayer)
         {
-            _playerAnim.SetBool(_restrictionParamName, true);
+            _playerRestrictionAnim.SetBool(_restrictionParamName, true);
         }
 
         if (!isPlayer)
         {
-            _aiAnim.SetBool(_restrictionParamName, true);
+            _aiRestrictionAnim.SetBool(_restrictionParamName, true);
         }
 
         // ランダムなコマンドの気を1つ変更する
@@ -95,14 +97,21 @@ public class YinYangCheck : MonoBehaviour
 
         // 攻撃が通らない
         _seAudio.PlayOneShot(_differSE);
-        _playerAnim.SetBool(_restrictionParamName, true);
+        _playerDifferAnim.SetBool(_differParamName, true);
+        _aiDifferAnim.SetBool(_differParamName, true);
 
         return false;
     }
 
     public void AnimParametersReset()
     {
-        _playerAnim.SetBool(_restrictionParamName, false);
-        _aiAnim.SetBool(_restrictionParamName, false);
+        _playerDifferAnim.SetBool(_differParamName, false);
+        _aiDifferAnim.SetBool(_differParamName, false);
+    }
+
+    public void RestrictionAnimParametersReset()
+    {
+        _playerRestrictionAnim.SetBool(_restrictionParamName, false);
+        _aiRestrictionAnim.SetBool(_restrictionParamName, false);
     }
 }

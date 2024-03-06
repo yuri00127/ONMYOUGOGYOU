@@ -5058,6 +5058,7 @@ GameObject:
   - component: {fileID: 918916185}
   - component: {fileID: 918916187}
   - component: {fileID: 918916186}
+  - component: {fileID: 918916188}
   m_Layer: 5
   m_Name: YinYangRestrictionIcon
   m_TagString: Untagged
@@ -5122,6 +5123,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918916184}
   m_CullTransparentMesh: 1
+--- !u!95 &918916188
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918916184}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c8b40167757e1f4198d70da9ce6c75d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &958685408
 GameObject:
   m_ObjectHideFlags: 0
@@ -5746,6 +5766,7 @@ GameObject:
   - component: {fileID: 1234488885}
   - component: {fileID: 1234488887}
   - component: {fileID: 1234488886}
+  - component: {fileID: 1234488888}
   m_Layer: 5
   m_Name: YinYangDiffer
   m_TagString: Untagged
@@ -5810,6 +5831,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234488884}
   m_CullTransparentMesh: 1
+--- !u!95 &1234488888
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234488884}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9f643f92c10ae50468ebaed54a0264c8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1277505121
 GameObject:
   m_ObjectHideFlags: 0
@@ -7276,8 +7316,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _differSE: {fileID: 8300000, guid: 795a5bbe2cffb594c8b928c88585c831, type: 3}
-  _playerAnim: {fileID: 1277505123}
-  _aiAnim: {fileID: 153407204}
+  _playerRestrictionAnim: {fileID: 0}
+  _playerDifferAnim: {fileID: 0}
+  _aiRestrictionAnim: {fileID: 0}
+  _aiDifferAnim: {fileID: 0}
 --- !u!114 &1713596768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7299,6 +7341,8 @@ MonoBehaviour:
   _attackSE: {fileID: 8300000, guid: e10a40ec9a0c200439b581604e5450c3, type: 3}
   _advantageousAttackSE: {fileID: 8300000, guid: 6f4d2b2a532ad5b47ba20d5038731f1c, type: 3}
   _disadbantageAttackSE: {fileID: 8300000, guid: cf30862c728d6694f8265620c22ae9ef, type: 3}
+  _playerAnim: {fileID: 1277505123}
+  _aiAnim: {fileID: 153407204}
 --- !u!114 &1713596769
 MonoBehaviour:
   m_ObjectHideFlags: 0
