@@ -68,7 +68,7 @@ public class CommandManager : MonoBehaviour
     /// 選択された気の画像を表示領域にセットする
     /// </summary>
     /// <param name="selectingCommandSequence">表示する位置</param>
-    protected virtual void SelectMind(int selectingCommandSequence)
+    public virtual void SelectMind(int selectingCommandSequence)
     {
         // 陽が選択されていたら
         if (IsYinList[selectingCommandSequence])

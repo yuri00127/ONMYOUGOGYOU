@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class WuXingCheck : MonoBehaviour
 {
+    [Header("Icon")]
+    [SerializeField] private GameObject _playerRivalryIcon;
+    [SerializeField] private GameObject _aiRivalryIcon;
+    [SerializeField] private Sprite[] _rivalryIconSprites = new Sprite[2];
+
     // ダメージ計算
     private int _damageMagnification = 2;             // 相剋の倍率
     private int _damageMagnificationIsReinforce = 3;  // 比和時の相剋倍率
@@ -23,6 +28,12 @@ public class WuXingCheck : MonoBehaviour
     [SerializeField] private AudioClip _advantageousAttackSE;   // 有利攻撃SE
     [SerializeField] private AudioClip _disadbantageAttackSE;   // 不利攻撃SE
 
+
+    private void Awake()
+    {
+        _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
+        _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
+    }
 
     /// <summary>
     /// 【相剋】属性相性によってダメージ倍率を変化
@@ -126,7 +137,7 @@ public class WuXingCheck : MonoBehaviour
     /// <param name="commandAttributeId">自コマンドの属性ID</param>
     /// <param name="otherCommandAttributeId">相手コマンドの属性ID</param>
     /// <returns>処理後ダメージ</returns>
-    public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId)
+    public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId, bool isReinforce)
     {
         int otherAttributeId = -1;  // 相手のコマンドの属性ID
 
@@ -158,10 +169,15 @@ public class WuXingCheck : MonoBehaviour
                 break;
         }
 
-        //比和の反映
         // ダメージアップ
         if (otherCommandAttributeId == otherAttributeId)
         {
+            // 比和発生時
+            if (isReinforce)
+            {
+                return damageBase + _damageUpValueIsReinforce;
+            }
+
             return damageBase + _damageUpValue;
         }
 

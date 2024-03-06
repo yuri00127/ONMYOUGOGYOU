@@ -114,31 +114,39 @@ public class BattleManager : MonoBehaviour
         // 1ラウンドの処理
         for (int i = 0; i < playerCommandList.Count; i++)
         {
+            Debug.Log((i + 1) + "回目");
+            Debug.Log("playerCommand:" + (playerCommandList[i] + 1));
+            Debug.Log("aiCommand:" + (aiCommandList[i] + 1));
+
             int playerDamage = _playerDamageBase;
             int aiDamage = _aiDamageBase;
+
+            // 【陰陽制約】コマンドの陰陽が全て同じなら、どれかを違うものに変更する
+            _yinYangCheck.Restriction(ref playerIsYinList, _playerCommandManager, true);
+            _yinYangCheck.Restriction(ref aiIsYinList, _aiCommandManager, false);
 
             // 【陰陽互根】お互いの陰陽が同じなら、ダメージは発生しない
             if (!_yinYangCheck.Differ(playerIsYinList[i], aiIsYinList[i]))
             {
-                break;
+                continue;
             }
 
             // 【比和】キャラクターとコマンドの属性が同じなら、以降の効果を増幅する
-            isPlayerReinforce = _wuXingCheck.Reinforce(playerCommandList[i], _playerCommandManager.SelectCharacter);
-            isAiReinforce = _wuXingCheck.Reinforce(aiCommandList[i], _aiCommandManager.SelectCharacter);
+            isPlayerReinforce = _wuXingCheck.Reinforce(playerCommandList[i] + 1, _playerCommandManager.SelectCharacter);
+            isAiReinforce = _wuXingCheck.Reinforce(aiCommandList[i] + 1, _aiCommandManager.SelectCharacter);
 
             // 【相剋】属性相性により、ダメージを増減
-            var rivalryDamage = _wuXingCheck.Rivalry(playerDamage, aiDamage, playerCommandList[i], aiCommandList[i], isPlayerReinforce, isAiReinforce);
+            var rivalryDamage = _wuXingCheck.Rivalry(playerDamage, aiDamage, playerCommandList[i] + 1, aiCommandList[i] + 1, isPlayerReinforce, isAiReinforce);
             playerDamage = rivalryDamage.playerDamaged;
             aiDamage = rivalryDamage.aiDamaged;
 
             // 【相生】属性相性により、ダメージを増幅
-            playerDamage = _wuXingCheck.Amplification(playerDamage, playerCommandList[i], aiCommandList[i]);
-            aiDamage = _wuXingCheck.Amplification(aiDamage, aiCommandList[i], playerCommandList[i]);
+            playerDamage = _wuXingCheck.Amplification(playerDamage, playerCommandList[i] + 1, aiCommandList[i] + 1, isPlayerReinforce);
+            aiDamage = _wuXingCheck.Amplification(aiDamage, aiCommandList[i] + 1, playerCommandList[i] + 1, isAiReinforce);
 
             // 攻撃アニメーション
-            AttackAnimation(playerCommandList[i], isPlayerReinforce);
-            AttackAnimation(aiCommandList[i], isAiReinforce);
+            AttackAnimation(playerCommandList[i] + 1, isPlayerReinforce, _aiPos);
+            AttackAnimation(aiCommandList[i] + 1, isAiReinforce, _playerPos);
 
             // 敵へのダメージを確定
             _aiHpSlider.value -= playerDamage;
@@ -177,26 +185,26 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     /// <param name="commandAttributeId">コマンドの属性ID</param>
     /// <param name="isReinforce">比和の有無</param>
-    private void AttackAnimation(int commandAttributeId, bool isReinforce)
+    private void AttackAnimation(int commandAttributeId, bool isReinforce, Vector3 pos)
     {
         ParticleSystem damageParticle = null;
 
         switch (commandAttributeId)
         {
             case 1:
-                damageParticle = Instantiate(_waterAttackParticle, _aiPos, Quaternion.identity);
+                damageParticle = Instantiate(_waterAttackParticle, pos, Quaternion.identity);
                 break;
             case 2:
-                damageParticle = Instantiate(_treeAttackParticle, _aiPos, Quaternion.identity);
+                damageParticle = Instantiate(_treeAttackParticle, pos, Quaternion.identity);
                 break;
             case 3:
-                damageParticle = Instantiate(_fireAttackParticle, _aiPos, Quaternion.identity);
+                damageParticle = Instantiate(_fireAttackParticle, pos, Quaternion.identity);
                 break;
             case 4:
-                damageParticle = Instantiate(_soilAttackParticle, _aiPos, Quaternion.identity);
+                damageParticle = Instantiate(_soilAttackParticle, pos, Quaternion.identity);
                 break;
             case 5:
-                damageParticle = Instantiate(_goldAttackParticle, _aiPos, Quaternion.identity);
+                damageParticle = Instantiate(_goldAttackParticle, pos, Quaternion.identity);
                 break;
             default:
                 break;

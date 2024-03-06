@@ -23,6 +23,11 @@ public class BattleResult : MonoBehaviour
     [SerializeField] private AudioClip _battleFinishJingle;    // バトル終了時のジングル
 
 
+    private void Awake()
+    {
+        _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
+    }
+
     public IEnumerator BattleFinish(bool playerWin)
     {
         Debug.Log("バトル終了");

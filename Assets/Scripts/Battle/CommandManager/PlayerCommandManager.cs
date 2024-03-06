@@ -102,6 +102,9 @@ public class PlayerCommandManager : CommandManager
         // UŒ‚ŠJŽn
         if (SelectingCommandSequence >= _maxSelectingCommandSequence)
         {
+            int yinCount = 0;
+            int yangCount = 0;
+
             _audio.PlayOneShot(_submitFinishSE);
 
             CanInput = false;

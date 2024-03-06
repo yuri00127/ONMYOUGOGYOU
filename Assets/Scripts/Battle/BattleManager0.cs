@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BattleManager0 : MonoBehaviour
 {
-    /*
+
     // スクリプトを取得するオブジェクト
     private const string _playerCommandManagerObjName = "PlayerCommandManager";
     private const string _aiCommandManagerObjName = "AICommandManager";
@@ -407,7 +407,7 @@ public class BattleManager0 : MonoBehaviour
                 _aiDamageIconObj[j].GetComponent<Image>().sprite = _aiDamageSprite[i, j];
             }
 
-            /*
+
             // 攻撃アニメーション
             if (attributeResult[i, 0] == 1)
             {
@@ -622,5 +622,5 @@ public class BattleManager0 : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(_resultDefaultButtonObj);
 
     }
-    */
+    
 }
