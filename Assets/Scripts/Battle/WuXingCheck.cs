@@ -29,18 +29,34 @@ public class WuXingCheck : MonoBehaviour
     [SerializeField] private AudioClip _disadbantageAttackSE;   // 不利攻撃SE
 
     // IconAnimation
-    [SerializeField] public Animator _playerAnim;
-    [SerializeField] public Animator _aiAnim;
+    [SerializeField] GameObject _playerBattleIconObj;
+    [SerializeField] GameObject _aiBattleIconObj;
+    private const string _reinforceIconObjName = "WuXingReinforce";
+    private const string _rivalryIconObjName = "WuXingRivalry";
+    private const string _amplificationIconObjName = "WuXingAmplification";
+    private Animator _playerReinforceAnim;
+    private Animator _playerRivalryAnim;
+    private Animator _playerAmplificationAnim;
+    private Animator _aiReinforceAnim;
+    private Animator _aiRivalryAnim;
+    private Animator _aiAmplificationAnim;
     private const string _reinforceParamName = "IsReinforce";
     private const string _rivalryAdParamName = "IsRivalry_Advantageous";
     private const string _rivalryDisadParamName = "IsRivalry_Disadvantage";
-    private const string _AmplificationParamName = "IsAmplification";
+    private const string _amplificationParamName = "IsAmplification";
 
 
     private void Awake()
     {
         _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
         _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
+
+        _playerReinforceAnim = _playerBattleIconObj?.transform.Find(_reinforceIconObjName).gameObject?.GetComponent<Animator>();
+        _playerRivalryAnim = _playerBattleIconObj?.transform.Find(_rivalryIconObjName).gameObject?.GetComponent<Animator>();
+        _playerAmplificationAnim = _playerBattleIconObj?.transform.Find(_amplificationIconObjName).gameObject?.GetComponent<Animator>() ;
+        _aiReinforceAnim = _aiBattleIconObj?.transform.Find(_reinforceIconObjName).gameObject?.GetComponent <Animator>() ;
+        _aiRivalryAnim = _aiBattleIconObj?.transform.Find(_rivalryIconObjName).gameObject?.GetComponent<Animator>();
+        _aiAmplificationAnim = _aiBattleIconObj?.transform.Find(_amplificationIconObjName).gameObject?.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -57,8 +73,8 @@ public class WuXingCheck : MonoBehaviour
         int advantageousAttributeId = -1;   // プレイヤーが有利な属性ID
         int disadvantageAttributeId = -1;   // プレイヤーが不利な属性ID
 
-        int playerDamaged = 0;
-        int aiDamaged = 0;
+        int playerDamaged;
+        int aiDamaged;
 
         switch (playerCommandAttributeId)
         {
@@ -97,21 +113,11 @@ public class WuXingCheck : MonoBehaviour
         if (aiCommandAttributeId == advantageousAttributeId)
         {
             _seAudio.PlayOneShot(_advantageousAttackSE);
-            _playerAnim.SetBool(_rivalryAdParamName, true);
-            _aiAnim.SetBool(_rivalryDisadParamName, true);
+            _playerRivalryAnim.SetBool(_rivalryAdParamName, true);
+            _aiRivalryAnim.SetBool(_rivalryDisadParamName, true);
 
-            playerDamaged = playerDamageBase * _damageMagnification;
-            aiDamaged = aiDamageBase / _damageMagnification;
-
-            if (isPlayerReinforce)
-            {
-                playerDamaged = playerDamageBase * _damageMagnificationIsReinforce;
-            }
-
-            if (isAiReinforce)
-            {
-                aiDamaged = aiDamaged / _damageMagnificationIsReinforce;
-            }
+            playerDamaged = (!isPlayerReinforce) ? playerDamageBase * _damageMagnification :  playerDamageBase * _damageMagnificationIsReinforce;
+            aiDamaged = (!isAiReinforce) ? aiDamageBase / _damageMagnification : aiDamageBase / _damageMagnificationIsReinforce;
 
             return (playerDamaged, aiDamaged);
         }
@@ -120,21 +126,11 @@ public class WuXingCheck : MonoBehaviour
         if (aiCommandAttributeId == disadvantageAttributeId)
         {
             _seAudio.PlayOneShot(_disadbantageAttackSE);
-            _playerAnim.SetBool(_rivalryDisadParamName, true);
-            _aiAnim.SetBool(_rivalryAdParamName, true);
+            _playerRivalryAnim.SetBool(_rivalryDisadParamName, true);
+            _aiRivalryAnim.SetBool(_rivalryAdParamName, true);
 
-            playerDamaged = playerDamageBase / _damageMagnification;
-            aiDamaged = aiDamageBase * _damageMagnification;
-
-            if (isPlayerReinforce)
-            {
-                playerDamaged = playerDamageBase / _damageMagnificationIsReinforce;
-            }
-
-            if (isAiReinforce)
-            {
-                aiDamaged = aiDamaged * _damageMagnificationIsReinforce;
-            }
+            playerDamaged = (!isPlayerReinforce) ? playerDamageBase / _damageMagnification : playerDamageBase / _damageMagnificationIsReinforce;
+            aiDamaged = (!isAiReinforce) ? aiDamageBase * _damageMagnification : aiDamageBase * _damageMagnificationIsReinforce;
 
             return (playerDamaged, aiDamaged);
         }
@@ -188,12 +184,12 @@ public class WuXingCheck : MonoBehaviour
         {
             if (isPlayer)
             {
-                _playerAnim.SetBool(_AmplificationParamName, true);
+                _playerAmplificationAnim.SetBool(_amplificationParamName, true);
             }
 
             if (!isPlayer)
             {
-                _aiAnim.SetBool(_AmplificationParamName, true);
+                _aiAmplificationAnim.SetBool(_amplificationParamName, true);
             }
 
             // 比和発生時
@@ -224,12 +220,12 @@ public class WuXingCheck : MonoBehaviour
 
             if (isPlayer) 
             { 
-                _playerAnim.SetBool(_reinforceParamName, true);
+                _playerReinforceAnim.SetBool(_reinforceParamName, true);
             }
 
             if (!isPlayer) 
             {
-                _aiAnim.SetBool(_reinforceParamName, true);
+                _aiReinforceAnim.SetBool(_reinforceParamName, true);
             }
 
             return true;
@@ -240,13 +236,13 @@ public class WuXingCheck : MonoBehaviour
 
     public void AnimParametersReset()
     {
-        _playerAnim.SetBool(_reinforceParamName, false);
-        _aiAnim.SetBool(_reinforceParamName, false);
-        _playerAnim.SetBool(_rivalryAdParamName, false);
-        _aiAnim.SetBool(_rivalryDisadParamName, false);
-        _playerAnim.SetBool(_rivalryDisadParamName, false);
-        _aiAnim.SetBool(_rivalryAdParamName, false);
-        _playerAnim.SetBool(_AmplificationParamName, false);
-        _aiAnim.SetBool(_AmplificationParamName, false);
+        _playerReinforceAnim.SetBool(_reinforceParamName, false);
+        _aiReinforceAnim.SetBool(_reinforceParamName, false);
+        _playerRivalryAnim.SetBool(_rivalryAdParamName, false);
+        _aiRivalryAnim.SetBool(_rivalryDisadParamName, false);
+        _playerRivalryAnim.SetBool(_rivalryDisadParamName, false);
+        _aiRivalryAnim.SetBool(_rivalryAdParamName, false);
+        _playerAmplificationAnim.SetBool(_amplificationParamName, false);
+        _aiAmplificationAnim.SetBool(_amplificationParamName, false);
     }
 }

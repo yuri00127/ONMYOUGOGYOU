@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 151097362}
   - component: {fileID: 151097364}
   - component: {fileID: 151097363}
+  - component: {fileID: 151097365}
   m_Layer: 5
   m_Name: WuXingRivalry
   m_TagString: Untagged
@@ -754,6 +755,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151097361}
   m_CullTransparentMesh: 1
+--- !u!95 &151097365
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151097361}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f4b4fab823040548964cf6a135e6b65, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &153407202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,6 +1352,7 @@ GameObject:
   - component: {fileID: 340847310}
   - component: {fileID: 340847312}
   - component: {fileID: 340847311}
+  - component: {fileID: 340847313}
   m_Layer: 5
   m_Name: WuXingAmplification
   m_TagString: Untagged
@@ -1396,6 +1417,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340847309}
   m_CullTransparentMesh: 1
+--- !u!95 &340847313
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340847309}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 11f9ebbd6f91a45438a792102c8cc3a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &348297464
 GameObject:
   m_ObjectHideFlags: 0
@@ -3713,8 +3753,9 @@ GameObject:
   - component: {fileID: 673780568}
   - component: {fileID: 673780570}
   - component: {fileID: 673780569}
+  - component: {fileID: 673780571}
   m_Layer: 5
-  m_Name: YinYangRestrictionIcon
+  m_Name: YinYangRestriction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3777,6 +3818,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673780567}
   m_CullTransparentMesh: 1
+--- !u!95 &673780571
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673780567}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96d6510514494ff44ae6fe9fbe6bc500, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &684902351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,7 +5120,7 @@ GameObject:
   - component: {fileID: 918916186}
   - component: {fileID: 918916188}
   m_Layer: 5
-  m_Name: YinYangRestrictionIcon
+  m_Name: YinYangRestriction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5901,7 +5961,7 @@ Animator:
   m_GameObject: {fileID: 1277505121}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c3942c47a34254246b418d2e6304c548, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b7f05e6fcd6c644ab78bd21bce361f5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6218,6 +6278,7 @@ GameObject:
   - component: {fileID: 1439407432}
   - component: {fileID: 1439407434}
   - component: {fileID: 1439407433}
+  - component: {fileID: 1439407435}
   m_Layer: 5
   m_Name: WuXingAmplification
   m_TagString: Untagged
@@ -6282,6 +6343,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439407431}
   m_CullTransparentMesh: 1
+--- !u!95 &1439407435
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439407431}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9ed40d1dd5b1754b9226613b91c6247, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1451028394
 GameObject:
   m_ObjectHideFlags: 0
@@ -6718,6 +6798,7 @@ GameObject:
   - component: {fileID: 1589116199}
   - component: {fileID: 1589116201}
   - component: {fileID: 1589116200}
+  - component: {fileID: 1589116202}
   m_Layer: 5
   m_Name: WuXingReinforce
   m_TagString: Untagged
@@ -6782,6 +6863,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589116198}
   m_CullTransparentMesh: 1
+--- !u!95 &1589116202
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589116198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d9672ca1a24a1d499f55dd91453f3d8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1624197239
 GameObject:
   m_ObjectHideFlags: 0
@@ -7168,6 +7268,7 @@ GameObject:
   - component: {fileID: 1706874950}
   - component: {fileID: 1706874952}
   - component: {fileID: 1706874951}
+  - component: {fileID: 1706874953}
   m_Layer: 5
   m_Name: YinYangDiffer
   m_TagString: Untagged
@@ -7232,6 +7333,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706874949}
   m_CullTransparentMesh: 1
+--- !u!95 &1706874953
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706874949}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8c425c4a68d15645be204e2ab7d5afb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1713596763
 GameObject:
   m_ObjectHideFlags: 0
@@ -7316,10 +7436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _differSE: {fileID: 8300000, guid: 795a5bbe2cffb594c8b928c88585c831, type: 3}
-  _playerRestrictionAnim: {fileID: 0}
-  _playerDifferAnim: {fileID: 0}
-  _aiRestrictionAnim: {fileID: 0}
-  _aiDifferAnim: {fileID: 0}
+  _playerBattleIconObj: {fileID: 1277505121}
+  _aiBattleIconObj: {fileID: 153407202}
 --- !u!114 &1713596768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7341,8 +7459,8 @@ MonoBehaviour:
   _attackSE: {fileID: 8300000, guid: e10a40ec9a0c200439b581604e5450c3, type: 3}
   _advantageousAttackSE: {fileID: 8300000, guid: 6f4d2b2a532ad5b47ba20d5038731f1c, type: 3}
   _disadbantageAttackSE: {fileID: 8300000, guid: cf30862c728d6694f8265620c22ae9ef, type: 3}
-  _playerAnim: {fileID: 1277505123}
-  _aiAnim: {fileID: 153407204}
+  _playerBattleIconObj: {fileID: 1277505121}
+  _aiBattleIconObj: {fileID: 153407202}
 --- !u!114 &1713596769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7376,6 +7494,7 @@ GameObject:
   - component: {fileID: 1748940441}
   - component: {fileID: 1748940443}
   - component: {fileID: 1748940442}
+  - component: {fileID: 1748940444}
   m_Layer: 5
   m_Name: WuXingReinforce
   m_TagString: Untagged
@@ -7440,6 +7559,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748940440}
   m_CullTransparentMesh: 1
+--- !u!95 &1748940444
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748940440}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 860bb3fda3188674eb905adf362013c0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1755375122
 GameObject:
   m_ObjectHideFlags: 0
@@ -8352,6 +8490,7 @@ GameObject:
   - component: {fileID: 2054116378}
   - component: {fileID: 2054116380}
   - component: {fileID: 2054116379}
+  - component: {fileID: 2054116381}
   m_Layer: 5
   m_Name: WuXingRivalry
   m_TagString: Untagged
@@ -8416,6 +8555,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054116377}
   m_CullTransparentMesh: 1
+--- !u!95 &2054116381
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054116377}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 56c0b23f32b95ce40a54de59d02e52f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2113033023
 PrefabInstance:
   m_ObjectHideFlags: 0

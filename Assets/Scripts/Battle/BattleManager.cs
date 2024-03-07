@@ -30,7 +30,7 @@ public class BattleManager : MonoBehaviour
 
     // ダメージ計算
     private int _playerDamageBase = 5;      // プレイヤーの基礎ダメージ量
-    private int _aiDamageBase = 15;         // 敵の基礎ダメージ量
+    private int _aiDamageBase = 8;         // 敵の基礎ダメージ量
 
     [Header("Animation")]
     [SerializeField] private ParticleSystem _waterAttackParticle;   // 水属性攻撃エフェクト
@@ -109,15 +109,11 @@ public class BattleManager : MonoBehaviour
         bool isPlayerReinforce = false;
         bool isAiReinforce = false;
 
-        var wait = new WaitForSeconds(1.0f);
+        var wait = new WaitForSeconds(1f);
 
         // 1ラウンドの処理
         for (int i = 0; i < playerCommandList.Count; i++)
         {
-            Debug.Log((i + 1) + "回目");
-            Debug.Log("playerCommand:" + (playerCommandList[i] + 1));
-            Debug.Log("aiCommand:" + (aiCommandList[i] + 1));
-
             int playerDamage = _playerDamageBase;
             int aiDamage = _aiDamageBase;
 
@@ -128,6 +124,8 @@ public class BattleManager : MonoBehaviour
             // 【陰陽互根】お互いの陰陽が同じなら、ダメージは発生しない
             if (!_yinYangCheck.Differ(playerIsYinList[i], aiIsYinList[i]))
             {
+                yield return new WaitForSeconds(2.0f);
+                _yinYangCheck.AnimParametersReset();
                 continue;
             }
 
@@ -156,7 +154,6 @@ public class BattleManager : MonoBehaviour
 
             yield return wait;
 
-            _yinYangCheck.AnimParametersReset();
             _wuXingCheck.AnimParametersReset();
 
             yield return wait;
@@ -177,8 +174,6 @@ public class BattleManager : MonoBehaviour
                 break;
             }
         }
-
-        _yinYangCheck.RestrictionAnimParametersReset();
 
         // お互いのHPが残っていれば、次のラウンドへ
         if (!_isFinish)
@@ -245,6 +240,7 @@ public class BattleManager : MonoBehaviour
         // ラウンド表示を更新
         _nowRound++;
         _roundCounter.CountUp(_nowRound);
+        _yinYangCheck.RestrictionAnimParametersReset();
 
         yield return new WaitForSeconds(1f);
     }

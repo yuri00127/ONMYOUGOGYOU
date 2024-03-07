@@ -13,10 +13,14 @@ public class YinYangCheck : MonoBehaviour
     [SerializeField] private AudioClip _differSE;   // âAózå›ç™SE
 
     // IconAnimation
-    [SerializeField] public Animator _playerRestrictionAnim;
-    [SerializeField] public Animator _playerDifferAnim;
-    [SerializeField] public Animator _aiRestrictionAnim;
-    [SerializeField] public Animator _aiDifferAnim;
+    [SerializeField] GameObject _playerBattleIconObj;
+    [SerializeField] GameObject _aiBattleIconObj;
+    private const string _restrictionIconObjName = "YinYangRestriction";
+    private const string _differIconObjName = "YinYangDiffer";
+    private Animator _playerRestrictionAnim;
+    private Animator _playerDifferAnim;
+    private Animator _aiRestrictionAnim;
+    private Animator _aiDifferAnim;
     private const string _restrictionParamName = "IsRestriction";
     private const string _differParamName = "IsDiffer";
 
@@ -25,6 +29,11 @@ public class YinYangCheck : MonoBehaviour
     {
         _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
         _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
+
+        _playerRestrictionAnim = _playerBattleIconObj?.transform.Find(_restrictionIconObjName).gameObject?.GetComponent<Animator>();
+        _playerDifferAnim = _playerBattleIconObj?.transform.Find(_differIconObjName).gameObject?.GetComponent<Animator>();
+        _aiRestrictionAnim = _aiBattleIconObj?.transform.Find(_restrictionIconObjName).gameObject?.GetComponent<Animator>();
+        _aiDifferAnim = _aiBattleIconObj?.transform.Find(_differIconObjName).gameObject?.GetComponent<Animator>() ;
     }
 
     /// <summary>
