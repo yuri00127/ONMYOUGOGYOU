@@ -18,7 +18,6 @@ public class VolumeController : MonoBehaviour
     private Slider _volumeSlider;
     public const float VolumeUnit = 0.1f;
 
-
     // input
     protected const string InputHorizontal = "Horizontal";
 
@@ -36,7 +35,7 @@ public class VolumeController : MonoBehaviour
     protected virtual void Update()
     {
         // スライダーを選択中
-        if (EventSystem.current.currentSelectedGameObject.name != null && EventSystem.current.currentSelectedGameObject.name == SliderName)
+        if (EventSystem.current.currentSelectedGameObject?.name != null && EventSystem.current.currentSelectedGameObject?.name == SliderName)
         {
             // 右入力
             if (Input.GetAxisRaw(InputHorizontal) > 0 && CanSelect) { VolumeUp(); }
@@ -72,7 +71,7 @@ public class VolumeController : MonoBehaviour
     /// <summary>
     /// 音量設定を反映する
     /// </summary>
-    private void VolumeSet()
+    protected void VolumeSet()
     {
         // 初回設定時にスライダーを取得
         if (IsFirst)
@@ -100,9 +99,9 @@ public class VolumeController : MonoBehaviour
     /// <summary>
     /// 音量設定を保存する
     /// </summary>
-    private void SaveVolumeSetting()
+    protected void SaveVolumeSetting()
     {
-        if (EventSystem.current.currentSelectedGameObject.name == SESliderName)
+        if (EventSystem.current.currentSelectedGameObject?.name == SESliderName)
         {
             PlayerPrefs.SetFloat(_seVolumeName, Audio.volume);
             VolumeSet();
@@ -111,5 +110,17 @@ public class VolumeController : MonoBehaviour
 
         PlayerPrefs.SetFloat(_bgmVolumeName, Audio.volume);
         VolumeSet();
+    }
+
+    public void MouseVolumeUp(GameObject gameObject)
+    {
+        EventSystem.current.SetSelectedGameObject(gameObject);
+        VolumeUp();
+    }
+
+    public void MouseVolumeDown(GameObject gameObject)
+    {
+        EventSystem.current.SetSelectedGameObject(gameObject);
+        VolumeDown();
     }
 }

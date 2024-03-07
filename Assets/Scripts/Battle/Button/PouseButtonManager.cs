@@ -51,6 +51,7 @@ public class PouseButtonManager : Button
     public override void Submit()
     {
         CanInput = false;
+        Audio.PlayOneShot(SubmitSE);
 
         // ŠJ‚­
         if (!_isOpenPouseView)
@@ -62,8 +63,6 @@ public class PouseButtonManager : Button
 
             // ƒ{ƒ^ƒ“‰æ‘œ‚Ìİ’è
             _buttonIcon.sprite = _sourceImage[1];
-
-            Debug.Log(EventSystem.current.currentSelectedGameObject);
             return;
         }
 

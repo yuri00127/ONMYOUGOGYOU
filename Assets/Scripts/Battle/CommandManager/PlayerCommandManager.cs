@@ -113,11 +113,11 @@ public class PlayerCommandManager : CommandManager
     /// <summary>
     /// 直前のコマンドの選択を取り消す
     /// </summary>
-    private void CancelCommand()
+    public void CancelCommand()
     {
         CanInput = false;
 
-        if (SelectingCommandSequence >= 0)
+        if (SelectingCommandSequence > 0)
         {
             _audio.PlayOneShot(_cancelSE);
 

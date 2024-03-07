@@ -14,6 +14,7 @@ public class BackTitleButton : Button
     {
         if (!_isLoading)
         {
+            Audio.PlayOneShot(SubmitSE);
             StartCoroutine(_loadNextScene.LoadScene(_nextScene));
         }
 

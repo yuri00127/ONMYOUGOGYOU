@@ -28,8 +28,11 @@ public class CharacterSelect : Button
 
     public override void PointerEnter(GameObject gameObject)
     {
-        base.PointerEnter(gameObject);
-
+        if (_selectStepManager.NowSelectStep != 2)
+        {
+            base.PointerEnter(gameObject);
+        }
+        
         // プレイヤーキャラクター選択時
         if (_selectStepManager.NowSelectStep == 0)
         {
@@ -47,13 +50,16 @@ public class CharacterSelect : Button
 
     public void Submit(GameObject gameObject)
     {
-        // 選択されたキャラクターのIDを取得
-        for (int i = 1; i <= _characterDataBase.CharacterList.Count; i++)
+        if (_selectStepManager.NowSelectStep != 2)
         {
-            if (gameObject.name == string.Format(_characterIdFormat, i))
+            // 選択されたキャラクターのIDを取得
+            for (int i = 1; i <= _characterDataBase.CharacterList.Count; i++)
             {
-                _selectCharacterId = i;
-                break;
+                if (gameObject.name == string.Format(_characterIdFormat, i))
+                {
+                    _selectCharacterId = i;
+                    break;
+                }
             }
         }
 

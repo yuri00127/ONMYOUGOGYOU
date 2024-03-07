@@ -109,7 +109,7 @@ public class BattleManager : MonoBehaviour
         bool isPlayerReinforce = false;
         bool isAiReinforce = false;
 
-        var wait = new WaitForSeconds(1f);
+        var wait = new WaitForSeconds(2.0f);
 
         // 1ƒ‰ƒEƒ“ƒh‚Ìˆ—
         for (int i = 0; i < playerCommandList.Count; i++)
@@ -124,7 +124,7 @@ public class BattleManager : MonoBehaviour
             // y‰A—zŒİªz‚¨Œİ‚¢‚Ì‰A—z‚ª“¯‚¶‚È‚çAƒ_ƒ[ƒW‚Í”­¶‚µ‚È‚¢
             if (!_yinYangCheck.Differ(playerIsYinList[i], aiIsYinList[i]))
             {
-                yield return new WaitForSeconds(2.0f);
+                yield return wait;
                 _yinYangCheck.AnimParametersReset();
                 continue;
             }
@@ -156,7 +156,7 @@ public class BattleManager : MonoBehaviour
 
             _wuXingCheck.AnimParametersReset();
 
-            yield return wait;
+            yield return new WaitForSeconds(1.0f);
 
             // ”s–k
             if (_playerHpSlider.value <= 0)

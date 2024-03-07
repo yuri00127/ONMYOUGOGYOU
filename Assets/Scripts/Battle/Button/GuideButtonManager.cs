@@ -12,42 +12,65 @@ public class GuideButtonManager : Button
     public bool IsOpenGuideView { get; private set; } = false;
     private bool _isPointerDown = false;
 
+    [SerializeField] private GameObject[] _pageObjcts = new GameObject[2];
+    private int pageNo = 0;
+
     private const string _assignmentButton = "Y";
+    private const string _horizontalButton = "Horizontal";
+
+    [SerializeField] private AudioClip _pageSE;
 
 
     private void Update()
     {
-        // 入力中のみガイドを表示する
+        // ガイドボタン入力
         if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
         {
-            Select();
+            Submit();
         }
 
-        if (!CanInput && Input.GetAxisRaw(_assignmentButton) == 0 && !_isPointerDown)
+        // ページめくり入力
+        if (IsOpenGuideView && Input.GetAxisRaw(_horizontalButton) > 0 && CanInput)
         {
-            Deselect();
+            NextPage();
+        }
+
+        if (IsOpenGuideView && Input.GetAxisRaw(_horizontalButton) < 0 && CanInput)
+        {
+            BackPage();
+        }
+
+        // 一度入力をやめると再入力可能
+        if (!CanInput && Input.GetAxisRaw(_assignmentButton) == 0 && Input.GetAxisRaw(_horizontalButton) == 0)
+        {
             CanInput = true;
         }
     }
 
-    // ガイドを開く
-    public override void Select()
+    
+    public override void Submit()
     {
         CanInput = false;
+        Audio.PlayOneShot(SubmitSE);
 
-        // ビューの設定
-        _guideView.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        IsOpenGuideView = true;
-    }
+        // ガイドを開く
+        if (!IsOpenGuideView)
+        {
+            _guideView.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            IsOpenGuideView = true;
+            return;
+        }
 
-    // ガイドを閉じる
-    public override void Deselect()
-    {
-        // ビューの設定
-        _guideView.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(_battleDefaultForcus);
-        IsOpenGuideView = false;
+        // ガイドを閉じる
+        if (IsOpenGuideView)
+        {
+            _guideView.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(_battleDefaultForcus);
+            IsOpenGuideView = false;
+            return;
+        }
+        
     }
 
     // マウスでの操作
@@ -61,5 +84,39 @@ public class GuideButtonManager : Button
     {
         _isPointerDown = false;
         Select();
+    }
+
+    public void NextPage()
+    {
+        _pageObjcts[pageNo].SetActive(false);
+        pageNo++;
+        PageSwitch();
+    }
+
+    public void BackPage()
+    {
+        _pageObjcts[pageNo].SetActive(false);
+        pageNo--;
+        PageSwitch();
+    }
+
+    private void PageSwitch()
+    {
+        CanInput = false;
+        Audio.PlayOneShot(_pageSE);
+
+        // ページをループ
+        if (pageNo < 0)
+        {
+            pageNo = _pageObjcts.Length - 1;
+        }
+
+        if (pageNo > _pageObjcts.Length - 1)
+        {
+            pageNo = 0;
+        }
+
+        // 表示
+        _pageObjcts[pageNo].SetActive(true);
     }
 }
