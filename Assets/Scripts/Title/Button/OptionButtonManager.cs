@@ -51,7 +51,9 @@ public class OptionButtonManager : Button
         }
     }
 
-    // オプションビューの開閉
+    /// <summary>
+    /// オプションビューの開閉
+    /// </summary>
     public override void Submit()
     {
         CanInput = false;
@@ -90,7 +92,9 @@ public class OptionButtonManager : Button
         
     }
 
-    // 操作説明をPC版に切り替える
+    /// <summary>
+    /// 操作説明をPC版に切り替える
+    /// </summary>
     public void ChangePCButton()
     {
         if (!_operatingGuideChange._isPC)
@@ -100,7 +104,9 @@ public class OptionButtonManager : Button
         
     }
 
-    // 操作説明をコントローラー版に切り替える
+    /// <summary>
+    /// 操作説明をコントローラー版に切り替える
+    /// </summary>
     public void ChangeControllerButton()
     {
         if (!_operatingGuideChange._isController)

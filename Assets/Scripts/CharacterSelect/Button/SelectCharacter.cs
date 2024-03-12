@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterSelect : Button
+public class SelectCharacter : Button
 {
     [SerializeField] private CharacterDataBase _characterDataBase;
     [SerializeField] private SelectStepManager _selectStepManager;
@@ -32,7 +31,7 @@ public class CharacterSelect : Button
         {
             base.PointerEnter(gameObject);
         }
-        
+
         // プレイヤーキャラクター選択時
         if (_selectStepManager.NowSelectStep == 0)
         {
@@ -48,6 +47,10 @@ public class CharacterSelect : Button
         }
     }
 
+    /// <summary>
+    /// キャラクターを選択
+    /// </summary>
+    /// <param name="gameObject">キャラクターのオブジェクト</param>
     public void Submit(GameObject gameObject)
     {
         if (_selectStepManager.NowSelectStep != 2)
@@ -69,7 +72,6 @@ public class CharacterSelect : Button
             _selectStepManager.NextAICharacterSelect(_selectCharacterId);
             _playerCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
             _aiCharacterViewImage.sprite = _defaultCharacterSprite;
-
             return;
         }
 
@@ -78,10 +80,7 @@ public class CharacterSelect : Button
         {
             _selectStepManager.NextAILevelSelect(_selectCharacterId);
             _aiCharacterViewImage.sprite = gameObject.GetComponent<Image>().sprite;
-
             return;
         }
-
     }
-
 }

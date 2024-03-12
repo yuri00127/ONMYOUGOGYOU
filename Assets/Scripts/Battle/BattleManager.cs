@@ -99,20 +99,24 @@ public class BattleManager : MonoBehaviour
         _aiHpSlider.value = _maxHp;
     }
 
-    public IEnumerator Battle()
+    /// <summary>
+    /// 選択されたコマンドによるバトルを開始する
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoBattleStart()
     {
         List<int> playerCommandList = _playerCommandManager.CommandIdList;  // プレイヤーのコマンドの属性IDリスト
         List<bool> playerIsYinList = _playerCommandManager.IsYinList;       // プレイヤーのコマンドの陰陽リスト
         List<int> aiCommandList = _aiCommandManager.CommandIdList;          // AIのコマンドの属性IDリスト
         List<bool> aiIsYinList = _aiCommandManager.IsYinList;               // AIのコマンドの陰陽リスト
 
-        bool isPlayerReinforce = false;
-        bool isAiReinforce = false;
+        var isPlayerReinforce = false;
+        var isAiReinforce = false;
 
         var wait = new WaitForSeconds(2.0f);
 
         // 1ラウンドの処理
-        for (int i = 0; i < playerCommandList.Count; i++)
+        for (var i = 0; i < playerCommandList.Count; i++)
         {
             int playerDamage = _playerDamageBase;
             int aiDamage = _aiDamageBase;
@@ -162,7 +166,7 @@ public class BattleManager : MonoBehaviour
             if (_playerHpSlider.value <= 0)
             {
                 _isFinish = true;
-                StartCoroutine(_battleResult.BattleFinish(false));
+                StartCoroutine(_battleResult.CoBattleFinish(false));
                 break;
             }
 
@@ -170,7 +174,7 @@ public class BattleManager : MonoBehaviour
             if (_aiHpSlider.value <= 0)
             {
                 _isFinish = true;
-                StartCoroutine(_battleResult.BattleFinish(true));
+                StartCoroutine(_battleResult.CoBattleFinish(true));
                 break;
             }
         }
@@ -223,8 +227,6 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator NextRound()
     {
-        //yield return new WaitForSeconds(3f);
-
         // コマンド初期化
         _playerCommandManager.SelectingCommandSequence = 0;
         _playerCommandManager.IsAllSelect = false;

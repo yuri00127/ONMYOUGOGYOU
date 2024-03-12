@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AILevelSelect : Button
+public class SelectAiLevel : Button
 {
     [SerializeField] private SelectStepManager _selectStepManager;
 
@@ -33,9 +33,13 @@ public class AILevelSelect : Button
         }
     }
 
+    /// <summary>
+    /// AIの強さのレベルを取得
+    /// </summary>
+    /// <param name="gameObject">レベルオブジェクト</param>
     public void Submit(GameObject gameObject)
     {
-        // 選択されたAIのレベルを取得
+        // 選択されたレベルを取得
         for (int i = 1; i <= 3; i++)
         {
             if (gameObject.name == string.Format(_AILevelFormat, i))
@@ -47,5 +51,4 @@ public class AILevelSelect : Button
 
         _selectStepManager.NextBattleScene(_selectAILevel);
     }
-
 }

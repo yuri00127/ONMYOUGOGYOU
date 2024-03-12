@@ -11,9 +11,7 @@ public class SelectStepManager : MonoBehaviour
     [SerializeField] private LoadNextScene _loadNextScene;
     [SerializeField] private SelectCharacterData _selectCharacterData;
 
-    // 選択ステップ（自キャラ、敵キャラ、敵AIレベル）
-    //public int NowSelectStep = 0;
-    public int NowSelectStep { get; private set; } = 0;
+    public int NowSelectStep { get; private set; } = 0;     // 選択ステップ（自キャラ、敵キャラ、敵AIレベル）
 
     [Header("デフォルトボタン")]
     [SerializeField] private GameObject _characterDefaultButton;
@@ -50,14 +48,18 @@ public class SelectStepManager : MonoBehaviour
         _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
     }
 
-    // プレイヤーキャラクターの選択ステップ
+    /// <summary>
+    /// プレイヤーキャラクターの選択ステップ開始
+    /// </summary>
     private void PlayerCharacterSelect()
     {
         StepGuideSet();
         EventSystem.current.SetSelectedGameObject(_characterDefaultButton);
     }
 
-    // 敵キャラクターの選択ステップ
+    /// <summary>
+    /// 敵キャラクターの選択ステップ開始
+    /// </summary>
     private void AICharacterSelect()
     {
         StepGuideSet();
@@ -65,7 +67,9 @@ public class SelectStepManager : MonoBehaviour
 
     }
 
-    // 敵AIレベルの選択ステップ
+    /// <summary>
+    /// 敵AIレベルの選択ステップ開始
+    /// </summary>
     private void AILevelSelect()
     {
         _AiLevelObj.SetActive(true);
@@ -74,7 +78,10 @@ public class SelectStepManager : MonoBehaviour
     }
 
 
-    // プレイヤーの使用キャラクターを選択して、敵キャラ選択へ
+    /// <summary>
+    /// プレイヤーの使用キャラクターを確定する
+    /// </summary>
+    /// <param name="PlayerCharacterId"></param>
     public void NextAICharacterSelect(int PlayerCharacterId)
     {
         _audio.PlayOneShot(_submitSE);
@@ -84,7 +91,10 @@ public class SelectStepManager : MonoBehaviour
         AICharacterSelect();
     }
 
-    // AIの使用キャラクターを選択して、AIレベル選択へ
+    /// <summary>
+    /// AIの使用キャラクターを確定する
+    /// </summary>
+    /// <param name="AICharacterId"></param>
     public void NextAILevelSelect(int AICharacterId)
     {
         _audio.PlayOneShot(_submitSE);
@@ -94,7 +104,10 @@ public class SelectStepManager : MonoBehaviour
         AILevelSelect();
     }
 
-    // AIの強さのレベルを選択して、バトル画面へ遷移
+    /// <summary>
+    /// AIの強さのレベルを確定する
+    /// </summary>
+    /// <param name="level"></param>
     public void NextBattleScene(int level)
     {
         _audio.PlayOneShot(_submitFinishSE);
@@ -103,13 +116,13 @@ public class SelectStepManager : MonoBehaviour
         StartCoroutine(_loadNextScene.LoadScene(_battleScene));
     }
 
-    // 選択ステップを一つ前に戻す
+    /// <summary>
+    /// 選択ステップを一つ前に戻す
+    /// </summary>
     public void BackStep()
     {
         _audio.PlayOneShot(_cancelSE);
-
         NowSelectStep--;
-        Debug.Log("back:" + NowSelectStep);
 
         // タイトル画面へ戻る
         if (NowSelectStep == -1)
@@ -133,7 +146,9 @@ public class SelectStepManager : MonoBehaviour
         }
     }
 
-    // ステップごとにガイド画像を変更する
+    /// <summary>
+    /// ステップごとにガイド画像を変更する
+    /// </summary>
     private void StepGuideSet()
     {
         _stepGuideImg.sprite = _stepGuides[NowSelectStep];

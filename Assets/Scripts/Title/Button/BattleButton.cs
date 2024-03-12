@@ -20,7 +20,9 @@ public class BattleButton : Button
         base.PointerEnter(gameObject);
     }
 
-    // キャラクター選択画面へ遷移
+    /// <summary>
+    /// キャラクター選択画面へ遷移
+    /// </summary>
     public override void Submit()
     {
         // 初回押下時のみ処理する

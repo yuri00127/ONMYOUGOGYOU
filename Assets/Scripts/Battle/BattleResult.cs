@@ -28,7 +28,7 @@ public class BattleResult : MonoBehaviour
         _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
     }
 
-    public IEnumerator BattleFinish(bool playerWin)
+    public IEnumerator CoBattleFinish(bool playerWin)
     {
         Debug.Log("ƒoƒgƒ‹I—¹");
 

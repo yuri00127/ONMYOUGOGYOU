@@ -106,7 +106,7 @@ public class PlayerCommandManager : CommandManager
 
             CanInput = false;
             IsAllSelect = true;
-            StartCoroutine(_battleManager.Battle());
+            StartCoroutine(_battleManager.CoBattleStart());
         }
     }
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameCloseButton : Button
 {
+    /// <summary>
+    /// ƒQ[ƒ€‚ğI—¹‚·‚é
+    /// </summary>
     public override void Submit()
     {
 #if UNITY_EDITOR
