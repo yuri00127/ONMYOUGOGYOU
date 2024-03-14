@@ -2428,6 +2428,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!82 &1558495278 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4165262615925210512, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+  m_PrefabInstance: {fileID: 1153464233}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1598341141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3361,6 +3366,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c4d2bc19f8908e14eafad6cd60f49355, type: 3}
   - {fileID: 21300000, guid: 685c8d40c16a82c4ba62d7de000d5d64, type: 3}
   - {fileID: 21300000, guid: a7dd9d41767fbe04fb1ce65ba63bcd62, type: 3}
+  _seAudio: {fileID: 1558495278}
   _submitSE: {fileID: 8300000, guid: d1c6e773550715141915d6cd65a29c00, type: 3}
   _submitFinishSE: {fileID: 8300000, guid: b931a8ba4d7592a439de5e1283b1d15b, type: 3}
   _cancelSE: {fileID: 8300000, guid: 539b6f6382694854f9bd60f4b89e90ef, type: 3}
@@ -3412,6 +3418,8 @@ MonoBehaviour:
   SubmitSE: {fileID: 0}
   _characterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
   _selectStepManager: {fileID: 2043042088}
+  _playerCharacterViewImage: {fileID: 584349746}
+  _aiCharacterViewImage: {fileID: 559672055}
   _defaultCharacterSprite: {fileID: 21300000, guid: 72b2b0f19030acb4aa08dc3e71fecd77, type: 3}
 --- !u!1 &2081221495
 GameObject:

@@ -24,14 +24,17 @@ public class BattleManager : MonoBehaviour
     private Slider _playerHpSlider;
     private Slider _aiHpSlider;
     private int _maxHp = 100;
-    private bool _isFirstAnimation = false;    // 最初のアニメーションが行われたか
-    private int _nowRound = 1;                 // 現在のラウンド
-    private bool _isFinish = false;            // 勝敗が決定しているか
 
     // ダメージ計算
     private int _playerDamageBase = 5;      // プレイヤーの基礎ダメージ量
     private int _aiDamageBase = 8;         // 敵の基礎ダメージ量
 
+    // 進行
+    private bool _isFirstAnimation = false;    // 最初のアニメーションが行われたか
+    private int _nowRound = 1;                 // 現在のラウンド
+    private bool _isFinish = false;            // 勝敗が決定しているか
+
+    // アニメーション
     [Header("Animation")]
     [SerializeField] private ParticleSystem _waterAttackParticle;   // 水属性攻撃エフェクト
     [SerializeField] private ParticleSystem _treeAttackParticle;    // 木属性攻撃エフェクト
@@ -187,7 +190,7 @@ public class BattleManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻撃アニメーション
+    /// 攻撃アニメーションの決定
     /// </summary>
     /// <param name="commandAttributeId">コマンドの属性ID</param>
     /// <param name="isReinforce">比和の有無</param>
@@ -225,6 +228,10 @@ public class BattleManager : MonoBehaviour
         Destroy(damageParticle.gameObject, 0.5f);
     }
 
+    /// <summary>
+    /// 次のラウンドへ進む
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator NextRound()
     {
         // コマンド初期化

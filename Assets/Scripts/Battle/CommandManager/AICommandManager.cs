@@ -5,25 +5,20 @@ using UnityEngine.UI;
 
 public class AICommandManager : CommandManager
 {
-    // スクリプトを取得するオブジェクト
-    private const string _aiCharacterManagerObjName = "AICharacterManager";
-    private const string _selectCharacterDataObjName = "SelectCharacterData";
-
     // スクリプト
-    private AICharacterManager _aiCharacterManager;
-    private SelectCharacterData _selectCharacterData;
+    [SerializeField] private AICharacterManager _aiCharacterManager;
+    [SerializeField] private SelectCharacterData _selectCharacterData;
     [SerializeField] private CharacterDataBase _characterDataBase;
 
     // 表示
-    private const string _aiSelectCommandObjName = "AICommands";    // 選択したコマンドの表示領域の名前
     [SerializeField] private Sprite _unknownCommandSprite;          // 不明なコマンドのSprite
     [SerializeField] private Sprite _unknownMindSprite;             // 不明な気のSprite
     private int _showCommandNumber;                                 // レベル別の表示するコマンドの数
     private int _showMindNumber;                                    // レベル別の表示する気の数
 
     // コマンド選択
-    private const int _startCommandRange = 0;   // コマンドの範囲の最小値
-    private const int _endCommandRange = 5;     // コマンドの範囲の最大値
+    private const int _minCommandAttributeRange = 0;   // 属性IDの範囲の最小値
+    private const int _maxCommandAttributeRange = 5;   // 属性IDの範囲の最大値
     private const int _maxAiLevel = 3;          // 敵AIの最大レベル
     private int _aiAttributeId;                 // 敵の属性ID
     private bool _isFirstRound = true;          // 最初のターンかどうか
@@ -32,13 +27,7 @@ public class AICommandManager : CommandManager
 
     protected override void Awake()
     {
-        // 表示領域のObject取得
-        SelectCommandObj = GameObject.Find(_aiSelectCommandObjName);
         base.Awake();
-
-        // スクリプトを取得
-        _aiCharacterManager = GameObject.Find(_aiCharacterManagerObjName).GetComponent<AICharacterManager>();
-        _selectCharacterData = GameObject.Find(_selectCharacterDataObjName).GetComponent<SelectCharacterData>();
 
         // 敵の属性を取得
         int aiCharacterId = PlayerPrefs.GetInt(_selectCharacterData.SaveAICharacterId);
@@ -63,10 +52,10 @@ public class AICommandManager : CommandManager
     public void ShowAICommand()
     {
         // 全ての表示をリセット
-        for (int i = 0; i < SelectCommandObjArray.Length; i++)
+        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
-            SelectCommandImageArray[i].sprite = _unknownCommandSprite;
-            MindImageArray[i].sprite = _unknownMindSprite;
+            SelectCommandAttributeImageArray[i].sprite = _unknownCommandSprite;
+            SelectCommandMindImageArray[i].sprite = _unknownMindSprite;
         }
 
         // 選択リストをリセット
@@ -76,30 +65,20 @@ public class AICommandManager : CommandManager
         // 敵のコマンドを決定
         int selectCommandIndex = 0;
 
-        for (int i = 0; i < SelectCommandObjArray.Length; i++)
+        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             selectCommandIndex = SetAICommand(_aiCharacterManager.AILevel);
             CommandIdList.Add(selectCommandIndex);
-
-            /* デバッグ用 
-            if (i == 0) { CommandIdList.Add(4); }
-            if (i == 1) { CommandIdList.Add(3); }
-            if (i == 2) { CommandIdList.Add(4); }
-            */
-
-            //Debug.Log("敵のコマンド：" + selectCommandIndex);
         }
 
         // 気を決定(0なら陰、1なら陽)
-        for (int i = 0; i < SelectCommandObjArray.Length; i++)
+        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             if (Random.Range(0, 2) == 0)
             {
                 IsYinList.Add(true);
             }
             IsYinList.Add(false);
-
-            //Debug.Log("敵の陰陽：" + IsYinList[i]);
         }
 
         // コマンドの表示
@@ -138,7 +117,7 @@ public class AICommandManager : CommandManager
             return;
         }
 
-        if (_aiCharacterManager.AILevel == 3)
+        if (_aiCharacterManager.AILevel == _maxAiLevel)
         {
             _showCommandNumber = 1;
             _showMindNumber = 0;
@@ -147,7 +126,7 @@ public class AICommandManager : CommandManager
     }
 
     /// <summary>
-    ///  表示位置を決める
+    ///  コマンドの表示位置を決める
     /// </summary>
     /// <param name="decideCount">表示する個数</param>
     /// <returns>表示位置のリスト</returns>
@@ -162,8 +141,6 @@ public class AICommandManager : CommandManager
             int num = Random.Range(0, _positionIndex.Count);
             _returnPositionIndex.Add(_positionIndex[num]);
             _positionIndex.RemoveAt(num);
-
-            //Debug.Log("位置" + num);
         }
 
         return _returnPositionIndex;
@@ -203,9 +180,7 @@ public class AICommandManager : CommandManager
                     case 5:
                         commandArray[4] = 3;
                         break;
-                    // デフォルト(絶対に通らない)
                     default:
-                        Debug.Log("処理ミス");
                         break;
                 }
             }
@@ -232,7 +207,7 @@ public class AICommandManager : CommandManager
         }
 
         // AIレベル1,2
-        return Random.Range(_startCommandRange, _endCommandRange);
+        return Random.Range(_minCommandAttributeRange, _maxCommandAttributeRange);
     }
 
 }

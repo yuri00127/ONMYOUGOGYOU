@@ -5,18 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerCommandManager : CommandManager
 {
-    // スクリプトを取得するオブジェクト
-    private const string _changeButtonObjName = "ChangeButton";
-    private const string _playerCharacterManagerObjName = "PlayerCharacterManager";
-
     // スクリプト
-    private YinYangChangeButton _yinYangChangeButton;
-    private PlayerCharacterManager _playerCharacterManager;
+    [SerializeField] private YinYangChangeButton _yinYangChangeButton;
+    [SerializeField] private PlayerCharacterManager _playerCharacterManager;
+    [SerializeField] private BattleManager BattleManager;
 
     [Header("コマンドObject")]
     [SerializeField] private GameObject[] _commandButtonArray = new GameObject[5];  // コマンドボタンのObject
     private Image[] _commandButtonImageArray = new Image[5];                        // コマンドボタンのImageコンポーネント
-    private const string _playerSelectCommandObjName = "PlayerCommands";            // 選択したコマンドの表示領域の名前
     [SerializeField] private Sprite _nullSprite;                                    // 何も選択していないときの画像
 
     public int SelectingCommandSequence = 0;        // 選択されたコマンドの数
@@ -28,8 +24,7 @@ public class PlayerCommandManager : CommandManager
     private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
 
     [Header("Audio")]
-    private const string _seManagerObjName = "SEManager";
-    private AudioSource _audio;
+    [SerializeField] private AudioSource _seAudio;
     [SerializeField] private AudioClip _submitSE;
     [SerializeField] private AudioClip _submitFinishSE;
     [SerializeField] private AudioClip _cancelSE;
@@ -37,12 +32,6 @@ public class PlayerCommandManager : CommandManager
 
     protected override void Awake()
     {
-        // スクリプトの取得
-        _yinYangChangeButton = GameObject.Find(_changeButtonObjName).GetComponent<YinYangChangeButton>();
-        _playerCharacterManager = GameObject.Find(_playerCharacterManagerObjName).GetComponent<PlayerCharacterManager>();
-
-        // 表示領域のObject取得
-        SelectCommandObj = GameObject.Find(_playerSelectCommandObjName);
         base.Awake();
 
         // コマンドボタンのImageコンポーネントの取得
@@ -50,8 +39,6 @@ public class PlayerCommandManager : CommandManager
         {
             _commandButtonImageArray[i] = _commandButtonArray[0].GetComponent<Image>();
         }
-
-        _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -81,10 +68,10 @@ public class PlayerCommandManager : CommandManager
     /// <param name="command">選択されたコマンドのObject</param>
     public override void SelectCommand(int selectCommandIndex)
     {
-        // コマンドが上限まで選択されていなければ
+        // コマンドが3つセットされていない時
         if (!IsAllSelect)
         {
-            _audio.PlayOneShot(_submitSE);
+            _seAudio.PlayOneShot(_submitSE);
 
             // 選択されたコマンドの情報をリストに登録
             CommandIdList.Add(selectCommandIndex - 1);
@@ -98,15 +85,14 @@ public class PlayerCommandManager : CommandManager
             SelectingCommandSequence++;
         }
 
-        // コマンド選択数が上限に達したとき
         // 攻撃開始
         if (SelectingCommandSequence >= _maxSelectingCommandSequence)
         {
-            _audio.PlayOneShot(_submitFinishSE);
+            _seAudio.PlayOneShot(_submitFinishSE);
 
             CanInput = false;
             IsAllSelect = true;
-            StartCoroutine(_battleManager.CoBattleStart());
+            StartCoroutine(BattleManager.CoBattleStart());
         }
     }
 
@@ -119,14 +105,14 @@ public class PlayerCommandManager : CommandManager
 
         if (SelectingCommandSequence > 0)
         {
-            _audio.PlayOneShot(_cancelSE);
+            _seAudio.PlayOneShot(_cancelSE);
 
             // コマンド選択数を減らす
             SelectingCommandSequence--;
 
             // 直前に追加したコマンドを表示エリアから消す
-            SelectCommandImageArray[SelectingCommandSequence].sprite = _nullSprite;
-            MindImageArray[SelectingCommandSequence].sprite = _nullSprite;
+            SelectCommandAttributeImageArray[SelectingCommandSequence].sprite = _nullSprite;
+            SelectCommandMindImageArray[SelectingCommandSequence].sprite = _nullSprite;
 
             // 選択リストから取り除く
             CommandIdList.RemoveAt(SelectingCommandSequence);
@@ -141,8 +127,8 @@ public class PlayerCommandManager : CommandManager
     {
         for (int i = 0; i < _maxSelectingCommandSequence; i++)
         {
-            SelectCommandImageArray[i].sprite = _nullSprite;
-            MindImageArray[i].sprite = _nullSprite;
+            SelectCommandAttributeImageArray[i].sprite = _nullSprite;
+            SelectCommandMindImageArray[i].sprite = _nullSprite;
         }
     }
 }

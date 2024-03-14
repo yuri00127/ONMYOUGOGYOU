@@ -5,14 +5,11 @@ using UnityEngine.UI;
 
 public class AICharacterManager : CharacterManager
 {
-    // スクリプトを取得するオブジェクト
-    private const string _aiCommandManagerObjName = "AICommandManager";
-
     // スクリプト
-    private AICommandManager _aiCommandManager;
+    [SerializeField] private AICommandManager _aiCommandManager;
 
     // キャラクタービュー
-    private const string _aiCharacterViewObjName = "AICharacter";
+    [SerializeField] private GameObject _aiCharacterView;
 
 
     public int AILevel { get; private set; }
@@ -20,25 +17,15 @@ public class AICharacterManager : CharacterManager
 
     protected override void Awake()
     {
-        // スクリプトを取得
-        _aiCommandManager = GameObject.Find(_aiCommandManagerObjName).GetComponent<AICommandManager>();
-
-        base.Awake();
-
         // 選択された敵キャラクターを取得
         int aiCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SaveAICharacterId, 1);
         SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
-        // 仮設定 
-        //int aiCharacterId = 1;
-        //SelectCharacter = CharacterDataBase.CharacterList[aiCharacterId - 1];
 
         // 選択された敵の強さを取得
         AILevel = PlayerPrefs.GetInt(SelectCharacterData.SaveAILevel, 1);
-        // 仮設定 
-        //AILevel = 1;
 
         // キャラクター画像をセット
-        CharacterImage = GameObject.Find(_aiCharacterViewObjName).GetComponent<Image>();
+        CharacterImage = _aiCharacterView.GetComponent<Image>();
         CharacterImage.sprite = SelectCharacter.CharacterImage;
     }
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SelectCharacter : Button
 {
+    // スクリプト
     [SerializeField] private CharacterDataBase _characterDataBase;
     [SerializeField] private SelectStepManager _selectStepManager;
 
@@ -12,18 +13,10 @@ public class SelectCharacter : Button
     private int _selectCharacterId;
 
     // キャラクタービュー
-    private const string _playerCharacterViewObjName = "PlayerCharacterBox";
-    private Image _playerCharacterViewImage;
-    private const string _aiCharacterViewObjName = "AICharacterBox";
-    private Image _aiCharacterViewImage;
+    [SerializeField] private Image _playerCharacterViewImage;
+    [SerializeField] private Image _aiCharacterViewImage;
     [SerializeField] private Sprite _defaultCharacterSprite;
 
-
-    private void Awake()
-    {
-        _playerCharacterViewImage = GameObject.Find(_playerCharacterViewObjName).GetComponent<Image>();
-        _aiCharacterViewImage = GameObject.Find(_aiCharacterViewObjName).GetComponent<Image>();
-    }
 
     public override void PointerEnter(GameObject gameObject)
     {

@@ -46,8 +46,10 @@ public class GuideButtonManager : Button
             CanInput = true;
         }
     }
-
     
+    /// <summary>
+    /// ガイドビューの表示/非表示
+    /// </summary>
     public override void Submit()
     {
         CanInput = false;
@@ -70,22 +72,11 @@ public class GuideButtonManager : Button
             IsOpenGuideView = false;
             return;
         }
-        
     }
 
-    // マウスでの操作
-    public void PointerDown()
-    {
-        _isPointerDown = true;
-        Select();
-    }
-
-    public void PointerUp()
-    {
-        _isPointerDown = false;
-        Select();
-    }
-
+    /// <summary>
+    /// 次のページへ
+    /// </summary>
     public void NextPage()
     {
         _pageObjcts[pageNo].SetActive(false);
@@ -93,6 +84,9 @@ public class GuideButtonManager : Button
         PageSwitch();
     }
 
+    /// <summary>
+    /// 前のページへ
+    /// </summary>
     public void BackPage()
     {
         _pageObjcts[pageNo].SetActive(false);
@@ -100,12 +94,15 @@ public class GuideButtonManager : Button
         PageSwitch();
     }
 
+    /// <summary>
+    /// ページをループさせる
+    /// </summary>
     private void PageSwitch()
     {
         CanInput = false;
         Audio.PlayOneShot(_pageSE);
 
-        // ページをループ
+        // ページNoのループ
         if (pageNo < 0)
         {
             pageNo = _pageObjcts.Length - 1;

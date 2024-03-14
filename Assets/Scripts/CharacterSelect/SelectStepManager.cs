@@ -33,8 +33,7 @@ public class SelectStepManager : MonoBehaviour
     private const string _battleScene = "Battle";
 
     // Audio
-    private const string _seManagerObjName = "SEManager";
-    private AudioSource _audio;
+    [SerializeField] private AudioSource _seAudio;
     [SerializeField] private AudioClip _submitSE;
     [SerializeField] private AudioClip _submitFinishSE;
     [SerializeField] private AudioClip _cancelSE;
@@ -44,8 +43,6 @@ public class SelectStepManager : MonoBehaviour
     {
         _stepGuideImg = _stepGuideObj.GetComponent<Image>();
         _cancelGuideImg = _cancelGuideObj.GetComponent<Image>();
-
-        _audio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -84,7 +81,7 @@ public class SelectStepManager : MonoBehaviour
     /// <param name="PlayerCharacterId"></param>
     public void NextAICharacterSelect(int PlayerCharacterId)
     {
-        _audio.PlayOneShot(_submitSE);
+        _seAudio.PlayOneShot(_submitSE);
         PlayerPrefs.SetInt(_selectCharacterData.SavePlayerCharacterId, PlayerCharacterId);
 
         NowSelectStep++;
@@ -97,7 +94,7 @@ public class SelectStepManager : MonoBehaviour
     /// <param name="AICharacterId"></param>
     public void NextAILevelSelect(int AICharacterId)
     {
-        _audio.PlayOneShot(_submitSE);
+        _seAudio.PlayOneShot(_submitSE);
         PlayerPrefs.SetInt(_selectCharacterData.SaveAICharacterId, AICharacterId);
 
         NowSelectStep++;
@@ -110,7 +107,7 @@ public class SelectStepManager : MonoBehaviour
     /// <param name="level"></param>
     public void NextBattleScene(int level)
     {
-        _audio.PlayOneShot(_submitFinishSE);
+        _seAudio.PlayOneShot(_submitFinishSE);
         PlayerPrefs.SetInt(_selectCharacterData.SaveAILevel, level);
 
         StartCoroutine(_loadNextScene.LoadScene(_battleScene));
@@ -121,7 +118,7 @@ public class SelectStepManager : MonoBehaviour
     /// </summary>
     public void BackStep()
     {
-        _audio.PlayOneShot(_cancelSE);
+        _seAudio.PlayOneShot(_cancelSE);
         NowSelectStep--;
 
         // ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö–ß‚é

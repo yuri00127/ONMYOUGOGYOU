@@ -5,11 +5,8 @@ using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
-    // スクリプトを取得するオブジェクト
-    private const string _selectCharacterData = "SelectCharacterData";
-
     // スクリプト
-    protected SelectCharacterData SelectCharacterData;
+    [SerializeField] protected SelectCharacterData SelectCharacterData;
 
     [Header("キャラクター")]
     [SerializeField] protected CharacterDataBase CharacterDataBase;     // キャラクターのデータベースObject
@@ -18,10 +15,5 @@ public class CharacterManager : MonoBehaviour
     // キャラクターの画像
     protected Image CharacterImage;
 
-
-    protected virtual void Awake()
-    {
-        // スクリプトの取得
-        SelectCharacterData = GameObject.Find(_selectCharacterData).GetComponent<SelectCharacterData>();
-    }
+    protected virtual void Awake() { }
 }

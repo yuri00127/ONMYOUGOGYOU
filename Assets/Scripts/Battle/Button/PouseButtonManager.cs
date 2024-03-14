@@ -24,7 +24,6 @@ public class PouseButtonManager : Button
     public override void Start()
     {
         base.Start();
-
         _buttonIcon = this.GetComponent<Image>();
 
         // 操作説明切り替え処理の準備
@@ -47,7 +46,9 @@ public class PouseButtonManager : Button
         }
     }
 
-    // ポーズの開閉
+    /// <summary>
+    /// ポーズビューの開閉
+    /// </summary>
     public override void Submit()
     {
         CanInput = false;
@@ -86,23 +87,25 @@ public class PouseButtonManager : Button
         base.PointerEnter(gameObject);
     }
 
-    // 操作説明をPC版に切り替える
+    /// <summary>
+    /// 操作説明をPC版に切り替える
+    /// </summary>
     public void ChangePCButton()
     {
         if (!_operatingGuideChange._isPC)
         {
             _operatingGuideChange.PCButton(Audio, 2);
         }
-
     }
 
-    // 操作説明をコントローラー版に切り替える
+    /// <summary>
+    /// 操作説明をコントローラー版に切り替える
+    /// </summary>
     public void ChangeControllerButton()
     {
         if (!_operatingGuideChange._isController)
         {
             _operatingGuideChange.ControllerButton(Audio, 2);
         }
-
     }
 }

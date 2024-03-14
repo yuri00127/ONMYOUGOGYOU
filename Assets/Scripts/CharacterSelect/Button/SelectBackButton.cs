@@ -6,7 +6,6 @@ using UnityEngine;
 public class SelectBackButton : Button
 {
     [SerializeField] private SelectStepManager _selectStepManager;
-
     private const string _cancelButton = "Cancel";
 
     private void Update()

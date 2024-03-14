@@ -17,8 +17,6 @@ public class PlayerCharacterManager : CharacterManager
 
     protected override void Awake()
     {
-        base.Awake();
-
         // 選択された自機キャラクターを取得
         int playerCharacterId = PlayerPrefs.GetInt(SelectCharacterData.SavePlayerCharacterId);
         SelectCharacter = CharacterDataBase.CharacterList[playerCharacterId - 1];

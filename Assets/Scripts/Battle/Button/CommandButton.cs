@@ -6,14 +6,10 @@ using UnityEngine.UI;
 
 public class CommandButton : Button
 {
-    // スクリプトを取得するオブジェクト
-    private const string _playerCharacterManagerObjName = "PlayerCharacterManager";
-    private const string _playerCommandManagerObjName = "PlayerCommandManager";
-
     // スクリプト
-    private PlayerCommandManager _playerCommandManager;
-
-    private Character _selectCharacter; // 選択されたキャラクター
+    [SerializeField] private PlayerCommandManager _playerCommandManager;
+    [SerializeField] private PlayerCharacterManager _playerCharacterManager;
+    private Character _selectCharacter;
 
     // コマンドボタン
     private Image _commandImage;      // このコマンドのImageコンポーネント
@@ -22,23 +18,14 @@ public class CommandButton : Button
 
     public override void Start()
     {
-        // スクリプトの取得
-        _playerCommandManager = GameObject.Find(_playerCommandManagerObjName).GetComponent<PlayerCommandManager>();
+        // 選択されたキャラクターを取得
+        _selectCharacter = _playerCharacterManager.SelectCharacter;
 
         // コマンドのImageコンポーネント取得
         _commandImage = this.gameObject.GetComponent<Image>();
 
         // コマンドの順番を取得
         _commandIndex = int.Parse(this.gameObject.name);
-
-        /* 一番左のコマンドボタンをデフォルトで選択する
-        if (_commandIndex == 1)
-        {
-            EventSystem.current.SetSelectedGameObject(this.gameObject);
-        }*/
-
-        // 選択されたキャラクターを取得
-        _selectCharacter = GameObject.Find(_playerCharacterManagerObjName).GetComponent<PlayerCharacterManager>().SelectCharacter;
 
         // コマンドの画像をセット
         _commandImage.sprite = _selectCharacter.CommandSprites[_commandIndex - 1];
@@ -67,8 +54,6 @@ public class CommandButton : Button
     /// </summary>
     public override void Submit()
     {
-        //Debug.Log("コマンド選択:" + this.gameObject.name);
-
         // コマンドが選択された処理を行う
         _playerCommandManager.SelectCommand(_commandIndex);
     }

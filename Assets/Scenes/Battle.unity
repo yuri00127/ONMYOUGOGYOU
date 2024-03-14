@@ -402,7 +402,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &62820629
 GameObject:
@@ -1902,6 +1902,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanInput: 1
   SubmitSE: {fileID: 0}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterManager: {fileID: 1674972187}
 --- !u!114 &348297470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2131,6 +2133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanInput: 1
   SubmitSE: {fileID: 0}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterManager: {fileID: 1674972187}
 --- !u!114 &369503490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2299,6 +2303,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372792905}
   m_CullTransparentMesh: 1
+--- !u!114 &380118652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4503602164596953807, guid: 53ddbdbb6bac6e744a52555a24060086, type: 3}
+  m_PrefabInstance: {fileID: 246754014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ee57b11756b8d4c914e1c9259ab687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &434443101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2647,6 +2662,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470048153}
   m_CullTransparentMesh: 1
+--- !u!82 &477565229 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4165262615925210512, guid: 5408875a384e99f44a82becfc9617634, type: 3}
+  m_PrefabInstance: {fileID: 524417578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &490419115
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,9 +3636,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0288708b2648184cb1ed611fc7eb180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectCommandAttributeObjArray:
+  - {fileID: 748250928}
+  - {fileID: 2005836898}
+  - {fileID: 1521317910}
+  SelectCommandMindObjArray:
+  - {fileID: 2029602016}
+  - {fileID: 1527725313}
+  - {fileID: 505675388}
+  SelectCommandObj: {fileID: 538689503}
   _yinYangSprites:
   - {fileID: 21300000, guid: ed1231f91955116418db9b0752823c86, type: 3}
   - {fileID: 21300000, guid: d4f14323411adda41af4be4ee9fdfde3, type: 3}
+  _yinYangChangeButton: {fileID: 885176858}
+  _playerCharacterManager: {fileID: 1674972187}
+  BattleManager: {fileID: 1713596769}
   _commandButtonArray:
   - {fileID: 348297464}
   - {fileID: 762208923}
@@ -3629,6 +3661,7 @@ MonoBehaviour:
   SelectingCommandSequence: 0
   IsAllSelect: 0
   CanInput: 1
+  _seAudio: {fileID: 477565229}
   _submitSE: {fileID: 8300000, guid: d1c6e773550715141915d6cd65a29c00, type: 3}
   _submitFinishSE: {fileID: 8300000, guid: b931a8ba4d7592a439de5e1283b1d15b, type: 3}
   _cancelSE: {fileID: 8300000, guid: 539b6f6382694854f9bd60f4b89e90ef, type: 3}
@@ -3644,7 +3677,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &652838693
 GameObject:
@@ -3782,6 +3815,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanInput: 1
   SubmitSE: {fileID: 0}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterManager: {fileID: 1674972187}
 --- !u!114 &652838699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4653,6 +4688,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanInput: 1
   SubmitSE: {fileID: 0}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterManager: {fileID: 1674972187}
 --- !u!114 &762208929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5873,6 +5910,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanInput: 1
   SubmitSE: {fileID: 0}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterManager: {fileID: 1674972187}
 --- !u!114 &964359161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6892,7 +6931,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1499083001
 MonoBehaviour:
@@ -6906,9 +6945,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28b94ec66efb504b835e3721b8ddf9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectCommandAttributeObjArray:
+  - {fileID: 1022866653}
+  - {fileID: 1121748750}
+  - {fileID: 1990991350}
+  SelectCommandMindObjArray:
+  - {fileID: 87912658}
+  - {fileID: 271436252}
+  - {fileID: 913169622}
+  SelectCommandObj: {fileID: 684902351}
   _yinYangSprites:
   - {fileID: 21300000, guid: ed1231f91955116418db9b0752823c86, type: 3}
   - {fileID: 21300000, guid: d4f14323411adda41af4be4ee9fdfde3, type: 3}
+  _aiCharacterManager: {fileID: 1755375123}
+  _selectCharacterData: {fileID: 380118652}
   _characterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
   _unknownCommandSprite: {fileID: 21300000, guid: 387e7c89a68e7ea4db88429bc6164345, type: 3}
   _unknownMindSprite: {fileID: 21300000, guid: f6e54488c048c0b42866623ccf6ca487, type: 3}
@@ -7811,6 +7861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22aa076e1a86a124280c3bbc66f93d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectCharacterData: {fileID: 380118652}
   CharacterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
 --- !u!4 &1674972188
 Transform:
@@ -7971,7 +8022,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1713596766
 Animator:
@@ -8176,7 +8227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b2cd775998d5c49ad26eced6456e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectCharacterData: {fileID: 380118652}
   CharacterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
+  _aiCommandManager: {fileID: 1499083001}
+  _aiCharacterView: {fileID: 1521418221}
 --- !u!4 &1755375124
 Transform:
   m_ObjectHideFlags: 0

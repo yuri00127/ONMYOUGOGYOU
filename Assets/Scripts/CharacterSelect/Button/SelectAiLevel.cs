@@ -24,7 +24,6 @@ public class SelectAiLevel : Button
         if (gameObject.name == string.Format(_AILevelFormat, 3))
         {
             _level2Obj.GetComponent<Image>().sprite = _levelSprite;
-            Debug.Log("3");
         }
 
         if (gameObject.name == string.Format(_AILevelFormat, 1))
