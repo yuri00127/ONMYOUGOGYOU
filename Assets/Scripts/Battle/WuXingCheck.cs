@@ -40,6 +40,15 @@ public class WuXingCheck : MonoBehaviour
     private const string _rivalryDisadParamName = "IsRivalry_Disadvantage";
     private const string _amplificationParamName = "IsAmplification";
 
+    private enum Attribute
+    {
+        Water = 1,
+        Tree = 2,
+        Fire = 3,
+        Soil = 4,
+        Gold = 5
+    }
+
 
     /// <summary>
     /// 【相剋】属性相性によってダメージ倍率を変化
@@ -60,30 +69,25 @@ public class WuXingCheck : MonoBehaviour
 
         switch (playerCommandAttributeId)
         {
-            // 水
-            case 1:
-                advantageousAttributeId = 3;
-                disadvantageAttributeId = 4;
+            case (int)Attribute.Water:
+                advantageousAttributeId = (int)Attribute.Fire;
+                disadvantageAttributeId = (int)Attribute.Soil;
                 break;
-            // 木
-            case 2:
-                advantageousAttributeId = 4;
-                disadvantageAttributeId = 5;
+            case (int)Attribute.Tree:
+                advantageousAttributeId = (int)Attribute.Soil;
+                disadvantageAttributeId = (int)Attribute.Gold;
                 break;
-            // 火
-            case 3:
-                advantageousAttributeId = 5;
-                disadvantageAttributeId = 1;
+            case (int)Attribute.Fire:
+                advantageousAttributeId = (int)Attribute.Gold;
+                disadvantageAttributeId = (int)Attribute.Water;
                 break;
-            // 土
-            case 4:
-                advantageousAttributeId = 1;
-                disadvantageAttributeId = 2;
+            case (int)Attribute.Soil:
+                advantageousAttributeId = (int)Attribute.Water;
+                disadvantageAttributeId = (int)Attribute.Tree;
                 break;
-            // 金
-            case 5:
-                advantageousAttributeId = 2;
-                disadvantageAttributeId = 3;
+            case (int)Attribute.Gold:
+                advantageousAttributeId = (int)Attribute.Tree;
+                disadvantageAttributeId = (int)Attribute.Fire;
                 break;
             default:
                 break;
@@ -129,36 +133,31 @@ public class WuXingCheck : MonoBehaviour
     /// <returns>処理後ダメージ</returns>
     public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId, bool isReinforce, bool isPlayer)
     {
-        var otherAttributeId = -1;  // 相手のコマンドの属性ID
+        var validityOtherAttributeId = -1;  // 有効時の相手コマンドの属性ID
 
         switch (commandAttributeId)
         {
-            // 水
-            case 1:
-                otherAttributeId = 5;
+            case (int)Attribute.Water:
+                validityOtherAttributeId = (int)Attribute.Gold;
                 break;
-            // 木
-            case 2:
-                otherAttributeId = 1;
+            case (int)Attribute.Tree:
+                validityOtherAttributeId = (int)Attribute.Water;
                 break;
-            // 火
-            case 3:
-                otherAttributeId = 2;
+            case (int)Attribute.Fire:
+                validityOtherAttributeId = (int)Attribute.Tree;
                 break;
-            // 土
-            case 4:
-                otherAttributeId = 3;
+            case (int)Attribute.Soil:
+                validityOtherAttributeId = (int)Attribute.Fire;
                 break;
-            // 金
-            case 5:
-                otherAttributeId = 4;
+            case (int)Attribute.Gold:
+                validityOtherAttributeId = (int)Attribute.Soil;
                 break;
             default:
                 break;
         }
 
         // ダメージアップ
-        if (otherCommandAttributeId == otherAttributeId)
+        if (otherCommandAttributeId == validityOtherAttributeId)
         {
             if (isPlayer)
             {

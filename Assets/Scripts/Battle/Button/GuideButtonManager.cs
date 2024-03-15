@@ -10,7 +10,6 @@ public class GuideButtonManager : Button
     [SerializeField] private GameObject _guideView;
     [SerializeField] private GameObject _battleDefaultForcus;
     public bool IsOpenGuideView { get; private set; } = false;
-    private bool _isPointerDown = false;
 
     [SerializeField] private GameObject[] _pageObjcts = new GameObject[2];
     private int pageNo = 0;
