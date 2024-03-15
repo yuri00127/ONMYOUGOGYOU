@@ -10,7 +10,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("キャラクター")]
     [SerializeField] protected CharacterDataBase CharacterDataBase;     // キャラクターのデータベースObject
-    public Character SelectCharacter { get; protected set; }              // 選択されたキャラクター
+    public Character SelectCharacter { get; protected set; }            // 選択されたキャラクター
 
     // キャラクターの画像
     protected Image CharacterImage;

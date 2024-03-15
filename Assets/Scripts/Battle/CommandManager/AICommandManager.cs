@@ -11,17 +11,17 @@ public class AICommandManager : CommandManager
     [SerializeField] private CharacterDataBase _characterDataBase;
 
     // 表示
-    [SerializeField] private Sprite _unknownCommandSprite;          // 不明なコマンドのSprite
-    [SerializeField] private Sprite _unknownMindSprite;             // 不明な気のSprite
-    private int _showCommandNumber;                                 // レベル別の表示するコマンドの数
-    private int _showMindNumber;                                    // レベル別の表示する気の数
+    [SerializeField] private Sprite _unknownCommandSprite;    // 不明なコマンドのSprite
+    [SerializeField] private Sprite _unknownMindSprite;       // 不明な気のSprite
+    private int _showCommandNumber;                           // レベル別の表示するコマンドの数
+    private int _showMindNumber;                              // レベル別の表示する気の数
 
     // コマンド選択
-    private const int _minCommandAttributeRange = 0;   // 属性IDの範囲の最小値
-    private const int _maxCommandAttributeRange = 5;   // 属性IDの範囲の最大値
-    private const int _maxAiLevel = 3;          // 敵AIの最大レベル
-    private int _aiAttributeId;                 // 敵の属性ID
-    private bool _isFirstRound = true;          // 最初のターンかどうか
+    private const int _minCommandAttributeRange = 0;            // 属性IDの範囲の最小値
+    private const int _maxCommandAttributeRange = 5;            // 属性IDの範囲の最大値
+    private int _aiAttributeId;                                 // 敵の属性ID
+    private const int _maxAiLevel = 3;                          // 敵AIの最大レベル
+    private bool _isFirstRound = true;                          // 最初のターンかどうか
     private int[] commandArray = new int[] { 1, 1, 1, 1, 1 };   // コマンドの重みづけ
 
 
@@ -52,7 +52,7 @@ public class AICommandManager : CommandManager
     public void ShowAICommand()
     {
         // 全ての表示をリセット
-        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
+        for (var i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             SelectCommandAttributeImageArray[i].sprite = _unknownCommandSprite;
             SelectCommandMindImageArray[i].sprite = _unknownMindSprite;
@@ -63,16 +63,16 @@ public class AICommandManager : CommandManager
         IsYinList.Clear();
 
         // 敵のコマンドを決定
-        int selectCommandIndex = 0;
+        var selectCommandIndex = 0;
 
-        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
+        for (var i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             selectCommandIndex = SetAICommand(_aiCharacterManager.AILevel);
             CommandIdList.Add(selectCommandIndex);
         }
 
         // 気を決定(0なら陰、1なら陽)
-        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
+        for (var i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             if (Random.Range(0, 2) == 0)
             {
@@ -84,7 +84,7 @@ public class AICommandManager : CommandManager
         // コマンドの表示
         List<int> showCommandPositionList = ShowPositionDecide(_showCommandNumber);
 
-        for (int i = 0; i < showCommandPositionList.Count; i++)
+        for (var i = 0; i < showCommandPositionList.Count; i++)
         {
             base.SelectCommand(showCommandPositionList[i]);
         }
@@ -92,7 +92,7 @@ public class AICommandManager : CommandManager
         // 気の表示
         List<int> showMindPositionList = ShowPositionDecide(_showMindNumber);
 
-        for (int i = 0; i < showMindPositionList.Count; i++)
+        for (var i = 0; i < showMindPositionList.Count; i++)
         {
             base.SelectMind(showMindPositionList[i]);
         }
@@ -136,7 +136,7 @@ public class AICommandManager : CommandManager
         List<int> _returnPositionIndex = new List<int>() { };
 
         // 位置決め
-        for (int i = 0; i < decideCount; i++)
+        for (var i = 0; i < decideCount; i++)
         {
             int num = Random.Range(0, _positionIndex.Count);
             _returnPositionIndex.Add(_positionIndex[num]);
@@ -187,7 +187,7 @@ public class AICommandManager : CommandManager
         }
 
         // AIレベル3
-        float total = 0;
+        var total = 0.0f;
 
         foreach (float elem in commandArray)
         {

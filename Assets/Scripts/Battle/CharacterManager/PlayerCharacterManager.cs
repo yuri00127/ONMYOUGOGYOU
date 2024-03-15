@@ -5,14 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerCharacterManager : CharacterManager
 {
-    // スクリプトを取得するオブジェクト
-    private const string _playerCommandManagerObjName = "PlayerCommandManager";
-
     // スクリプト
-    private PlayerCommandManager _playerCommandManager;
+    [SerializeField] private PlayerCommandManager _playerCommandManager;
 
     // キャラクタービュー
-    private const string _playerCharacterViewObjName = "PlayerCharacter";
+    [SerializeField] private GameObject _playerCharacterViewObj;
 
 
     protected override void Awake()
@@ -22,10 +19,7 @@ public class PlayerCharacterManager : CharacterManager
         SelectCharacter = CharacterDataBase.CharacterList[playerCharacterId - 1];
 
         // キャラクター画像をセット
-        CharacterImage = GameObject.Find(_playerCharacterViewObjName).GetComponent<Image>();
+        CharacterImage = _playerCharacterViewObj.GetComponent<Image>();
         CharacterImage.sprite = SelectCharacter.CharacterImage;
-
-        // スクリプトを取得
-        _playerCommandManager = GameObject.Find(_playerCommandManagerObjName).GetComponent<PlayerCommandManager>();
     }
 }

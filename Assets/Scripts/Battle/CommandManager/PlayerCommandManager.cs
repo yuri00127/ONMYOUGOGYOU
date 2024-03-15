@@ -8,7 +8,7 @@ public class PlayerCommandManager : CommandManager
     // スクリプト
     [SerializeField] private YinYangChangeButton _yinYangChangeButton;
     [SerializeField] private PlayerCharacterManager _playerCharacterManager;
-    [SerializeField] private BattleManager BattleManager;
+    [SerializeField] private BattleManager _battleManager;
 
     [Header("コマンドObject")]
     [SerializeField] private GameObject[] _commandButtonArray = new GameObject[5];  // コマンドボタンのObject
@@ -35,7 +35,7 @@ public class PlayerCommandManager : CommandManager
         base.Awake();
 
         // コマンドボタンのImageコンポーネントの取得
-        for (int i = 0; i < _commandButtonArray.Length; i++)
+        for (var i = 0; i < _commandButtonArray.Length; i++)
         {
             _commandButtonImageArray[i] = _commandButtonArray[0].GetComponent<Image>();
         }
@@ -92,7 +92,7 @@ public class PlayerCommandManager : CommandManager
 
             CanInput = false;
             IsAllSelect = true;
-            StartCoroutine(BattleManager.CoBattleStart());
+            StartCoroutine(_battleManager.CoBattleStart());
         }
     }
 
@@ -125,7 +125,7 @@ public class PlayerCommandManager : CommandManager
     /// </summary>
     public void CommandReset()
     {
-        for (int i = 0; i < _maxSelectingCommandSequence; i++)
+        for (var i = 0; i < _maxSelectingCommandSequence; i++)
         {
             SelectCommandAttributeImageArray[i].sprite = _nullSprite;
             SelectCommandMindImageArray[i].sprite = _nullSprite;

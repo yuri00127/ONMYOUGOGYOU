@@ -10,6 +10,8 @@ public class SelectAiLevel : Button
 
     private string _AILevelFormat = "Level{0}";
     private int _selectAILevel;
+    private const int _aiLevelThree = 3;
+    private const int _aiLevelOne = 1;
 
     [Header("AiLevelObj")]
     [SerializeField] private GameObject _level2Obj;
@@ -21,12 +23,12 @@ public class SelectAiLevel : Button
     {
         base.PointerEnter(gameObject);
 
-        if (gameObject.name == string.Format(_AILevelFormat, 3))
+        if (gameObject.name == string.Format(_AILevelFormat, _aiLevelThree))
         {
             _level2Obj.GetComponent<Image>().sprite = _levelSprite;
         }
 
-        if (gameObject.name == string.Format(_AILevelFormat, 1))
+        if (gameObject.name == string.Format(_AILevelFormat, _aiLevelOne))
         {
             _level2Obj.GetComponent<Image>().sprite = _nullSprite;
         }
@@ -39,7 +41,7 @@ public class SelectAiLevel : Button
     public void Submit(GameObject gameObject)
     {
         // ‘I‘ð‚³‚ê‚½ƒŒƒxƒ‹‚ðŽæ“¾
-        for (int i = 1; i <= 3; i++)
+        for (var i = 1; i <= 3; i++)
         {
             if (gameObject.name == string.Format(_AILevelFormat, i))
             {

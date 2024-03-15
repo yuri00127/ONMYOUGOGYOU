@@ -6,47 +6,32 @@ using UnityEngine.UI;
 public class YinYangCheck : MonoBehaviour
 {
     [Header("Audio")]
-    private const string _seManagerObjName = "SEManager";
-    private const string _bgmManagerObjName = "BGMManager";
-    private AudioSource _seAudio;
-    private AudioSource _bgmAudio;
+    [SerializeField] private AudioSource _seAudio;
+    [SerializeField] private AudioSource _bgmAudio;
     [SerializeField] private AudioClip _differSE;   // 陰陽互根SE
 
     // IconAnimation
     [SerializeField] GameObject _playerBattleIconObj;
     [SerializeField] GameObject _aiBattleIconObj;
-    private const string _restrictionIconObjName = "YinYangRestriction";
-    private const string _differIconObjName = "YinYangDiffer";
-    private Animator _playerRestrictionAnim;
-    private Animator _playerDifferAnim;
-    private Animator _aiRestrictionAnim;
-    private Animator _aiDifferAnim;
+    [SerializeField] private Animator _playerRestrictionAnim;
+    [SerializeField] private Animator _playerDifferAnim;
+    [SerializeField] private Animator _aiRestrictionAnim;
+    [SerializeField] private Animator _aiDifferAnim;
     private const string _restrictionParamName = "IsRestriction";
     private const string _differParamName = "IsDiffer";
 
 
-    private void Awake()
-    {
-        _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
-        _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
-
-        _playerRestrictionAnim = _playerBattleIconObj?.transform.Find(_restrictionIconObjName).gameObject?.GetComponent<Animator>();
-        _playerDifferAnim = _playerBattleIconObj?.transform.Find(_differIconObjName).gameObject?.GetComponent<Animator>();
-        _aiRestrictionAnim = _aiBattleIconObj?.transform.Find(_restrictionIconObjName).gameObject?.GetComponent<Animator>();
-        _aiDifferAnim = _aiBattleIconObj?.transform.Find(_differIconObjName).gameObject?.GetComponent<Animator>() ;
-    }
-
     /// <summary>
-    /// 【陰陽制約】コマンドの陰陽が全て同じなら、どれかを違うものに変更する
+    /// 【陰陽制約】コマンドの気が全て同じなら、どれかを違うものに変更する
     /// </summary>
-    /// <param name="yinYangCommandList"></param>
-    /// <param name="commandManager"></param>
+    /// <param name="yinYangCommandList">気のboolリスト</param>
+    /// <param name="commandManager">対応するキャラクターのCommandManager</param>
     public void Restriction(ref List<bool> yinYangCommandList, CommandManager commandManager, bool isPlayer)
     {
-        int yinCommand = 0;
-        int yangCommand = 0;
+        var yinCommand = 0;
+        var yangCommand = 0;
 
-        for (int i = 0; i < yinYangCommandList.Count; i++)
+        for (var i = 0; i < yinYangCommandList.Count; i++)
         {
             if (yinYangCommandList[i])
             {
@@ -93,8 +78,8 @@ public class YinYangCheck : MonoBehaviour
     /// <summary>
     /// 【陰陽互根】お互いのコマンドの陰陽が同じ場合、攻撃は無効となる
     /// </summary>
-    /// <param name="playerYinYang"></param>
-    /// <param name="aiYinYang"></param>
+    /// <param name="playerYinYang">プレイヤーの気</param>
+    /// <param name="aiYinYang">敵の気</param>
     /// <returns></returns>
     public bool Differ(bool playerYinYang, bool aiYinYang)
     {
@@ -112,12 +97,18 @@ public class YinYangCheck : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 陰陽互換のアニメーションフラグをリセット
+    /// </summary>
     public void AnimParametersReset()
     {
         _playerDifferAnim.SetBool(_differParamName, false);
         _aiDifferAnim.SetBool(_differParamName, false);
     }
 
+    /// <summary>
+    /// 陰陽制約のアニメーションフラグをリセット
+    /// </summary>
     public void RestrictionAnimParametersReset()
     {
         _playerRestrictionAnim.SetBool(_restrictionParamName, false);

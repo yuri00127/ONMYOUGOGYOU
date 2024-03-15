@@ -5,15 +5,10 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    // スクリプトを取得するオブジェクト
-    private const string _playerCommandManagerObjName = "PlayerCommandManager";
-    private const string _aiCommandManagerObjName = "AICommandManager";
-    private const string _roundCounterObjName = "RoundCounter";
-
     // スクリプト
-    private PlayerCommandManager _playerCommandManager;
-    private AICommandManager _aiCommandManager;
-    private RoundCounter _roundCounter;
+    [SerializeField] private PlayerCommandManager _playerCommandManager;
+    [SerializeField] private AICommandManager _aiCommandManager;
+    [SerializeField] private RoundCounter _roundCounter;
     private WuXingCheck _wuXingCheck;
     private YinYangCheck _yinYangCheck;
     private BattleResult _battleResult;
@@ -26,7 +21,7 @@ public class BattleManager : MonoBehaviour
     private int _maxHp = 100;
 
     // ダメージ計算
-    private int _playerDamageBase = 5;      // プレイヤーの基礎ダメージ量
+    private int _playerDamageBase = 5;     // プレイヤーの基礎ダメージ量
     private int _aiDamageBase = 8;         // 敵の基礎ダメージ量
 
     // 進行
@@ -50,9 +45,6 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         // スクリプト取得
-        _playerCommandManager = GameObject.Find(_playerCommandManagerObjName).GetComponent<PlayerCommandManager>();
-        _aiCommandManager = GameObject.Find(_aiCommandManagerObjName).GetComponent<AICommandManager>();
-        _roundCounter = GameObject.Find(_roundCounterObjName).GetComponent<RoundCounter>();
         _wuXingCheck = this.GetComponent<WuXingCheck>();
         _yinYangCheck = this.GetComponent<YinYangCheck>();
         _battleResult = this.GetComponent<BattleResult>();

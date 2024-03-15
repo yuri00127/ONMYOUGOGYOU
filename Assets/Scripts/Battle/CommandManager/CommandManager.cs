@@ -14,8 +14,10 @@ public class CommandManager : MonoBehaviour
     protected Image[] SelectCommandMindImageArray = new Image[3];                                // 陰陽表示ObjectのImage
 
     // 表示
-    [SerializeField] protected GameObject SelectCommandObj;                              // 表示領域のObject
+    [SerializeField] protected GameObject SelectCommandObj;             // 表示領域のObject
     [SerializeField] private Sprite[] _yinYangSprites = new Sprite[2];  // 陰陽のSprite
+    private const int _yinSpriteIndex = 0;
+    private const int _yangSpriteIndex = 1;
 
     // 選択コマンド
     public List<int> CommandIdList { get; private set; } = new List<int>();  // 選択された属性のIDリスト
@@ -26,7 +28,7 @@ public class CommandManager : MonoBehaviour
     {
         // 選択したコマンドの表示領域を取得
         int commandIndex = 0;
-        for (int i = 0; i < SelectCommandAttributeObjArray.Length; i++)
+        for (var i = 0; i < SelectCommandAttributeObjArray.Length; i++)
         {
             // Imageコンポーネント取得
             SelectCommandAttributeImageArray[i] = SelectCommandAttributeObjArray[i].GetComponent<Image>();
@@ -60,12 +62,12 @@ public class CommandManager : MonoBehaviour
         // 陰の画像をセット
         if (IsYinList[selectingCommandSequence])
         {
-            SelectCommandMindImageArray[selectingCommandSequence].sprite = _yinYangSprites[0];
+            SelectCommandMindImageArray[selectingCommandSequence].sprite = _yinYangSprites[_yinSpriteIndex];
             return;
         }
 
         // 陽の画像をセット
-        SelectCommandMindImageArray[selectingCommandSequence].sprite = _yinYangSprites[1];
+        SelectCommandMindImageArray[selectingCommandSequence].sprite = _yinYangSprites[_yangSpriteIndex];
     }
     
 }

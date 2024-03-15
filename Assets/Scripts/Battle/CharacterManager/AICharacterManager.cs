@@ -14,7 +14,6 @@ public class AICharacterManager : CharacterManager
 
     public int AILevel { get; private set; }
     
-
     protected override void Awake()
     {
         // 選択された敵キャラクターを取得

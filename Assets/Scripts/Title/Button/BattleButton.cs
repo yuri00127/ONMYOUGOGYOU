@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class BattleButton : Button
 {
     [SerializeField] private LoadNextScene _loadNextScene;
-    private const string _nextScene = "CharacterSelect";
-
+    private const string _characterSelectSceneName = "CharacterSelect";
     private bool _isLoading = false;
+
 
     public override void Start()
     {
@@ -29,7 +29,7 @@ public class BattleButton : Button
         if (!_isLoading)
         {
             Audio.PlayOneShot(SubmitSE);
-            StartCoroutine(_loadNextScene.LoadScene(_nextScene));
+            StartCoroutine(_loadNextScene.LoadScene(_characterSelectSceneName));
 
             _isLoading = true;
         }

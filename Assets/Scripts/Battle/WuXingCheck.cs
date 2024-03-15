@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class WuXingCheck : MonoBehaviour
 {
-    [Header("Icon")]
+    [Header("アイコン")]
     [SerializeField] private GameObject _playerRivalryIcon;
     [SerializeField] private GameObject _aiRivalryIcon;
     [SerializeField] private Sprite[] _rivalryIconSprites = new Sprite[2];
@@ -19,10 +19,8 @@ public class WuXingCheck : MonoBehaviour
     private int _damageUpValueIsReinforce = 8;        // 比和時の相生ダメージUP量
 
     [Header("Audio")]
-    private const string _seManagerObjName = "SEManager";
-    private const string _bgmManagerObjName = "BGMManager";
-    private AudioSource _seAudio;
-    private AudioSource _bgmAudio;
+    [SerializeField] private AudioSource _seAudio;
+    [SerializeField] private AudioSource _bgmAudio;
     [SerializeField] private AudioClip _reinforceSE;            // 比和SE
     [SerializeField] private AudioClip _attackSE;               // 攻撃SE
     [SerializeField] private AudioClip _advantageousAttackSE;   // 有利攻撃SE
@@ -31,33 +29,17 @@ public class WuXingCheck : MonoBehaviour
     // IconAnimation
     [SerializeField] GameObject _playerBattleIconObj;
     [SerializeField] GameObject _aiBattleIconObj;
-    private const string _reinforceIconObjName = "WuXingReinforce";
-    private const string _rivalryIconObjName = "WuXingRivalry";
-    private const string _amplificationIconObjName = "WuXingAmplification";
-    private Animator _playerReinforceAnim;
-    private Animator _playerRivalryAnim;
-    private Animator _playerAmplificationAnim;
-    private Animator _aiReinforceAnim;
-    private Animator _aiRivalryAnim;
-    private Animator _aiAmplificationAnim;
+    [SerializeField] private Animator _playerReinforceAnim;
+    [SerializeField] private Animator _playerRivalryAnim;
+    [SerializeField] private Animator _playerAmplificationAnim;
+    [SerializeField] private Animator _aiReinforceAnim;
+    [SerializeField] private Animator _aiRivalryAnim;
+    [SerializeField] private Animator _aiAmplificationAnim;
     private const string _reinforceParamName = "IsReinforce";
     private const string _rivalryAdParamName = "IsRivalry_Advantageous";
     private const string _rivalryDisadParamName = "IsRivalry_Disadvantage";
     private const string _amplificationParamName = "IsAmplification";
 
-
-    private void Awake()
-    {
-        _seAudio = GameObject.Find(_seManagerObjName).GetComponent<AudioSource>();
-        _bgmAudio = GameObject.Find(_bgmManagerObjName).GetComponent<AudioSource>();
-
-        _playerReinforceAnim = _playerBattleIconObj?.transform.Find(_reinforceIconObjName).gameObject?.GetComponent<Animator>();
-        _playerRivalryAnim = _playerBattleIconObj?.transform.Find(_rivalryIconObjName).gameObject?.GetComponent<Animator>();
-        _playerAmplificationAnim = _playerBattleIconObj?.transform.Find(_amplificationIconObjName).gameObject?.GetComponent<Animator>() ;
-        _aiReinforceAnim = _aiBattleIconObj?.transform.Find(_reinforceIconObjName).gameObject?.GetComponent <Animator>() ;
-        _aiRivalryAnim = _aiBattleIconObj?.transform.Find(_rivalryIconObjName).gameObject?.GetComponent<Animator>();
-        _aiAmplificationAnim = _aiBattleIconObj?.transform.Find(_amplificationIconObjName).gameObject?.GetComponent<Animator>();
-    }
 
     /// <summary>
     /// 【相剋】属性相性によってダメージ倍率を変化
@@ -70,11 +52,11 @@ public class WuXingCheck : MonoBehaviour
     public (int playerDamaged, int aiDamaged) Rivalry (int playerDamageBase, int aiDamageBase,
         int playerCommandAttributeId, int aiCommandAttributeId, bool isPlayerReinforce, bool isAiReinforce)
     {
-        int advantageousAttributeId = -1;   // プレイヤーが有利な属性ID
-        int disadvantageAttributeId = -1;   // プレイヤーが不利な属性ID
+        var advantageousAttributeId = -1;   // プレイヤーが有利な属性ID
+        var disadvantageAttributeId = -1;   // プレイヤーが不利な属性ID
 
-        int playerDamaged;
-        int aiDamaged;
+        int playerDamaged;  // プレイヤーが与えるダメージ
+        int aiDamaged;      // プレイヤーが受けるダメージ
 
         switch (playerCommandAttributeId)
         {
@@ -103,9 +85,7 @@ public class WuXingCheck : MonoBehaviour
                 advantageousAttributeId = 2;
                 disadvantageAttributeId = 3;
                 break;
-            // デフォルト(絶対に通らない)
             default:
-                Debug.Log("処理ミス");
                 break;
         }
 
@@ -149,7 +129,7 @@ public class WuXingCheck : MonoBehaviour
     /// <returns>処理後ダメージ</returns>
     public int Amplification(int damageBase, int commandAttributeId, int otherCommandAttributeId, bool isReinforce, bool isPlayer)
     {
-        int otherAttributeId = -1;  // 相手のコマンドの属性ID
+        var otherAttributeId = -1;  // 相手のコマンドの属性ID
 
         switch (commandAttributeId)
         {
@@ -173,9 +153,7 @@ public class WuXingCheck : MonoBehaviour
             case 5:
                 otherAttributeId = 4;
                 break;
-            // デフォルト(絶対に通らない)
             default:
-                Debug.Log("処理ミス");
                 break;
         }
 
@@ -234,6 +212,9 @@ public class WuXingCheck : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 全てのアイコンアニメーションのフラグをリセットする
+    /// </summary>
     public void AnimParametersReset()
     {
         _playerReinforceAnim.SetBool(_reinforceParamName, false);

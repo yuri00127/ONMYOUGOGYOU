@@ -16,13 +16,15 @@ public class SelectStepManager : MonoBehaviour
     [Header("デフォルトボタン")]
     [SerializeField] private GameObject _characterDefaultButton;
     [SerializeField] private GameObject _AILevelDefaultButton;
-
     [SerializeField] private GameObject _AiLevelObj;
 
     [Header("ステップガイド")]
     [SerializeField] private GameObject _stepGuideObj;
     private Image _stepGuideImg;
     [SerializeField] private Sprite[] _stepGuides = new Sprite[3];
+    private const int _backTitleStep = -1;
+    private const int _backPlayerSelectStep = 0;
+    private const int _backAiSelectStep = 1;
 
     [Header("Cancelガイド")]
     [SerializeField] private GameObject _cancelGuideObj;
@@ -122,20 +124,20 @@ public class SelectStepManager : MonoBehaviour
         NowSelectStep--;
 
         // タイトル画面へ戻る
-        if (NowSelectStep == -1)
+        if (NowSelectStep == _backTitleStep)
         {
             SceneManager.LoadScene(_titleScene);
         }
 
         // プレイヤー選択へ戻る
-        if (NowSelectStep == 0)
+        if (NowSelectStep == _backPlayerSelectStep)
         {
             PlayerCharacterSelect();
             return;
         }
 
         // 敵選択へ戻る
-        if (NowSelectStep == 1)
+        if (NowSelectStep == _backAiSelectStep)
         {
             _AiLevelObj.SetActive(false);
             AICharacterSelect();

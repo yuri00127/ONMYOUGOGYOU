@@ -3650,7 +3650,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d4f14323411adda41af4be4ee9fdfde3, type: 3}
   _yinYangChangeButton: {fileID: 885176858}
   _playerCharacterManager: {fileID: 1674972187}
-  BattleManager: {fileID: 1713596769}
+  _battleManager: {fileID: 1713596769}
   _commandButtonArray:
   - {fileID: 348297464}
   - {fileID: 762208923}
@@ -7863,6 +7863,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SelectCharacterData: {fileID: 380118652}
   CharacterDataBase: {fileID: 11400000, guid: e1917e3b7cea2cb41ac2864ccf863de1, type: 2}
+  _playerCommandManager: {fileID: 644831317}
+  _playerCharacterViewObj: {fileID: 206768419}
 --- !u!4 &1674972188
 Transform:
   m_ObjectHideFlags: 0
@@ -8006,9 +8008,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resultCanvas: {fileID: 862050117}
+  _resultImage: {fileID: 584606606}
+  _showCharacterImageObj: {fileID: 958685408}
+  _playerCharacterObj: {fileID: 206768419}
+  _resultDefaultButtonObj: {fileID: 1635493109}
   _resultSprites:
   - {fileID: 21300000, guid: d010ae2794f276f4d8dd1bb19da71c54, type: 3}
   - {fileID: 21300000, guid: 25d4e83c78b3f9b41a9c92a5890c81c0, type: 3}
+  _bgmAudio: {fileID: 558306358}
   _battleFinishJingle: {fileID: 8300000, guid: 717c140db4ed7bf4d9ee58354343440a, type: 3}
 --- !u!4 &1713596765
 Transform:
@@ -8055,9 +8062,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fefb821b52a414aa337110e8b8ea3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _seAudio: {fileID: 477565229}
+  _bgmAudio: {fileID: 558306358}
   _differSE: {fileID: 8300000, guid: 795a5bbe2cffb594c8b928c88585c831, type: 3}
   _playerBattleIconObj: {fileID: 1277505121}
   _aiBattleIconObj: {fileID: 153407202}
+  _playerRestrictionAnim: {fileID: 918916188}
+  _playerDifferAnim: {fileID: 1234488888}
+  _aiRestrictionAnim: {fileID: 673780571}
+  _aiDifferAnim: {fileID: 1706874953}
 --- !u!114 &1713596768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8075,12 +8088,20 @@ MonoBehaviour:
   _rivalryIconSprites:
   - {fileID: 21300000, guid: 2bc12e24f83a8cc4a939751fadb204ec, type: 3}
   - {fileID: 21300000, guid: 1fd206589b3eca545907fc99884cbd90, type: 3}
+  _seAudio: {fileID: 477565229}
+  _bgmAudio: {fileID: 558306358}
   _reinforceSE: {fileID: 8300000, guid: 494f9fd552278db43a889648b0594daf, type: 3}
   _attackSE: {fileID: 8300000, guid: e10a40ec9a0c200439b581604e5450c3, type: 3}
   _advantageousAttackSE: {fileID: 8300000, guid: 6f4d2b2a532ad5b47ba20d5038731f1c, type: 3}
   _disadbantageAttackSE: {fileID: 8300000, guid: cf30862c728d6694f8265620c22ae9ef, type: 3}
   _playerBattleIconObj: {fileID: 1277505121}
   _aiBattleIconObj: {fileID: 153407202}
+  _playerReinforceAnim: {fileID: 1748940444}
+  _playerRivalryAnim: {fileID: 2054116381}
+  _playerAmplificationAnim: {fileID: 340847313}
+  _aiReinforceAnim: {fileID: 1589116202}
+  _aiRivalryAnim: {fileID: 151097365}
+  _aiAmplificationAnim: {fileID: 1439407435}
 --- !u!114 &1713596769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8093,6 +8114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23d48d09fe79204e87eda0a059973a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerCommandManager: {fileID: 644831317}
+  _aiCommandManager: {fileID: 1499083001}
+  _roundCounter: {fileID: 52996615}
   _waterAttackParticle: {fileID: 133813231002817845, guid: 539b9297976eb9444b6017d87175fad8, type: 3}
   _treeAttackParticle: {fileID: 8630463584405363854, guid: 859ec3a14042b944f877bde1581a2c13, type: 3}
   _fireAttackParticle: {fileID: 4700183917218928242, guid: 7974077dbcb4732439fc2e21d4060fe3, type: 3}

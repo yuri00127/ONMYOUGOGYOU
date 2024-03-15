@@ -6,11 +6,6 @@ using UnityEngine.EventSystems;
 // 
 public class Button : MonoBehaviour
 {
-    // シーン
-    public const string TitleScene = "Title";
-    public const string CharacterSelectScene = "CharacterSelect";
-    public const string BattleScene = "Battle";
-
     [Header("アニメーション")]
     protected Animator Anim;
 
@@ -33,25 +28,34 @@ public class Button : MonoBehaviour
         Audio = GameObject.Find(_seObjName).GetComponent<AudioSource>();
     }
 
-    // フォーカス時の処理
+    /// <summary>
+    /// フォーカス時の処理
+    /// </summary>
     public virtual void Select()
     {
         
     }
 
-    // フォーカスが外れた時の処理
+    /// <summary>
+    /// フォーカスが外れた時の処理
+    /// </summary>
     public virtual void Deselect()
     {
         
     }
 
-    // 選択した時の処理
+    /// <summary>
+    /// 選択した時の処理
+    /// </summary>
     public virtual void Submit()
     {
 
     }
 
-    // マウスオーバーした時の処理
+    /// <summary>
+    /// マウスオーバーした時の処理
+    /// </summary>
+    /// <param name="gameObject">マウスオーバーしたオブジェクト</param>
     public virtual void PointerEnter(GameObject gameObject)
     {
         if (EventSystem.current.currentSelectedGameObject != gameObject)
@@ -60,7 +64,9 @@ public class Button : MonoBehaviour
         }
     }
 
-    // マウスアウトした時の処理
+    /// <summary>
+    /// マウスアウトした時の処理
+    /// </summary>
     public virtual void PointerExit()
     {
         EventSystem.current.SetSelectedGameObject(null);

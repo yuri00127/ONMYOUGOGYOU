@@ -50,7 +50,9 @@ public class VolumeController : MonoBehaviour
         }
     }
 
-    // 音量を1段階上げる
+    /// <summary>
+    /// 音量を1段階上げる
+    /// </summary>
     protected virtual void VolumeUp()
     {
         CanSelect = false;
@@ -59,7 +61,9 @@ public class VolumeController : MonoBehaviour
         SaveVolumeSetting();
     }
 
-    // 音量を1段階下げる
+    /// <summary>
+    /// 音量を1段階下げる
+    /// </summary>
     protected virtual void VolumeDown()
     {
         CanSelect = false;
@@ -112,12 +116,20 @@ public class VolumeController : MonoBehaviour
         VolumeSet();
     }
 
+    /// <summary>
+    /// マウス操作による音量アップ
+    /// </summary>
+    /// <param name="gameObject">音量アップボタン</param>
     public void MouseVolumeUp(GameObject gameObject)
     {
         EventSystem.current.SetSelectedGameObject(gameObject);
         VolumeUp();
     }
 
+    /// <summary>
+    /// マウス操作による音量ダウン
+    /// </summary>
+    /// <param name="gameObject">音量ダウンボタン</param>
     public void MouseVolumeDown(GameObject gameObject)
     {
         EventSystem.current.SetSelectedGameObject(gameObject);

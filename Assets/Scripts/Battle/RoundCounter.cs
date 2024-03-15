@@ -12,7 +12,7 @@ public class RoundCounter : MonoBehaviour
     private Image _firstPlaceImage;
     private Image _decimalPlaceImage;
     [SerializeField] private Sprite[] _oneDigitArray = new Sprite[9];       // 1桁の時の画像
-    [SerializeField] private Sprite[] _twoDigitArray = new Sprite[10];       // 2桁の時の画像
+    [SerializeField] private Sprite[] _twoDigitArray = new Sprite[10];      // 2桁の時の画像
     private Vector2 _oneDigitFirstPlacePosition = new Vector2(5f, 0f);      // 1桁の時の1の位の位置
     private Vector2 _twoDigitFirstPlacePosition = new Vector2(20f, 0f);     // 2桁の時の1の位の位置
 
@@ -31,9 +31,12 @@ public class RoundCounter : MonoBehaviour
 
         // Animatorコンポーネントを取得
         _roundCounterAnim = _roundCounterObj.GetComponent<Animator>();
-        //StartCoroutine(StartRoundAnimation());
     }
 
+    /// <summary>
+    /// ラウンドを1進める
+    /// </summary>
+    /// <param name="round">現在のラウンド数</param>
     public void CountUp(int round)
     {
         _roundCount = round;
@@ -65,7 +68,10 @@ public class RoundCounter : MonoBehaviour
         StartCoroutine(StartRoundAnimation());
     }
 
-    // 1桁目の更新
+    /// <summary>
+    /// 1桁目の更新
+    /// </summary>
+    /// <param name="countNumber">1桁目の数字</param>
     private void FirstPlaceUpdate(int countNumber)
     {
         if (_isOneDigit)
@@ -77,13 +83,19 @@ public class RoundCounter : MonoBehaviour
         _firstPlaceImage.sprite = _twoDigitArray[countNumber];
     }
 
-    // 2桁目の更新
+    /// <summary>
+    /// 2桁目の更新
+    /// </summary>
+    /// <param name="countNumber">2桁目の数字</param>
     private void DecimalPlaceUpdate(int countNumber)
     {
         _decimalPlaceImage.sprite = _twoDigitArray[countNumber];
     }
 
-    // ラウンド開始時のアニメーション
+    /// <summary>
+    /// ラウンド開始時のアニメーション
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator StartRoundAnimation()
     {
         _roundCounterAnim.SetBool(_countUpAnimationBoolName, true);

@@ -21,7 +21,11 @@ public class LoadNextScene : MonoBehaviour
         }
     }
 
-    // 指定された名前のシーンに遷移する
+    /// <summary>
+    /// 指定された名前のシーンに遷移する
+    /// </summary>
+    /// <param name="sceneName">遷移先のシーン名</param>
+    /// <returns></returns>
     public IEnumerator LoadScene(string sceneName)
     {
         _fadeObj.SetActive(true);

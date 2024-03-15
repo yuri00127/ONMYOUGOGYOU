@@ -7,10 +7,10 @@ using UnityEngine;
 [SerializeField]
 public class Character : ScriptableObject
 {
-    public int Id;
-    public string Name;
-    public int AttributeId;
-    public Sprite CharacterImage;
-    public Sprite[] CommandSprites = new Sprite[5];
-    public Sprite[] SelectCommandSprites = new Sprite[5];
+    public int Id;                                          // ID
+    public string Name;                                     // 名前
+    public int AttributeId;                                 // 属性のID
+    public Sprite CharacterImage;                           // 画像
+    public Sprite[] CommandSprites = new Sprite[5];         // コマンドの画像
+    public Sprite[] SelectCommandSprites = new Sprite[5];   // 選択状態のコマンドの画像
 }

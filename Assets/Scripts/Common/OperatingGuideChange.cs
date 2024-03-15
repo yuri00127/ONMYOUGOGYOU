@@ -28,6 +28,10 @@ public class OperatingGuideChange : MonoBehaviour
     [SerializeField] private AudioClip ControllerChangeSE;  // 操作説明画像切り替え時のSE
 
 
+    /// <summary>
+    /// 表示の準備
+    /// </summary>
+    /// <param name="view">表示する領域のオブジェクト</param>
     public void SetUp(GameObject view)
     {
         // 操作方法切り替えボタンを取得
@@ -36,7 +40,11 @@ public class OperatingGuideChange : MonoBehaviour
         _changeControllerButtonImg = view.transform.Find(_changeControllerButtonObjName).GetComponent<Image>();
     }
 
-    // 操作説明をPC版に切り替える
+    /// <summary>
+    /// 操作説明をPC版に切り替える
+    /// </summary>
+    /// <param name="audio">SEManagerのAudio</param>
+    /// <param name="sceneNum">Unityでのシーン番号</param>
     public void PCButton(AudioSource audio, int sceneNum)
     {
         audio.PlayOneShot(ControllerChangeSE);
@@ -52,7 +60,11 @@ public class OperatingGuideChange : MonoBehaviour
         _isController = false;
     }
 
-    // 操作説明をコントローラー版に切り替える
+    /// <summary>
+    /// 操作説明をコントローラー版に切り替える
+    /// </summary>
+    /// <param name="audio">SEManagerのAudio</param>
+    /// <param name="sceneNum">Unityでのシーン番号</param>
     public void ControllerButton(AudioSource audio, int sceneNum)
     {
         audio.PlayOneShot(ControllerChangeSE);

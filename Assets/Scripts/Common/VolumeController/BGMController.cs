@@ -7,6 +7,7 @@ public class BGMController : VolumeController
 {
     private const string _bgmManager = "BGMManager";
 
+
     protected override void Awake()
     {
         Audio = GameObject.Find(_bgmManager).GetComponent<AudioSource>();

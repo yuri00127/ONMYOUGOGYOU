@@ -17,6 +17,8 @@ public class OptionButtonManager : Button
     [Header("ボタンアイコン")]
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
     private Image _buttonIcon;
+    private const int _closeIconSpriteIndex = 0;
+    private const int _openIconSpriteIndex = 1;
 
     private const string _assignmentButton = "Menu";
 
@@ -69,7 +71,7 @@ public class OptionButtonManager : Button
             _isOpenOptionView = true;
 
             // ボタン画像の設定
-            _buttonIcon.sprite = _sourceImage[1];
+            _buttonIcon.sprite = _sourceImage[_openIconSpriteIndex];
 
             return;
         }
@@ -85,7 +87,7 @@ public class OptionButtonManager : Button
             _isOpenOptionView = false;
 
             // ボタン画像の設定
-            _buttonIcon.sprite = _sourceImage[0];
+            _buttonIcon.sprite = _sourceImage[_closeIconSpriteIndex];
 
             return;
         }
