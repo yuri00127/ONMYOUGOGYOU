@@ -36,7 +36,7 @@ public class PouseButtonManager : Button
     private void Update()
     {
         // “ü—Í
-        if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
+        if (Input.GetAxisRaw(_assignmentButton) > 0 && CanInput)
         {
             Submit();
         }

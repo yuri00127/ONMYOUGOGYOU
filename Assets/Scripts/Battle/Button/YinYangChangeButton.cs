@@ -19,7 +19,7 @@ public class YinYangChangeButton : Button
     private void Update()
     {
         // “ü—Í
-        if (Input.GetAxis(_inputName) > 0 && CanInput)
+        if (Input.GetAxisRaw(_inputName) > 0 && CanInput)
         {
             Submit();
         }

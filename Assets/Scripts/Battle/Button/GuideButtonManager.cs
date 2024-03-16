@@ -28,7 +28,7 @@ public class GuideButtonManager : Button
     private void Update()
     {
         // ガイドボタン入力
-        if (Input.GetAxis(_assignmentButton) > 0 && CanInput)
+        if (Input.GetAxisRaw(_assignmentButton) > 0 && CanInput)
         {
             Submit();
         }
