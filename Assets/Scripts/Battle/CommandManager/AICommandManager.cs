@@ -23,6 +23,7 @@ public class AICommandManager : CommandManager
     private const int _maxAiLevel = 3;                          // 敵AIの最大レベル
     private bool _isFirstRound = true;                          // 最初のターンかどうか
     private int[] commandArray = new int[] { 1, 1, 1, 1, 1 };   // コマンドの重みづけ
+    private const int _commandWeight = 3;
 
 
     protected override void Awake()
@@ -153,61 +154,65 @@ public class AICommandManager : CommandManager
     /// <returns>決定したコマンドのindex</returns>
     private int SetAICommand(int aiLevel)
     {
-        // AIレベル3(初回のみ処理)
-        if (_isFirstRound)
-        {
-            if (aiLevel == _maxAiLevel)
-            {
-                switch (_aiAttributeId)
-                {
-                    // 水
-                    case 1:
-                        commandArray[0] = 3;
-                        break;
-                    // 木
-                    case 2:
-                        commandArray[1] = 3;
-                        break;
-                    // 火
-                    case 3:
-                        commandArray[2] = 3;
-                        break;
-                    // 土
-                    case 4:
-                        commandArray[3] = 3;
-                        break;
-                    // 金
-                    case 5:
-                        commandArray[4] = 3;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
         // AIレベル3
-        var total = 0.0f;
-
-        foreach (float elem in commandArray)
+        if (aiLevel == _maxAiLevel)
         {
-            total += elem;
-        }
-
-        float randomPoint = Random.value * total;
-
-        for (int i = 0; i < commandArray.Length; i++)
-        {
-            if (randomPoint < commandArray[i])
+            if (_isFirstRound)
             {
-                return i;
+                SetCommandWeight();
             }
 
-            randomPoint -= commandArray[i];
+            // 重みの合計を計算
+            var total = 0.0f;
+
+            foreach (float weight in commandArray)
+            {
+                total += weight;
+            }
+
+            // 抽選
+            float randomPoint = Random.value * total;
+
+            for (int index = 0; index < commandArray.Length; index++)
+            {
+                if (randomPoint < commandArray[index])
+                {
+                    return index;
+                }
+
+                randomPoint -= commandArray[index];
+            }
         }
 
         // AIレベル1,2
         return Random.Range(_minCommandAttributeRange, _maxCommandAttributeRange);
+    }
+
+    /// <summary>
+    /// コマンドに重みを設定する
+    /// </summary>
+    private void SetCommandWeight()
+    {
+        switch (_aiAttributeId)
+        {
+            case (int)Attribute.AttributeIndex.Water:
+                commandArray[0] = _commandWeight;
+                break;
+            case (int)Attribute.AttributeIndex.Tree:
+                commandArray[1] = _commandWeight;
+                break;
+            case (int)Attribute.AttributeIndex.Fire:
+                commandArray[2] = _commandWeight;
+                break;
+            case (int)Attribute.AttributeIndex.Soil:
+                commandArray[3] = _commandWeight;
+                break;
+            case (int)Attribute.AttributeIndex.Gold:
+                commandArray[4] = _commandWeight;
+                break;
+            default:
+                break;
+        }
     }
 
 }

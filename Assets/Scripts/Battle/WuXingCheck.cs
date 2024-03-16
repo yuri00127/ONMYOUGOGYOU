@@ -40,14 +40,6 @@ public class WuXingCheck : MonoBehaviour
     private const string _rivalryDisadParamName = "IsRivalry_Disadvantage";
     private const string _amplificationParamName = "IsAmplification";
 
-    private enum Attribute
-    {
-        Water = 1,
-        Tree = 2,
-        Fire = 3,
-        Soil = 4,
-        Gold = 5
-    }
 
 
     /// <summary>
@@ -69,25 +61,25 @@ public class WuXingCheck : MonoBehaviour
 
         switch (playerCommandAttributeId)
         {
-            case (int)Attribute.Water:
-                advantageousAttributeId = (int)Attribute.Fire;
-                disadvantageAttributeId = (int)Attribute.Soil;
+            case (int)Attribute.AttributeIndex.Water:
+                advantageousAttributeId = (int)Attribute.AttributeIndex.Fire;
+                disadvantageAttributeId = (int)Attribute.AttributeIndex.Soil;
                 break;
-            case (int)Attribute.Tree:
-                advantageousAttributeId = (int)Attribute.Soil;
-                disadvantageAttributeId = (int)Attribute.Gold;
+            case (int)Attribute.AttributeIndex.Tree:
+                advantageousAttributeId = (int)Attribute.AttributeIndex.Soil;
+                disadvantageAttributeId = (int)Attribute.AttributeIndex.Gold;
                 break;
-            case (int)Attribute.Fire:
-                advantageousAttributeId = (int)Attribute.Gold;
-                disadvantageAttributeId = (int)Attribute.Water;
+            case (int)Attribute.AttributeIndex.Fire:
+                advantageousAttributeId = (int)Attribute.AttributeIndex.Gold;
+                disadvantageAttributeId = (int)Attribute.AttributeIndex.Water;
                 break;
-            case (int)Attribute.Soil:
-                advantageousAttributeId = (int)Attribute.Water;
-                disadvantageAttributeId = (int)Attribute.Tree;
+            case (int)Attribute.AttributeIndex.Soil:
+                advantageousAttributeId = (int)Attribute.AttributeIndex.Water;
+                disadvantageAttributeId = (int)Attribute.AttributeIndex.Tree;
                 break;
-            case (int)Attribute.Gold:
-                advantageousAttributeId = (int)Attribute.Tree;
-                disadvantageAttributeId = (int)Attribute.Fire;
+            case (int)Attribute.AttributeIndex.Gold:
+                advantageousAttributeId = (int)Attribute.AttributeIndex.Tree;
+                disadvantageAttributeId = (int)Attribute.AttributeIndex.Fire;
                 break;
             default:
                 break;
@@ -137,20 +129,20 @@ public class WuXingCheck : MonoBehaviour
 
         switch (commandAttributeId)
         {
-            case (int)Attribute.Water:
-                validityOtherAttributeId = (int)Attribute.Gold;
+            case (int)Attribute.AttributeIndex.Water:
+                validityOtherAttributeId = (int)Attribute.AttributeIndex.Gold;
                 break;
-            case (int)Attribute.Tree:
-                validityOtherAttributeId = (int)Attribute.Water;
+            case (int)Attribute.AttributeIndex.Tree:
+                validityOtherAttributeId = (int)Attribute.AttributeIndex.Water;
                 break;
-            case (int)Attribute.Fire:
-                validityOtherAttributeId = (int)Attribute.Tree;
+            case (int)Attribute.AttributeIndex.Fire:
+                validityOtherAttributeId = (int)Attribute.AttributeIndex.Tree;
                 break;
-            case (int)Attribute.Soil:
-                validityOtherAttributeId = (int)Attribute.Fire;
+            case (int)Attribute.AttributeIndex.Soil:
+                validityOtherAttributeId = (int)Attribute.AttributeIndex.Fire;
                 break;
-            case (int)Attribute.Gold:
-                validityOtherAttributeId = (int)Attribute.Soil;
+            case (int)Attribute.AttributeIndex.Gold:
+                validityOtherAttributeId = (int)Attribute.AttributeIndex.Soil;
                 break;
             default:
                 break;
