@@ -19,7 +19,7 @@ public class VolumeController : MonoBehaviour
     public const float VolumeUnit = 0.1f;
 
     // input
-    protected const string InputHorizontal = "Horizontal";
+    protected string InputHorizontal;
 
     // save
     private const string _bgmVolumeName = "bgmVolume";
@@ -30,6 +30,7 @@ public class VolumeController : MonoBehaviour
     {
         float seVomule = PlayerPrefs.GetFloat(_seVolumeName, 5f);
         float bgmVolume = PlayerPrefs.GetFloat(_bgmVolumeName, 5f);
+        InputHorizontal = InputTypeManager.InputType.Horizontal.ToString();
     }
 
     protected virtual void Update()

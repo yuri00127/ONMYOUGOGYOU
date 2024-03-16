@@ -14,11 +14,16 @@ public class GuideButtonManager : Button
     [SerializeField] private GameObject[] _pageObjcts = new GameObject[2];
     private int pageNo = 0;
 
-    private const string _assignmentButton = "Y";
-    private const string _horizontalButton = "Horizontal";
+    private string _assignmentButton;
+    private string _horizontalButton;
 
     [SerializeField] private AudioClip _pageSE;
 
+    private void Awake()
+    {
+        _assignmentButton = InputTypeManager.InputType.Y.ToString();
+        _horizontalButton = InputTypeManager.InputType.Horizontal.ToString();
+    }
 
     private void Update()
     {

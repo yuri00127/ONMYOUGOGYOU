@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class YinYangChangeButton : Button
 {
-    private const string _AnimName = "IsYin";
-    private const string _inputName = "X";
+    private const string _animName = "IsYin";
+    private string _inputName;
 
     public bool IsYin { get; private set; } = true;
 
     public override void Start()
     {
         base.Start();
+        _inputName = InputTypeManager.InputType.X.ToString();
     }
 
     private void Update()
@@ -37,13 +38,13 @@ public class YinYangChangeButton : Button
 
         if (IsYin)
         {
-            Anim.SetBool(_AnimName, false);
+            Anim.SetBool(_animName, false);
             IsYin = false;
 
             return;
         }
 
-        Anim.SetBool(_AnimName, true);
+        Anim.SetBool(_animName, true);
         IsYin = true;
     }
 }

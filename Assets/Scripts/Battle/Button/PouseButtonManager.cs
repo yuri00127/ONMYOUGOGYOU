@@ -18,7 +18,7 @@ public class PouseButtonManager : Button
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
     private Image _buttonIcon;
 
-    private const string _assignmentButton = "Menu";
+    private string _assignmentButton;
 
 
     public override void Start()
@@ -29,6 +29,8 @@ public class PouseButtonManager : Button
         // ‘€ìà–¾Ø‚è‘Ö‚¦ˆ—‚Ì€”õ
         _operatingGuideChange = this.GetComponent<OperatingGuideChange>();
         _operatingGuideChange.SetUp(_pouseView);
+
+        _assignmentButton = InputTypeManager.InputType.Menu.ToString();
     }
 
     private void Update()

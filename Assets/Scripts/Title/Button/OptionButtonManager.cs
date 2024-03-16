@@ -20,7 +20,7 @@ public class OptionButtonManager : Button
     private const int _closeIconSpriteIndex = 0;
     private const int _openIconSpriteIndex = 1;
 
-    private const string _assignmentButton = "Menu";
+    private string _assignmentButton;
 
     // Audio
     [SerializeField] private AudioClip SecondSubmitSE;      // ビューを閉じるSE
@@ -35,7 +35,9 @@ public class OptionButtonManager : Button
         _operatingGuideChange.SetUp(_optionView);
 
         // メニューボタンのImageコンポーネントを取得
-        _buttonIcon = this.GetComponent<Image>();        
+        _buttonIcon = this.GetComponent<Image>();
+
+        _assignmentButton = InputTypeManager.InputType.Menu.ToString();
     }
 
     private void Update()

@@ -20,8 +20,8 @@ public class PlayerCommandManager : CommandManager
     public bool IsAllSelect = false;                // コマンドが上限まで選択されたかどうか
 
     // Input
-    public bool CanInput = true;                    // 入力を可能とする制御
-    private const string _inputCancel = "Cancel";   // コマンドの取消に対応する入力
+    public bool CanInput = true;   // 入力を可能とする制御
+    private string _inputCancel;   // コマンドの取消に対応する入力
 
     [Header("Audio")]
     [SerializeField] private AudioSource _seAudio;
@@ -39,6 +39,8 @@ public class PlayerCommandManager : CommandManager
         {
             _commandButtonImageArray[i] = _commandButtonArray[0].GetComponent<Image>();
         }
+
+        _inputCancel = InputTypeManager.InputType.Cancel.ToString();
     }
 
     private void Start()
