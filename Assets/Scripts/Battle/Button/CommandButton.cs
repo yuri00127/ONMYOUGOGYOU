@@ -15,6 +15,12 @@ public class CommandButton : Button
     private Image _commandImage;      // このコマンドのImageコンポーネント
     private int _commandIndex = 0;    // このコマンドの順番
 
+    [SerializeField] private GameObject _selectIconObj;
+    private Image _selectIconImage;
+    private Animator _selectIconAnim;
+    private const string _selectBoolName = "Select";
+    private Vector3 _selectIconPosition;
+
 
     public override void Start()
     {
@@ -29,6 +35,12 @@ public class CommandButton : Button
 
         // コマンドの画像をセット
         _commandImage.sprite = _selectCharacter.CommandSprites[_commandIndex - 1];
+
+        _selectIconImage = _selectIconObj.GetComponent<Image>();
+        _selectIconAnim = _selectIconObj.GetComponent<Animator>();
+        _selectIconPosition = this.transform.localPosition;
+        _selectIconPosition.x -= 10f;
+        _selectIconPosition.y -= 80f;
     }
 
     /// <summary>
@@ -38,6 +50,10 @@ public class CommandButton : Button
     {
         // 選択状態の画像を表示
         _commandImage.sprite = _selectCharacter.SelectCommandSprites[_commandIndex - 1];
+
+        _selectIconObj.transform.localPosition = _selectIconPosition;
+        _selectIconImage.color += new Color(0f, 0f, 0f, 255f);
+        _selectIconAnim.SetBool(_selectBoolName, true);
     }
 
     /// <summary>
@@ -47,6 +63,9 @@ public class CommandButton : Button
     {
         // 通常の画像を表示
         _commandImage.sprite = _selectCharacter.CommandSprites[_commandIndex - 1];
+
+        _selectIconImage.color -= new Color(0f, 0f, 0f, 255f);
+        _selectIconAnim.SetBool(_selectBoolName, false);
     }
 
     /// <summary>

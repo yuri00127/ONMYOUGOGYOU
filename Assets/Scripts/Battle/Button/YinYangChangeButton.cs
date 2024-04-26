@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class YinYangChangeButton : Button
 {
-    private const string _animName = "IsYin";
+    private const string _boolName = "IsYin";
     private string _inputName;
+    private const string _focusBoolName = "Focus";
+    private Animator _iconAnim;
 
     public bool IsYin { get; private set; } = true;
 
@@ -14,6 +16,7 @@ public class YinYangChangeButton : Button
     {
         base.Start();
         _inputName = InputTypeManager.InputType.X.ToString();
+        _iconAnim = this.transform.GetChild(0).GetComponent<Animator>();
     }
 
     private void Update()
@@ -38,13 +41,23 @@ public class YinYangChangeButton : Button
 
         if (IsYin)
         {
-            Anim.SetBool(_animName, false);
+            Anim.SetBool(_boolName, false);
             IsYin = false;
 
             return;
         }
 
-        Anim.SetBool(_animName, true);
+        Anim.SetBool(_boolName, true);
         IsYin = true;
+    }
+
+    public override void Select()
+    {
+        _iconAnim.SetBool(_focusBoolName, true);
+    }
+
+    public override void Deselect()
+    {
+        _iconAnim.SetBool(_focusBoolName, false);
     }
 }
