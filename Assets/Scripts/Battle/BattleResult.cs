@@ -16,6 +16,9 @@ public class BattleResult : MonoBehaviour
     [SerializeField] private Sprite[] _resultSprites = new Sprite[2];   // 勝敗画像
     private const string _buttonParentObjName = "Button";               // ボタンを子として持つ親オブジェクトの名前
 
+    [SerializeField] GuideButtonManager _guideButtonManager;
+    [SerializeField] PouseButtonManager _pouseButtonManager;
+
     [Header("Audio")]
     [SerializeField] private AudioSource _bgmAudio;
     [SerializeField] private AudioClip _battleFinishJingle;    // バトル終了時のジングル
@@ -23,6 +26,9 @@ public class BattleResult : MonoBehaviour
 
     public IEnumerator CoBattleFinish(bool playerWin)
     {
+        _guideButtonManager.CanOpenGuideView = true;
+        _pouseButtonManager.CanOpenPouseView = false;
+
         _bgmAudio.clip = _battleFinishJingle;
         _bgmAudio.Play();
         _bgmAudio.loop = false;

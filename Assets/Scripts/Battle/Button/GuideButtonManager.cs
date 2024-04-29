@@ -10,6 +10,7 @@ public class GuideButtonManager : Button
     [SerializeField] private GameObject _guideView;
     [SerializeField] private GameObject _battleDefaultForcus;
     public bool IsOpenGuideView { get; private set; } = false;
+    public bool CanOpenGuideView = true;
 
     [SerializeField] private GameObject[] _pageObjcts = new GameObject[2];
     private int pageNo = 0;
@@ -56,6 +57,11 @@ public class GuideButtonManager : Button
     /// </summary>
     public override void Submit()
     {
+        if (!CanOpenGuideView)
+        {
+            return;
+        }
+
         CanInput = false;
         Audio.PlayOneShot(SubmitSE);
 

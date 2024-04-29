@@ -13,6 +13,7 @@ public class PouseButtonManager : Button
     [SerializeField] private GameObject _pouseDefaultForcus;
     [SerializeField] private GameObject _battleDefaultForcus;
     private bool _isOpenPouseView = false;
+    public bool CanOpenPouseView = true;
 
     [Header("ÉAÉCÉRÉì")]
     [SerializeField] private Sprite[] _sourceImage = new Sprite[2];
@@ -53,6 +54,11 @@ public class PouseButtonManager : Button
     /// </summary>
     public override void Submit()
     {
+        if (!CanOpenPouseView)
+        {
+            return;
+        }
+
         CanInput = false;
         Audio.PlayOneShot(SubmitSE);
 

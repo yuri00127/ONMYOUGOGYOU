@@ -60,4 +60,9 @@ public class YinYangChangeButton : Button
     {
         _iconAnim.SetBool(_focusBoolName, false);
     }
+
+    public override void PointerEnter(GameObject gameObject)
+    {
+        base.PointerEnter(gameObject);
+    }
 }
